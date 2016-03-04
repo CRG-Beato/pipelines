@@ -1,0 +1,3 @@
+
+INFO 	2016-01-15 10:22:46 	[quantification_featurecounts] 	quantifying abundances of transcripts using featureCounts
+INFO 	2016-01-15 10:22:46 	[quantification_featurecounts] 	using Ensemble genes as transcriptome reference

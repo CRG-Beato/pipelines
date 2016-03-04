@@ -1,0 +1,26 @@
+
+INFO 	2015-11-17 10:51:03 	[mapping] 	mapping with bowtie; only unique and valid mappings are reported
+INFO 	2015-11-17 11:09:15 	[mapping] 	sort and index BAM
+TIME 	2015-11-17 11:16:38 	[mapping] 	step time for completion (seconds) = 1535
+
+INFO 	2015-11-17 11:16:38 	[make_tag_directory] 	converting BAM to BED --required for making tag directory
+INFO 	2015-11-17 11:17:54 	[make_tag_directory] 	Make tag directory with HOMER
+TIME 	2015-11-17 11:26:45 	[make_tag_directory] 	step time for completion (seconds) = 607
+
+INFO 	2015-11-17 11:26:45 	[make_bigbed] 	Sort BED file
+INFO 	2015-11-17 11:28:21 	[make_bigbed] 	Make BigBed file
+TIME 	2015-11-17 11:29:30 	[make_bigbed] 	step time for completion (seconds) = 165
+
+INFO 	2015-11-17 11:29:30 	[calculate_rpms] 	Get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2015-11-17 11:29:30 	[calculate_rpms] 	Generate RPM fragment profile
+TIME 	2015-11-17 12:25:14 	[calculate_rpms] 	step time for completion (seconds) = 3344
+
+INFO 	2015-11-17 12:25:14 	[call_peaks] 	Get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2015-11-17 12:25:14 	[call_peaks] 	Fragment length (l) is 389 bp
+INFO 	2015-11-17 12:25:14 	[call_peaks] 	Peak calling with MACS2
+INFO 	2015-11-17 12:25:14 	[call_peaks] 	q-value cutoff = 0.01 (default is 0.01)
+INFO 	2015-11-17 12:25:14 	[call_peaks] 	--nomodel (MACS2 will not try to model peak length but use l = 389 instead
+INFO 	2015-11-17 12:25:14 	[call_peaks] 	Peak calling with the sample alone (i.e. no input)
+TIME 	2015-11-17 12:29:23 	[call_peaks] 	step time for completion (seconds) = 249
+
+

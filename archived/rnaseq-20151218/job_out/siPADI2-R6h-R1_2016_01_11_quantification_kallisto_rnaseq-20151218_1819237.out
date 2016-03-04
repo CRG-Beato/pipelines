@@ -1,0 +1,8 @@
+
+INFO 	2016-01-11 09:55:06 	[quantification_kallisto] 	performing pseudoalignment and quantifying abundances of transcripts using kallisto
+INFO 	2016-01-11 09:55:06 	[quantification_kallisto] 	using Ensemble genes as transcriptome reference
+INFO 	2016-01-11 14:13:15 	[quantification_kallisto] 	converting form HDF5 to text
+INFO 	2016-01-11 14:14:18 	[quantification_kallisto] 	quantifications are in /users/GR/mb/jquilez/data/rnaseq/samples/siPADI2-R6h-R1/quantifications/kallisto
+TIME 	2016-01-11 14:14:18 	[quantification_kallisto] 	step time for completion (seconds) = 15552
+
+

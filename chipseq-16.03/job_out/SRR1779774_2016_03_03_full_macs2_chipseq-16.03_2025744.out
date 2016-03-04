@@ -1,0 +1,76 @@
+
+INFO 	2016-03-03 14:39:30 	[trim_reads_trimmomatic] 	sequencing type = PE
+INFO 	2016-03-03 14:39:30 	[trim_reads_trimmomatic] 	trimming adapter sequences for HiSeq, NextSeq or HiSeq
+INFO 	2016-03-03 14:39:30 	[trim_reads_trimmomatic] 	trimming low-quality reads ends using trimmomatic's recommended practices
+INFO 	2016-03-03 14:39:37 	[trim_reads_trimmomatic] 	parse step log to extract generated metadata
+INFO 	2016-03-03 14:39:37 	[trim_reads_trimmomatic] 	reads after trimming = 252047
+INFO 	2016-03-03 14:39:37 	[trim_reads_trimmomatic] 	trimmed reads are in /users/GR/mb/jquilez/data/atacseq/samples/SRR1779774/fastqs_processed/trimmomatic/paired_end
+INFO 	2016-03-03 14:39:37 	[trim_reads_trimmomatic] 	unpaired reads are deleted
+TIME 	2016-03-03 14:39:37 	[trim_reads_trimmomatic] 	step time for completion (seconds) = 8
+
+INFO 	2016-03-03 14:39:37 	[align_bwa] 	align single-end reads with BWA
+INFO 	2016-03-03 14:39:37 	[align_bwa] 	alignments are converted to BAM, sorted by genomic coordinates and multi-mappings filtered out
+[M::mem_pestat] analyzing insert size distribution for orientation FF...
+[M::mem_pestat] (25, 50, 75) percentile: (60, 92, 161)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (1, 363)
+[M::mem_pestat] mean and std.dev: (112.58, 77.03)
+[M::mem_pestat] low and high boundaries for proper pairs: (1, 464)
+[M::mem_pestat] analyzing insert size distribution for orientation FR...
+[M::mem_pestat] (25, 50, 75) percentile: (58, 95, 184)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (1, 436)
+[M::mem_pestat] mean and std.dev: (123.97, 89.53)
+[M::mem_pestat] low and high boundaries for proper pairs: (1, 562)
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] analyzing insert size distribution for orientation RR...
+[M::mem_pestat] (25, 50, 75) percentile: (75, 96, 113)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (1, 189)
+[M::mem_pestat] mean and std.dev: (84.86, 32.33)
+[M::mem_pestat] low and high boundaries for proper pairs: (1, 227)
+[M::mem_pestat] skip orientation FF
+[M::mem_pestat] skip orientation RR
+[main] Version: 0.7.12-r1039
+[main] CMD: /software/mb/el6.3/bwa/bwa-0.7.12/bwa mem -t 8 -M -R @RG\tID:'SRR1779774'\tLB:'SRR1779774'\tPL:illumina\tPU:'SRR1779774'\tSM:'SRR1779774' -v 0 /users/GR/mb/jquilez/assemblies/homo_sapiens/hg19/ucsc/hg19.fa /users/GR/mb/jquilez/data/atacseq/samples/SRR1779774/fastqs_processed/trimmomatic/paired_end/SRR1779774_read1.fastq.gz /users/GR/mb/jquilez/data/atacseq/samples/SRR1779774/fastqs_processed/trimmomatic/paired_end/SRR1779774_read2.fastq.gz
+[main] Real time: 47.063 sec; CPU: 76.232 sec
+INFO 	2016-03-03 14:40:32 	[align_bwa] 	reads aligned = 504097
+INFO 	2016-03-03 14:40:32 	[align_bwa] 	reads unique = 321490
+TIME 	2016-03-03 14:40:33 	[align_bwa] 	step time for completion (seconds) = 56
+
+INFO 	2016-03-03 14:40:33 	[make_tag_directory] 	converting BAM to BED --required for making tag directory
+INFO 	2016-03-03 14:40:34 	[make_tag_directory] 	make tag directory with HOMER
+INFO 	2016-03-03 14:41:55 	[make_tag_directory] 	parse step log to extract generated metadata
+INFO 	2016-03-03 14:41:56 	[make_tag_directory] 	estimated genome size = 3030470308
+INFO 	2016-03-03 14:41:56 	[make_tag_directory] 	estimated average read density per bp = 0.000106
+INFO 	2016-03-03 14:41:56 	[make_tag_directory] 	total tags = 321490.0
+INFO 	2016-03-03 14:41:56 	[make_tag_directory] 	total_positions = 118332
+INFO 	2016-03-03 14:41:56 	[make_tag_directory] 	avg. tag length = 45.7
+INFO 	2016-03-03 14:41:56 	[make_tag_directory] 	median tags per position = 1
+INFO 	2016-03-03 14:41:56 	[make_tag_directory] 	avg. tags per position = 2.717
+INFO 	2016-03-03 14:41:56 	[make_tag_directory] 	fragment length estimate = 91
+INFO 	2016-03-03 14:41:56 	[make_tag_directory] 	peak width estimate = 67
+INFO 	2016-03-03 14:41:56 	[make_tag_directory] 	autocorrelation: same strand fold enrichment = 1.3
+INFO 	2016-03-03 14:41:56 	[make_tag_directory] 	autocorrelation: diff strand fold enrichment = 1.4
+INFO 	2016-03-03 14:41:56 	[make_tag_directory] 	autocorrelation: same-to-diff strand fold enrichment = 1.0
+INFO 	2016-03-03 14:41:56 	[make_tag_directory] 	avg. fragment GC% = 44.12
+INFO 	2016-03-03 14:41:56 	[make_tag_directory] 	avg. expected GC% = 40.26
+TIME 	2016-03-03 14:41:56 	[make_tag_directory] 	step time for completion (seconds) = 83
+
+INFO 	2016-03-03 14:41:56 	[make_bigbed] 	make BigBed file
+TIME 	2016-03-03 14:41:56 	[make_bigbed] 	step time for completion (seconds) = 0
+
+INFO 	2016-03-03 14:41:56 	[calculate_rpms] 	generate reads pe million profile (RPM) fragment profile
+INFO 	2016-03-03 14:41:56 	[calculate_rpms] 	get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-03-03 14:41:56 	[calculate_rpms] 	fragment length estimate = 91
+INFO 	2016-03-03 14:41:56 	[calculate_rpms] 	fragment length correction = 91
+INFO 	2016-03-03 14:41:56 	[calculate_rpms] 	the correction will be used if the estimate is not reliable
+TIME 	2016-03-03 14:52:15 	[calculate_rpms] 	step time for completion (seconds) = 619
+
+INFO 	2016-03-03 14:52:15 	[call_peaks] 	Get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-03-03 14:52:15 	[call_peaks] 	Fragment length (l) is 91 bp (note this is not used if peak caller is zerone)
+INFO 	2016-03-03 14:52:15 	[call_peaks] 	Peak calling with MACS2
+INFO 	2016-03-03 14:52:15 	[call_peaks] 	genome size for homo_sapiens will be used
+INFO 	2016-03-03 14:52:15 	[call_peaks] 	q-value cutoff =  (default is 0.01)
+INFO 	2016-03-03 14:52:15 	[call_peaks] 	--nomodel (MACS2 will not try to model peak length but use l = 91 instead
+INFO 	2016-03-03 14:52:15 	[call_peaks] 	--call-summits = MACS reanalyzes the shape of signal profile to deconvolve subpeaks within each peak called
+INFO 	2016-03-03 14:52:15 	[call_peaks] 	peak calling with the sample alone (i.e. no input)
+INFO 	2016-03-03 14:52:17 	[call_peaks] 	peaks = 138
+

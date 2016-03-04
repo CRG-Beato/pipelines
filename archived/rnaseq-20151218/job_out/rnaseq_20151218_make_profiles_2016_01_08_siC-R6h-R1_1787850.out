@@ -1,0 +1,8 @@
+
+INFO 	2016-01-08 11:34:49 	[make_profiles] 	make read profiles from STAR alignments
+INFO 	2016-01-08 11:34:49 	[make_profiles] 	Filtering valid pairs (for paired-end data only) and convert BAM to BED
+INFO 	2016-01-08 11:55:19 	[make_profiles] 	converting BED to bigWig (more suitable for UCSC Genome Browser uploads)
+INFO 	2016-01-08 12:04:18 	[make_profiles] 	delete intermediate BED
+TIME 	2016-01-08 12:04:20 	[make_profiles] 	step time for completion (seconds) = 1771
+
+

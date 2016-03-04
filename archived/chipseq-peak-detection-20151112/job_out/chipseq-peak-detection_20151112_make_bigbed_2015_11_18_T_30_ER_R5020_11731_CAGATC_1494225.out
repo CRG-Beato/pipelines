@@ -1,0 +1,7 @@
+
+INFO 	2015-11-18 14:46:28 	[make_bigbed] 	Sort BED file
+/software/mb/bin/sortBed: line 2: 11484 Killed                  ${0%/*}/bedtools sort "$@"
+INFO 	2015-11-18 14:56:13 	[make_bigbed] 	Make BigBed file
+TIME 	2015-11-18 14:57:26 	[make_bigbed] 	step time for completion (seconds) = 658
+
+

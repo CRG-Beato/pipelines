@@ -1,0 +1,10 @@
+
+INFO 	2015-11-30 15:23:56 	[call_peaks] 	Get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2015-11-30 15:23:56 	[call_peaks] 	Fragment length (l) is 221 bp
+INFO 	2015-11-30 15:23:56 	[call_peaks] 	Peak calling with MACS2
+INFO 	2015-11-30 15:23:56 	[call_peaks] 	q-value cutoff = 0.01 (default is 0.01)
+INFO 	2015-11-30 15:23:56 	[call_peaks] 	--nomodel (MACS2 will not try to model peak length but use l = 221 instead
+INFO 	2015-11-30 15:23:56 	[call_peaks] 	Peak calling with input DNA (/users/GR/mb/jquilez/projects/er_pr/data/alignments/input_mcf7_merged_sorted_dups_removed.bam) as control
+TIME 	2015-11-30 15:48:23 	[call_peaks] 	step time for completion (seconds) = 1467
+
+

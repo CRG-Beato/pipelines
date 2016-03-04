@@ -1,0 +1,55 @@
+
+INFO 	2016-02-26 12:51:18 	[trim_reads] 	sequencing type = SE
+INFO 	2016-02-26 12:51:18 	[trim_reads] 	trimming adapter sequences for HiSeq, NextSeq or HiSeq
+INFO 	2016-02-26 12:51:18 	[trim_reads] 	trimming low-quality reads ends using trimmomatic's recommended practices
+INFO 	2016-02-26 13:54:28 	[trim_reads] 	parse step log to extract generated metadata
+INFO 	2016-02-26 13:54:28 	[trim_reads] 	reads after trimming = 168075320
+INFO 	2016-02-26 13:54:28 	[trim_reads] 	trimmed reads are in /users/GR/mb/jquilez/data/rnaseq/samples/R12h.mRNA/fastqs_processed/trimmomatic/single_end
+TIME 	2016-02-26 13:54:28 	[trim_reads] 	step time for completion (seconds) = 3791
+
+INFO 	2016-02-26 13:54:28 	[align_star] 	align trimmed single-end reads with STAR (version = STAR_2.4.0j)
+INFO 	2016-02-26 13:54:28 	[align_star] 	using ENCODE standard options for long RNA-seq pipeline
+INFO 	2016-02-26 14:18:19 	[align_star] 	alignments are in /users/GR/mb/jquilez/data/rnaseq/samples/R12h.mRNA/alignments/star/hg38/single_end
+INFO 	2016-02-26 14:18:19 	[align_star] 	parse step log to extract generated metadata
+INFO 	2016-02-26 14:18:20 	[align_star] 	uniquely mapped reads (number) = 116150876
+INFO 	2016-02-26 14:18:20 	[align_star] 	uniquely mapped reads (percentage) = 69.11
+INFO 	2016-02-26 14:18:20 	[align_star] 	accepted multi-mappings (number) = 46603595
+INFO 	2016-02-26 14:18:20 	[align_star] 	accepted multi-mappings (percentage) = 27.73
+INFO 	2016-02-26 14:18:20 	[align_star] 	splices (number) = 25196976
+TIME 	2016-02-26 14:18:20 	[align_star] 	step time for completion (seconds) = 1432
+
+INFO 	2016-02-26 14:18:20 	[quantification_featurecounts] 	quantifying read counts per gene using featureCounts
+INFO 	2016-02-26 14:18:20 	[quantification_featurecounts] 	using gene models from /users/GR/mb/jquilez/assemblies/homo_sapiens/hg38/gencode/gencode.v24.annotation.gtf
+INFO 	2016-02-26 14:18:20 	[quantification_featurecounts] 	kallisto (transcripts) and featurecounts (genes) quantifications are not directly comparable
+INFO 	2016-02-26 14:18:20 	[quantification_featurecounts] 	even if the *_mmtv version of the assembly is used, gene/transcript models are the same as for *
+INFO 	2016-02-26 14:18:20 	[quantification_featurecounts] 	sequencing type is SE so reads are counted
+INFO 	2016-02-26 14:22:29 	[quantification_featurecounts] 	quantifications are in /users/GR/mb/jquilez/data/rnaseq/samples/R12h.mRNA/quantifications/featurecounts/hg38/single_end
+INFO 	2016-02-26 14:22:29 	[quantification_featurecounts] 	parse step log to extract generated metadata
+INFO 	2016-02-26 14:22:29 	[quantification_featurecounts] 	assigned = 55987259
+INFO 	2016-02-26 14:22:29 	[quantification_featurecounts] 	ambiguous = 2305183
+INFO 	2016-02-26 14:22:29 	[quantification_featurecounts] 	multi-mapping = 174348566
+INFO 	2016-02-26 14:22:29 	[quantification_featurecounts] 	no features = 57858434
+TIME 	2016-02-26 14:22:29 	[quantification_featurecounts] 	step time for completion (seconds) = 249
+
+INFO 	2016-02-26 14:22:29 	[quantification_kallisto] 	performing pseudoalignment and quantifying abundances of transcripts using kallisto
+INFO 	2016-02-26 14:22:29 	[quantification_kallisto] 	using /users/GR/mb/jquilez/assemblies/homo_sapiens/hg38/kallisto_index/kallisto_homo_sapiens_hg38_gencode_v24.index as transcriptome reference
+INFO 	2016-02-26 14:22:29 	[quantification_kallisto] 	kallisto (transcripts) and featurecounts (genes) quantifications are not directly comparable
+INFO 	2016-02-26 14:22:29 	[quantification_kallisto] 	even if the *_mmtv version of the assembly is used, gene/transcript models are the same as for *
+INFO 	2016-02-26 14:22:29 	[quantification_kallisto] 	sequence based bias correction is only applied to single-end data, as it fails for paired-end
+INFO 	2016-02-26 14:22:29 	[quantification_kallisto] 	for single-end data, the user-provided fragment length average (150 bp) is used
+INFO 	2016-02-26 14:22:29 	[quantification_kallisto] 	for single-end data, the user-provided fragment length standard deviation (30 bp) is used
+INFO 	2016-02-26 15:02:27 	[quantification_kallisto] 	converting form HDF5 to text
+INFO 	2016-02-26 15:03:39 	[quantification_kallisto] 	quantifications are in /users/GR/mb/jquilez/data/rnaseq/samples/R12h.mRNA/quantifications/kallisto/hg38/single_end
+INFO 	2016-02-26 15:03:39 	[quantification_kallisto] 	parse step log to extract generated metadata
+INFO 	2016-02-26 15:03:40 	[quantification_kallisto] 	transcripts quantified (number) = 199169
+INFO 	2016-02-26 15:03:40 	[quantification_kallisto] 	reads pseudoaligned (number) = 075
+TIME 	2016-02-26 15:03:40 	[quantification_kallisto] 	step time for completion (seconds) = 2471
+
+INFO 	2016-02-26 15:03:40 	[make_profiles] 	make read profiles from STAR alignments
+INFO 	2016-02-26 15:03:40 	[make_profiles] 	filtering valid pairs (for paired-end data only) and convert BAM to BED
+INFO 	2016-02-26 15:14:29 	[make_profiles] 	converting BED to bigWig (more suitable for UCSC Genome Browser uploads)
+INFO 	2016-02-26 15:30:27 	[make_profiles] 	profiles are in /users/GR/mb/jquilez/data/rnaseq/samples/R12h.mRNA/profiles/hg38/single_end
+INFO 	2016-02-26 15:30:27 	[make_profiles] 	delete intermediate BED
+TIME 	2016-02-26 15:30:28 	[make_profiles] 	step time for completion (seconds) = 1608
+
+

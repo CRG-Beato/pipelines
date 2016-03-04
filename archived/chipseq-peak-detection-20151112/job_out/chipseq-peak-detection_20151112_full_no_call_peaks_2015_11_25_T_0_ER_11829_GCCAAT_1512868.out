@@ -1,0 +1,18 @@
+
+INFO 	2015-11-25 10:36:30 	[mapping] 	mapping with bowtie; only unique and valid mappings are reported
+INFO 	2015-11-25 11:11:41 	[mapping] 	sort and index BAM
+[bam_sort_core] merging from 32 files...
+TIME 	2015-11-25 11:18:42 	[mapping] 	step time for completion (seconds) = 2532
+
+INFO 	2015-11-25 11:18:42 	[make_tag_directory] 	converting BAM to BED --required for making tag directory
+INFO 	2015-11-25 11:21:49 	[make_tag_directory] 	Make tag directory with HOMER
+TIME 	2015-11-25 11:33:31 	[make_tag_directory] 	step time for completion (seconds) = 889
+
+INFO 	2015-11-25 11:33:31 	[make_bigbed] 	Make BigBed file
+TIME 	2015-11-25 11:36:11 	[make_bigbed] 	step time for completion (seconds) = 160
+
+INFO 	2015-11-25 11:36:11 	[calculate_rpms] 	Get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2015-11-25 11:36:11 	[calculate_rpms] 	Generate RPM fragment profile
+TIME 	2015-11-25 12:41:31 	[calculate_rpms] 	step time for completion (seconds) = 3920
+
+

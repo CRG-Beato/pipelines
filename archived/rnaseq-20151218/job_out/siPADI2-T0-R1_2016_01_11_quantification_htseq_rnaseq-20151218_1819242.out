@@ -1,0 +1,7 @@
+
+INFO 	2016-01-11 09:56:51 	[quantification_htseq] 	quantifying abundances of transcripts using HTSeq
+INFO 	2016-01-11 09:56:51 	[quantification_htseq] 	using Ensemble genes as transcriptome reference
+INFO 	2016-01-11 14:17:37 	[quantification_htseq] 	quantifications are in /users/GR/mb/jquilez/data/rnaseq/samples/siPADI2-T0-R1/quantifications/htseq
+TIME 	2016-01-11 14:17:37 	[quantification_htseq] 	step time for completion (seconds) = 15646
+
+

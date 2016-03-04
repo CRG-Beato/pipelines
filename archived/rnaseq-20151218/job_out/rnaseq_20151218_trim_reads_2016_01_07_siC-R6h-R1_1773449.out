@@ -1,0 +1,7 @@
+
+INFO 	2016-01-07 15:53:59 	[trim_reads] 	trimming adapter sequences for HiSeq, NextSeq or HiSeq
+INFO 	2016-01-07 15:53:59 	[trim_reads] 	trimming low-quality reads ends using trimmomatic's recommended practices
+INFO 	2016-01-07 16:15:27 	[trim_reads] 	unpaired reads are deleted
+TIME 	2016-01-07 16:15:28 	[trim_reads] 	step time for completion (seconds) = 1290
+
+

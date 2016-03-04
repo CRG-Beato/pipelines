@@ -1,0 +1,9 @@
+
+INFO 	2015-11-18 15:21:11 	[make_tag_directory] 	converting BAM to BED --required for making tag directory
+INFO 	2015-11-18 15:25:57 	[make_tag_directory] 	Make tag directory with HOMER
+TIME 	2015-11-18 15:42:58 	[make_tag_directory] 	step time for completion (seconds) = 1307
+
+INFO 	2015-11-18 15:42:58 	[make_bigbed] 	Make BigBed file
+TIME 	2015-11-18 15:46:58 	[make_bigbed] 	step time for completion (seconds) = 240
+
+

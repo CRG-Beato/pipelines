@@ -1,0 +1,54 @@
+
+INFO 	2016-02-19 16:55:04 	[trim_reads_single_end] 	trimming adapter sequences for HiSeq, NextSeq or HiSeq
+INFO 	2016-02-19 16:55:04 	[trim_reads_single_end] 	trimming low-quality reads ends using trimmomatic's recommended practices
+INFO 	2016-02-19 17:18:30 	[trim_reads_single_end] 	reads after trimming = 71158352
+TIME 	2016-02-19 17:18:30 	[trim_reads_single_end] 	step time for completion (seconds) = 1406
+
+INFO 	2016-02-19 17:18:30 	[align_single_end] 	align single-end reads with BWA
+INFO 	2016-02-19 17:18:30 	[align_single_end] 	alignments are converted to BAM, sorted by genomic coordinates and multi-mappings filtered out
+[main] Version: 0.7.12-r1039
+[main] CMD: /software/mb/el6.3/bwa/bwa-0.7.12/bwa mem -t 8 -M -R @RG\tID:'R30_F'\tLB:'R30_F'\tPL:illumina\tPU:'R30_F'\tSM:'R30_F' -v 0 /users/GR/mb/jquilez/assemblies/homo_sapiens/hg19/ucsc/hg19.fa /users/GR/mb/jquilez/data/chipseq/samples/R30_F/fastqs_processed/trimmomatic/single_end_reads/R30_F_read1.fastq.gz
+[main] Real time: 2353.564 sec; CPU: 17329.165 sec
+[bam_sort_core] merging from 32 files...
+INFO 	2016-02-19 18:20:55 	[align_single_end] 	reads aligned = 71158580
+INFO 	2016-02-19 18:20:55 	[align_single_end] 	reads unique = 61668808
+TIME 	2016-02-19 18:20:55 	[align_single_end] 	step time for completion (seconds) = 3745
+
+INFO 	2016-02-19 18:20:55 	[make_tag_directory] 	converting BAM to BED --required for making tag directory
+INFO 	2016-02-19 18:23:37 	[make_tag_directory] 	Make tag directory with HOMER
+INFO 	2016-02-19 18:37:58 	[make_tag_directory] 	parse step log to extract generated metadata
+INFO 	2016-02-19 18:37:58 	[make_tag_directory] 	estimated genome size = 3035413270
+INFO 	2016-02-19 18:37:58 	[make_tag_directory] 	estimated average read density per bp = 0.020316
+INFO 	2016-02-19 18:37:58 	[make_tag_directory] 	total tags = 61668808.0
+INFO 	2016-02-19 18:37:58 	[make_tag_directory] 	total_positions = 57831265
+INFO 	2016-02-19 18:37:58 	[make_tag_directory] 	avg. tag length = 49.1
+INFO 	2016-02-19 18:37:58 	[make_tag_directory] 	median tags per position = 1
+INFO 	2016-02-19 18:37:58 	[make_tag_directory] 	avg. tags per position = 1.066
+INFO 	2016-02-19 18:37:58 	[make_tag_directory] 	fragment length estimate = 222
+INFO 	2016-02-19 18:37:58 	[make_tag_directory] 	peak width estimate = 191
+INFO 	2016-02-19 18:37:58 	[make_tag_directory] 	autocorrelation: same strand fold enrichment = 1.2
+INFO 	2016-02-19 18:37:58 	[make_tag_directory] 	autocorrelation: diff strand fold enrichment = 1.2
+INFO 	2016-02-19 18:37:58 	[make_tag_directory] 	autocorrelation: same-to-diff strand fold enrichment = 1.0
+INFO 	2016-02-19 18:37:58 	[make_tag_directory] 	avg. fragment GC% = 40.89
+INFO 	2016-02-19 18:37:58 	[make_tag_directory] 	avg. expected GC% = 40.65
+TIME 	2016-02-19 18:37:58 	[make_tag_directory] 	step time for completion (seconds) = 1023
+
+INFO 	2016-02-19 18:37:58 	[make_bigbed] 	make BigBed file
+TIME 	2016-02-19 18:40:30 	[make_bigbed] 	step time for completion (seconds) = 152
+
+INFO 	2016-02-19 18:40:30 	[calculate_rpms] 	get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-02-19 18:40:30 	[calculate_rpms] 	fragment length estimate = 222
+INFO 	2016-02-19 18:40:30 	[calculate_rpms] 	fragment length correction = 222
+INFO 	2016-02-19 18:40:30 	[calculate_rpms] 	the correction will be use if the estimate is not reliable
+INFO 	2016-02-19 18:40:30 	[calculate_rpms] 	generate reads pe million profile (RPM) fragment profile
+TIME 	2016-02-19 20:04:34 	[calculate_rpms] 	step time for completion (seconds) = 5044
+
+INFO 	2016-02-19 20:04:34 	[call_peaks] 	Get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-02-19 20:04:34 	[call_peaks] 	Fragment length (l) is 222 bp (note this is not used if peak caller is zerone)
+INFO 	2016-02-19 20:04:34 	[call_peaks] 	Peak calling with MACS2
+INFO 	2016-02-19 20:04:34 	[call_peaks] 	genome size for homo_sapiens will be used
+INFO 	2016-02-19 20:04:34 	[call_peaks] 	q-value cutoff =  (default is 0.01)
+INFO 	2016-02-19 20:04:34 	[call_peaks] 	--nomodel (MACS2 will not try to model peak length but use l = 222 instead
+INFO 	2016-02-19 20:04:34 	[call_peaks] 	--call-summits = MACS reanalyzes the shape of signal profile to deconvolve subpeaks within each peak called
+INFO 	2016-02-19 20:04:34 	[call_peaks] 	peak calling with the sample alone (i.e. no input)
+

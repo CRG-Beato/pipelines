@@ -1,0 +1,316 @@
+INFO  @ Wed, 11 Nov 2015 17:30:42: 
+# Command line: callpeak -t /users/GR/mb/jquilez/data/chipseq/samples/T_30_ER_R5020_11731_CAGATC/alignments/bowtie/T_30_ER_R5020_11731_CAGATC_sorted.bam -n T_30_ER_R5020_11731_CAGATC --outdir /users/GR/mb/jquilez/data/chipseq/samples/T_30_ER_R5020_11731_CAGATC/peaks/macs2 -g hs -B --call-summits --verbose 3
+# ARGUMENTS LIST:
+# name = T_30_ER_R5020_11731_CAGATC
+# format = AUTO
+# ChIP-seq file = ['/users/GR/mb/jquilez/data/chipseq/samples/T_30_ER_R5020_11731_CAGATC/alignments/bowtie/T_30_ER_R5020_11731_CAGATC_sorted.bam']
+# control file = None
+# effective genome size = 2.70e+09
+# band width = 300
+# model fold = [5, 50]
+# qvalue cutoff = 5.00e-02
+# Larger dataset will be scaled towards smaller dataset.
+# Range for calculating regional lambda is: 10000 bps
+# Broad region calling is off
+# Searching for subpeak summits is on
+ 
+INFO  @ Wed, 11 Nov 2015 17:30:42: #1 read tag files... 
+INFO  @ Wed, 11 Nov 2015 17:30:42: #1 read treatment tags... 
+DEBUG @ Wed, 11 Nov 2015 17:30:42: Testing format BAM 
+INFO  @ Wed, 11 Nov 2015 17:30:42: Detected format is: BAM 
+INFO  @ Wed, 11 Nov 2015 17:30:42: * Input file is gzipped. 
+INFO  @ Wed, 11 Nov 2015 17:30:47:  1000000 
+INFO  @ Wed, 11 Nov 2015 17:30:52:  2000000 
+INFO  @ Wed, 11 Nov 2015 17:30:56:  3000000 
+INFO  @ Wed, 11 Nov 2015 17:31:01:  4000000 
+INFO  @ Wed, 11 Nov 2015 17:31:05:  5000000 
+INFO  @ Wed, 11 Nov 2015 17:31:10:  6000000 
+INFO  @ Wed, 11 Nov 2015 17:31:15:  7000000 
+INFO  @ Wed, 11 Nov 2015 17:31:19:  8000000 
+INFO  @ Wed, 11 Nov 2015 17:31:24:  9000000 
+INFO  @ Wed, 11 Nov 2015 17:31:28:  10000000 
+INFO  @ Wed, 11 Nov 2015 17:31:33:  11000000 
+INFO  @ Wed, 11 Nov 2015 17:31:38:  12000000 
+INFO  @ Wed, 11 Nov 2015 17:31:42:  13000000 
+INFO  @ Wed, 11 Nov 2015 17:31:47:  14000000 
+INFO  @ Wed, 11 Nov 2015 17:31:51:  15000000 
+INFO  @ Wed, 11 Nov 2015 17:31:56:  16000000 
+INFO  @ Wed, 11 Nov 2015 17:32:01:  17000000 
+INFO  @ Wed, 11 Nov 2015 17:32:05:  18000000 
+INFO  @ Wed, 11 Nov 2015 17:32:10:  19000000 
+INFO  @ Wed, 11 Nov 2015 17:32:14:  20000000 
+INFO  @ Wed, 11 Nov 2015 17:32:19:  21000000 
+INFO  @ Wed, 11 Nov 2015 17:32:23:  22000000 
+INFO  @ Wed, 11 Nov 2015 17:32:28:  23000000 
+INFO  @ Wed, 11 Nov 2015 17:32:33:  24000000 
+INFO  @ Wed, 11 Nov 2015 17:32:37:  25000000 
+INFO  @ Wed, 11 Nov 2015 17:32:42:  26000000 
+INFO  @ Wed, 11 Nov 2015 17:32:46:  27000000 
+INFO  @ Wed, 11 Nov 2015 17:32:51:  28000000 
+INFO  @ Wed, 11 Nov 2015 17:32:56:  29000000 
+INFO  @ Wed, 11 Nov 2015 17:33:00:  30000000 
+INFO  @ Wed, 11 Nov 2015 17:33:05:  31000000 
+INFO  @ Wed, 11 Nov 2015 17:33:09:  32000000 
+INFO  @ Wed, 11 Nov 2015 17:33:14:  33000000 
+INFO  @ Wed, 11 Nov 2015 17:33:18:  34000000 
+INFO  @ Wed, 11 Nov 2015 17:33:23:  35000000 
+INFO  @ Wed, 11 Nov 2015 17:33:28:  36000000 
+INFO  @ Wed, 11 Nov 2015 17:33:32:  37000000 
+INFO  @ Wed, 11 Nov 2015 17:33:37:  38000000 
+INFO  @ Wed, 11 Nov 2015 17:33:41:  39000000 
+INFO  @ Wed, 11 Nov 2015 17:33:46:  40000000 
+INFO  @ Wed, 11 Nov 2015 17:33:51:  41000000 
+INFO  @ Wed, 11 Nov 2015 17:33:55:  42000000 
+INFO  @ Wed, 11 Nov 2015 17:34:00:  43000000 
+INFO  @ Wed, 11 Nov 2015 17:34:04:  44000000 
+INFO  @ Wed, 11 Nov 2015 17:34:09:  45000000 
+INFO  @ Wed, 11 Nov 2015 17:34:14:  46000000 
+INFO  @ Wed, 11 Nov 2015 17:34:18:  47000000 
+INFO  @ Wed, 11 Nov 2015 17:34:23:  48000000 
+INFO  @ Wed, 11 Nov 2015 17:34:27:  49000000 
+INFO  @ Wed, 11 Nov 2015 17:34:32:  50000000 
+INFO  @ Wed, 11 Nov 2015 17:34:36:  51000000 
+INFO  @ Wed, 11 Nov 2015 17:34:41:  52000000 
+INFO  @ Wed, 11 Nov 2015 17:34:46:  53000000 
+INFO  @ Wed, 11 Nov 2015 17:34:50:  54000000 
+INFO  @ Wed, 11 Nov 2015 17:34:55:  55000000 
+INFO  @ Wed, 11 Nov 2015 17:34:59:  56000000 
+INFO  @ Wed, 11 Nov 2015 17:35:04:  57000000 
+INFO  @ Wed, 11 Nov 2015 17:35:09:  58000000 
+INFO  @ Wed, 11 Nov 2015 17:35:13:  59000000 
+INFO  @ Wed, 11 Nov 2015 17:35:18:  60000000 
+INFO  @ Wed, 11 Nov 2015 17:35:22:  61000000 
+INFO  @ Wed, 11 Nov 2015 17:35:27:  62000000 
+INFO  @ Wed, 11 Nov 2015 17:35:32:  63000000 
+INFO  @ Wed, 11 Nov 2015 17:35:36:  64000000 
+INFO  @ Wed, 11 Nov 2015 17:35:41:  65000000 
+INFO  @ Wed, 11 Nov 2015 17:35:45:  66000000 
+INFO  @ Wed, 11 Nov 2015 17:35:50:  67000000 
+INFO  @ Wed, 11 Nov 2015 17:35:55:  68000000 
+INFO  @ Wed, 11 Nov 2015 17:35:59:  69000000 
+INFO  @ Wed, 11 Nov 2015 17:36:04:  70000000 
+INFO  @ Wed, 11 Nov 2015 17:36:08:  71000000 
+INFO  @ Wed, 11 Nov 2015 17:36:13:  72000000 
+INFO  @ Wed, 11 Nov 2015 17:36:17:  73000000 
+INFO  @ Wed, 11 Nov 2015 17:36:22:  74000000 
+INFO  @ Wed, 11 Nov 2015 17:36:27:  75000000 
+INFO  @ Wed, 11 Nov 2015 17:36:31:  76000000 
+INFO  @ Wed, 11 Nov 2015 17:36:36:  77000000 
+INFO  @ Wed, 11 Nov 2015 17:36:40:  78000000 
+INFO  @ Wed, 11 Nov 2015 17:36:45:  79000000 
+INFO  @ Wed, 11 Nov 2015 17:36:50:  80000000 
+INFO  @ Wed, 11 Nov 2015 17:36:54:  81000000 
+INFO  @ Wed, 11 Nov 2015 17:36:59:  82000000 
+INFO  @ Wed, 11 Nov 2015 17:37:03:  83000000 
+INFO  @ Wed, 11 Nov 2015 17:37:08:  84000000 
+INFO  @ Wed, 11 Nov 2015 17:37:12:  85000000 
+INFO  @ Wed, 11 Nov 2015 17:37:17:  86000000 
+INFO  @ Wed, 11 Nov 2015 17:37:22:  87000000 
+INFO  @ Wed, 11 Nov 2015 17:37:26:  88000000 
+INFO  @ Wed, 11 Nov 2015 17:37:31:  89000000 
+INFO  @ Wed, 11 Nov 2015 17:37:36:  90000000 
+INFO  @ Wed, 11 Nov 2015 17:37:40:  91000000 
+INFO  @ Wed, 11 Nov 2015 17:37:45:  92000000 
+INFO  @ Wed, 11 Nov 2015 17:37:49:  93000000 
+INFO  @ Wed, 11 Nov 2015 17:37:54:  94000000 
+INFO  @ Wed, 11 Nov 2015 17:37:58:  95000000 
+INFO  @ Wed, 11 Nov 2015 17:38:03:  96000000 
+INFO  @ Wed, 11 Nov 2015 17:38:06:  97000000 
+INFO  @ Wed, 11 Nov 2015 17:38:09:  98000000 
+INFO  @ Wed, 11 Nov 2015 17:38:12:  99000000 
+INFO  @ Wed, 11 Nov 2015 17:38:14:  100000000 
+INFO  @ Wed, 11 Nov 2015 17:38:17:  101000000 
+INFO  @ Wed, 11 Nov 2015 17:38:20:  102000000 
+INFO  @ Wed, 11 Nov 2015 17:38:23:  103000000 
+INFO  @ Wed, 11 Nov 2015 17:38:26:  104000000 
+INFO  @ Wed, 11 Nov 2015 17:38:28:  105000000 
+INFO  @ Wed, 11 Nov 2015 17:38:31:  106000000 
+INFO  @ Wed, 11 Nov 2015 17:38:34:  107000000 
+INFO  @ Wed, 11 Nov 2015 17:38:37:  108000000 
+INFO  @ Wed, 11 Nov 2015 17:38:39:  109000000 
+INFO  @ Wed, 11 Nov 2015 17:38:42:  110000000 
+INFO  @ Wed, 11 Nov 2015 17:38:45:  111000000 
+INFO  @ Wed, 11 Nov 2015 17:38:48:  112000000 
+INFO  @ Wed, 11 Nov 2015 17:38:51:  113000000 
+INFO  @ Wed, 11 Nov 2015 17:38:53:  114000000 
+INFO  @ Wed, 11 Nov 2015 17:38:56:  115000000 
+INFO  @ Wed, 11 Nov 2015 17:38:59:  116000000 
+INFO  @ Wed, 11 Nov 2015 17:39:02:  117000000 
+INFO  @ Wed, 11 Nov 2015 17:39:04:  118000000 
+INFO  @ Wed, 11 Nov 2015 17:39:07:  119000000 
+INFO  @ Wed, 11 Nov 2015 17:39:10:  120000000 
+INFO  @ Wed, 11 Nov 2015 17:39:13: #1 tag size is determined as 50 bps 
+INFO  @ Wed, 11 Nov 2015 17:39:13: #1 tag size = 50 
+INFO  @ Wed, 11 Nov 2015 17:39:13: #1  total tags in treatment: 96078378 
+INFO  @ Wed, 11 Nov 2015 17:39:13: #1 user defined the maximum tags... 
+INFO  @ Wed, 11 Nov 2015 17:39:13: #1 filter out redundant tags at the same location and the same strand by allowing at most 1 tag(s) 
+INFO  @ Wed, 11 Nov 2015 17:39:15: #1  tags after filtering in treatment: 77068479 
+INFO  @ Wed, 11 Nov 2015 17:39:15: #1  Redundant rate of treatment: 0.20 
+INFO  @ Wed, 11 Nov 2015 17:39:15: #1 finished! 
+INFO  @ Wed, 11 Nov 2015 17:39:15: #2 Build Peak Model... 
+INFO  @ Wed, 11 Nov 2015 17:39:15: #2 looking for paired plus/minus strand peaks... 
+DEBUG @ Wed, 11 Nov 2015 17:39:15: Chromosome: chr1 
+DEBUG @ Wed, 11 Nov 2015 17:39:15: Number of unique tags on + strand: 2988980 
+DEBUG @ Wed, 11 Nov 2015 17:39:15: Number of peaks in + strand: 2623 
+DEBUG @ Wed, 11 Nov 2015 17:39:16: Number of unique tags on - strand: 2991030 
+DEBUG @ Wed, 11 Nov 2015 17:39:16: Number of peaks in - strand: 2637 
+DEBUG @ Wed, 11 Nov 2015 17:39:16: Number of paired peaks: 2086 
+DEBUG @ Wed, 11 Nov 2015 17:39:16: Chromosome: chr10 
+DEBUG @ Wed, 11 Nov 2015 17:39:16: Number of unique tags on + strand: 1602546 
+DEBUG @ Wed, 11 Nov 2015 17:39:16: Number of peaks in + strand: 148 
+DEBUG @ Wed, 11 Nov 2015 17:39:16: Number of unique tags on - strand: 1606104 
+DEBUG @ Wed, 11 Nov 2015 17:39:16: Number of peaks in - strand: 142 
+DEBUG @ Wed, 11 Nov 2015 17:39:16: Number of paired peaks: 112 
+DEBUG @ Wed, 11 Nov 2015 17:39:16: Chromosome: chr11 
+DEBUG @ Wed, 11 Nov 2015 17:39:16: Number of unique tags on + strand: 1402314 
+DEBUG @ Wed, 11 Nov 2015 17:39:16: Number of peaks in + strand: 60 
+DEBUG @ Wed, 11 Nov 2015 17:39:16: Number of unique tags on - strand: 1403567 
+DEBUG @ Wed, 11 Nov 2015 17:39:16: Number of peaks in - strand: 53 
+DEBUG @ Wed, 11 Nov 2015 17:39:16: Number of paired peaks: 42 
+DEBUG @ Wed, 11 Nov 2015 17:39:16: Chromosome: chr12 
+DEBUG @ Wed, 11 Nov 2015 17:39:16: Number of unique tags on + strand: 2097700 
+DEBUG @ Wed, 11 Nov 2015 17:39:16: Number of peaks in + strand: 116 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of unique tags on - strand: 2095931 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of peaks in - strand: 115 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of paired peaks: 87 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Chromosome: chr13 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of unique tags on + strand: 1130621 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of peaks in + strand: 31 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of unique tags on - strand: 1127953 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of peaks in - strand: 26 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of paired peaks: 22 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Chromosome: chr14 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of unique tags on + strand: 1485408 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of peaks in + strand: 65 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of unique tags on - strand: 1484030 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of peaks in - strand: 67 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of paired peaks: 51 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Chromosome: chr15 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of unique tags on + strand: 1061633 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of peaks in + strand: 115 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of unique tags on - strand: 1061355 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of peaks in - strand: 112 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of paired peaks: 58 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Chromosome: chr16 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of unique tags on + strand: 992445 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of peaks in + strand: 98 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of unique tags on - strand: 992971 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of peaks in - strand: 114 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Number of paired peaks: 72 
+DEBUG @ Wed, 11 Nov 2015 17:39:17: Chromosome: chr17 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Number of unique tags on + strand: 1270387 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Number of peaks in + strand: 3356 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Number of unique tags on - strand: 1271512 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Number of peaks in - strand: 3372 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Number of paired peaks: 3134 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Chromosome: chr18 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Number of unique tags on + strand: 720808 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Number of peaks in + strand: 31 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Number of unique tags on - strand: 721294 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Number of peaks in - strand: 31 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Number of paired peaks: 31 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Chromosome: chr19 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Number of unique tags on + strand: 498480 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Number of peaks in + strand: 20 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Number of unique tags on - strand: 498723 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Number of peaks in - strand: 24 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Number of paired peaks: 20 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Chromosome: chr2 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Number of unique tags on + strand: 3067740 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Number of peaks in + strand: 136 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Number of unique tags on - strand: 3065405 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Number of peaks in - strand: 135 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Number of paired peaks: 102 
+DEBUG @ Wed, 11 Nov 2015 17:39:18: Chromosome: chr20 
+DEBUG @ Wed, 11 Nov 2015 17:39:19: Number of unique tags on + strand: 1382482 
+DEBUG @ Wed, 11 Nov 2015 17:39:19: Number of peaks in + strand: 4645 
+DEBUG @ Wed, 11 Nov 2015 17:39:19: Number of unique tags on - strand: 1381580 
+DEBUG @ Wed, 11 Nov 2015 17:39:19: Number of peaks in - strand: 4603 
+DEBUG @ Wed, 11 Nov 2015 17:39:19: Number of paired peaks: 4286 
+DEBUG @ Wed, 11 Nov 2015 17:39:19: Chromosome: chr21 
+DEBUG @ Wed, 11 Nov 2015 17:39:19: Number of unique tags on + strand: 437371 
+DEBUG @ Wed, 11 Nov 2015 17:39:19: Number of peaks in + strand: 88 
+DEBUG @ Wed, 11 Nov 2015 17:39:19: Number of unique tags on - strand: 438586 
+DEBUG @ Wed, 11 Nov 2015 17:39:19: Number of peaks in - strand: 88 
+DEBUG @ Wed, 11 Nov 2015 17:39:19: Number of paired peaks: 73 
+DEBUG @ Wed, 11 Nov 2015 17:39:19: Chromosome: chr22 
+DEBUG @ Wed, 11 Nov 2015 17:39:19: Number of unique tags on + strand: 242916 
+DEBUG @ Wed, 11 Nov 2015 17:39:19: Number of peaks in + strand: 9 
+DEBUG @ Wed, 11 Nov 2015 17:39:19: Number of unique tags on - strand: 242076 
+DEBUG @ Wed, 11 Nov 2015 17:39:19: Number of peaks in - strand: 8 
+DEBUG @ Wed, 11 Nov 2015 17:39:19: Number of paired peaks: 6 
+DEBUG @ Wed, 11 Nov 2015 17:39:19: Chromosome: chr3 
+DEBUG @ Wed, 11 Nov 2015 17:39:19: Number of unique tags on + strand: 3259823 
+DEBUG @ Wed, 11 Nov 2015 17:39:19: Number of peaks in + strand: 3589 
+DEBUG @ Wed, 11 Nov 2015 17:39:20: Number of unique tags on - strand: 3261391 
+DEBUG @ Wed, 11 Nov 2015 17:39:20: Number of peaks in - strand: 3645 
+DEBUG @ Wed, 11 Nov 2015 17:39:20: Number of paired peaks: 3096 
+DEBUG @ Wed, 11 Nov 2015 17:39:20: Chromosome: chr4 
+DEBUG @ Wed, 11 Nov 2015 17:39:20: Number of unique tags on + strand: 2370570 
+DEBUG @ Wed, 11 Nov 2015 17:39:20: Number of peaks in + strand: 92 
+DEBUG @ Wed, 11 Nov 2015 17:39:20: Number of unique tags on - strand: 2372204 
+DEBUG @ Wed, 11 Nov 2015 17:39:20: Number of peaks in - strand: 86 
+DEBUG @ Wed, 11 Nov 2015 17:39:20: Number of paired peaks: 68 
+DEBUG @ Wed, 11 Nov 2015 17:39:20: Chromosome: chr5 
+DEBUG @ Wed, 11 Nov 2015 17:39:20: Number of unique tags on + strand: 2528049 
+DEBUG @ Wed, 11 Nov 2015 17:39:20: Number of peaks in + strand: 113 
+DEBUG @ Wed, 11 Nov 2015 17:39:20: Number of unique tags on - strand: 2528117 
+DEBUG @ Wed, 11 Nov 2015 17:39:20: Number of peaks in - strand: 115 
+DEBUG @ Wed, 11 Nov 2015 17:39:20: Number of paired peaks: 98 
+DEBUG @ Wed, 11 Nov 2015 17:39:20: Chromosome: chr6 
+DEBUG @ Wed, 11 Nov 2015 17:39:21: Number of unique tags on + strand: 2493337 
+DEBUG @ Wed, 11 Nov 2015 17:39:21: Number of peaks in + strand: 110 
+DEBUG @ Wed, 11 Nov 2015 17:39:21: Number of unique tags on - strand: 2494345 
+DEBUG @ Wed, 11 Nov 2015 17:39:21: Number of peaks in - strand: 118 
+DEBUG @ Wed, 11 Nov 2015 17:39:21: Number of paired peaks: 83 
+DEBUG @ Wed, 11 Nov 2015 17:39:21: Chromosome: chr7 
+DEBUG @ Wed, 11 Nov 2015 17:39:21: Number of unique tags on + strand: 2273895 
+DEBUG @ Wed, 11 Nov 2015 17:39:21: Number of peaks in + strand: 95 
+DEBUG @ Wed, 11 Nov 2015 17:39:21: Number of unique tags on - strand: 2273198 
+DEBUG @ Wed, 11 Nov 2015 17:39:21: Number of peaks in - strand: 103 
+DEBUG @ Wed, 11 Nov 2015 17:39:21: Number of paired peaks: 78 
+DEBUG @ Wed, 11 Nov 2015 17:39:21: Chromosome: chr8 
+DEBUG @ Wed, 11 Nov 2015 17:39:21: Number of unique tags on + strand: 2319872 
+DEBUG @ Wed, 11 Nov 2015 17:39:21: Number of peaks in + strand: 260 
+DEBUG @ Wed, 11 Nov 2015 17:39:22: Number of unique tags on - strand: 2321845 
+DEBUG @ Wed, 11 Nov 2015 17:39:22: Number of peaks in - strand: 253 
+DEBUG @ Wed, 11 Nov 2015 17:39:22: Number of paired peaks: 178 
+DEBUG @ Wed, 11 Nov 2015 17:39:22: Chromosome: chr9 
+DEBUG @ Wed, 11 Nov 2015 17:39:22: Number of unique tags on + strand: 1642200 
+DEBUG @ Wed, 11 Nov 2015 17:39:22: Number of peaks in + strand: 89 
+DEBUG @ Wed, 11 Nov 2015 17:39:22: Number of unique tags on - strand: 1644608 
+DEBUG @ Wed, 11 Nov 2015 17:39:22: Number of peaks in - strand: 100 
+DEBUG @ Wed, 11 Nov 2015 17:39:22: Number of paired peaks: 75 
+DEBUG @ Wed, 11 Nov 2015 17:39:22: Chromosome: chrX 
+DEBUG @ Wed, 11 Nov 2015 17:39:22: Number of unique tags on + strand: 1260762 
+DEBUG @ Wed, 11 Nov 2015 17:39:22: Number of peaks in + strand: 28 
+DEBUG @ Wed, 11 Nov 2015 17:39:22: Number of unique tags on - strand: 1260315 
+DEBUG @ Wed, 11 Nov 2015 17:39:22: Number of peaks in - strand: 27 
+DEBUG @ Wed, 11 Nov 2015 17:39:22: Number of paired peaks: 24 
+INFO  @ Wed, 11 Nov 2015 17:39:22: #2 number of paired peaks: 13882 
+DEBUG @ Wed, 11 Nov 2015 17:39:22: Use 13882 pairs to build the model. 
+INFO  @ Wed, 11 Nov 2015 17:39:22: start model_add_line... 
+INFO  @ Wed, 11 Nov 2015 17:39:23: start X-correlation... 
+INFO  @ Wed, 11 Nov 2015 17:39:23: end of X-cor 
+INFO  @ Wed, 11 Nov 2015 17:39:23: #2 finished! 
+DEBUG @ Wed, 11 Nov 2015 17:39:23: #2  Summary Model: 
+DEBUG @ Wed, 11 Nov 2015 17:39:23: #2   min_tags: 43 
+DEBUG @ Wed, 11 Nov 2015 17:39:23: #2   d: 201 
+DEBUG @ Wed, 11 Nov 2015 17:39:23: #2   scan_window: 402 
+INFO  @ Wed, 11 Nov 2015 17:39:23: #2 predicted fragment length is 201 bps 
+INFO  @ Wed, 11 Nov 2015 17:39:23: #2 alternative fragment length(s) may be 4,201 bps 
+INFO  @ Wed, 11 Nov 2015 17:39:23: #2.2 Generate R script for model : /users/GR/mb/jquilez/data/chipseq/samples/T_30_ER_R5020_11731_CAGATC/peaks/macs2/T_30_ER_R5020_11731_CAGATC_model.r 
+INFO  @ Wed, 11 Nov 2015 17:39:23: #3 Call peaks... 
+INFO  @ Wed, 11 Nov 2015 17:39:23: #3 Going to call summits inside each peak ... 
+INFO  @ Wed, 11 Nov 2015 17:39:23: #3 Pre-compute pvalue-qvalue table... 
+DEBUG @ Wed, 11 Nov 2015 17:39:23: Start to calculate pvalue stat... 
+DEBUG @ Wed, 11 Nov 2015 17:42:07: access pq hash for 283554035 times 
+INFO  @ Wed, 11 Nov 2015 17:42:07: #3 In the peak calling step, the following will be performed simultaneously: 
+INFO  @ Wed, 11 Nov 2015 17:42:07: #3   Write bedGraph files for treatment pileup (after scaling if necessary)... T_30_ER_R5020_11731_CAGATC_treat_pileup.bdg 
+INFO  @ Wed, 11 Nov 2015 17:42:07: #3   Write bedGraph files for control lambda (after scaling if necessary)... T_30_ER_R5020_11731_CAGATC_control_lambda.bdg 
+INFO  @ Wed, 11 Nov 2015 17:42:07: #3   Pileup will be based on sequencing depth in treatment. 
+INFO  @ Wed, 11 Nov 2015 17:42:07: #3 Call peaks for each chromosome... 
+INFO  @ Wed, 11 Nov 2015 17:52:19: #4 Write output xls file... /users/GR/mb/jquilez/data/chipseq/samples/T_30_ER_R5020_11731_CAGATC/peaks/macs2/T_30_ER_R5020_11731_CAGATC_peaks.xls 
+INFO  @ Wed, 11 Nov 2015 17:52:19: #4 Write peak in narrowPeak format file... /users/GR/mb/jquilez/data/chipseq/samples/T_30_ER_R5020_11731_CAGATC/peaks/macs2/T_30_ER_R5020_11731_CAGATC_peaks.narrowPeak 
+INFO  @ Wed, 11 Nov 2015 17:52:19: #4 Write summits bed file... /users/GR/mb/jquilez/data/chipseq/samples/T_30_ER_R5020_11731_CAGATC/peaks/macs2/T_30_ER_R5020_11731_CAGATC_summits.bed 
+INFO  @ Wed, 11 Nov 2015 17:52:19: Done! 

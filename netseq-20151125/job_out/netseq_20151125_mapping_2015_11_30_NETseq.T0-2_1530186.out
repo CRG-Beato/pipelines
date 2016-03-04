@@ -1,0 +1,9 @@
+
+INFO 	2015-11-30 17:09:07 	[mapping] 	map paired-end reads with star
+Nov 30 17:09:07 ..... Started STAR run
+Nov 30 17:12:45 ..... Started mapping
+Nov 30 17:40:15 ..... Started sorting BAM
+Nov 30 17:40:56 ..... Finished successfully
+TIME 	2015-11-30 17:40:58 	[mapping] 	step time for completion (seconds) = 1911
+
+

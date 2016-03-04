@@ -1,0 +1,34 @@
+
+INFO 	2016-01-11 12:38:58 	[trim_reads] 	trimming adapter sequences for HiSeq, NextSeq or HiSeq
+INFO 	2016-01-11 12:38:58 	[trim_reads] 	trimming low-quality reads ends using trimmomatic's recommended practices
+INFO 	2016-01-11 12:59:53 	[trim_reads] 	unpaired reads are deleted
+TIME 	2016-01-11 12:59:53 	[trim_reads] 	step time for completion (seconds) = 1255
+
+INFO 	2016-01-11 12:59:53 	[map_star] 	mapping trimmed paired-end reads with STAR
+INFO 	2016-01-11 12:59:53 	[map_star] 	using ENCODE standard options for long RNA-seq pipeline
+INFO 	2016-01-11 13:13:47 	[map_star] 	alignments are in /users/GR/mb/jquilez/data/rnaseq/samples/siCont_T0_CB/alignments/star
+TIME 	2016-01-11 13:13:47 	[map_star] 	step time for completion (seconds) = 834
+
+INFO 	2016-01-11 13:13:47 	[make_profiles] 	make read profiles from STAR alignments
+INFO 	2016-01-11 13:13:47 	[make_profiles] 	Filtering valid pairs (for paired-end data only) and convert BAM to BED
+INFO 	2016-01-11 13:27:58 	[make_profiles] 	converting BED to bigWig (more suitable for UCSC Genome Browser uploads)
+INFO 	2016-01-11 13:36:22 	[make_profiles] 	delete intermediate BED
+TIME 	2016-01-11 13:36:23 	[make_profiles] 	step time for completion (seconds) = 1356
+
+INFO 	2016-01-11 13:36:23 	[quantification_htseq] 	quantifying abundances of transcripts using HTSeq
+INFO 	2016-01-11 13:36:23 	[quantification_htseq] 	using Ensemble genes as transcriptome reference
+INFO 	2016-01-11 15:50:42 	[quantification_htseq] 	quantifications are in /users/GR/mb/jquilez/data/rnaseq/samples/siCont_T0_CB/quantifications/htseq
+TIME 	2016-01-11 15:50:42 	[quantification_htseq] 	step time for completion (seconds) = 8059
+
+INFO 	2016-01-11 15:50:42 	[quantification_kallisto] 	performing pseudoalignment and quantifying abundances of transcripts using kallisto
+INFO 	2016-01-11 15:50:42 	[quantification_kallisto] 	using Ensemble genes as transcriptome reference
+INFO 	2016-01-11 16:30:08 	[quantification_kallisto] 	converting form HDF5 to text
+INFO 	2016-01-11 16:31:22 	[quantification_kallisto] 	quantifications are in /users/GR/mb/jquilez/data/rnaseq/samples/siCont_T0_CB/quantifications/kallisto
+TIME 	2016-01-11 16:31:22 	[quantification_kallisto] 	step time for completion (seconds) = 2440
+
+INFO 	2016-01-11 16:31:22 	[quantification_featurecounts] 	quantifying abundances of transcripts using featureCounts
+INFO 	2016-01-11 16:31:22 	[quantification_featurecounts] 	using Ensemble genes as transcriptome reference
+INFO 	2016-01-11 16:49:50 	[quantification_featurecounts] 	quantifications are in /users/GR/mb/jquilez/data/rnaseq/samples/siCont_T0_CB/quantifications/featurecounts
+TIME 	2016-01-11 16:49:50 	[quantification_featurecounts] 	step time for completion (seconds) = 1108
+
+

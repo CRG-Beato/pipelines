@@ -1,0 +1,19 @@
+
+INFO 	2016-01-19 17:24:02 	[trim_reads] 	trimming adapter sequences for HiSeq, NextSeq or HiSeq
+INFO 	2016-01-19 17:24:02 	[trim_reads] 	trimming low-quality reads ends using trimmomatic's recommended practices
+INFO 	2016-01-19 18:21:10 	[trim_reads] 	unpaired reads are deleted
+TIME 	2016-01-19 18:21:10 	[trim_reads] 	step time for completion (seconds) = 3429
+
+INFO 	2016-01-19 18:21:10 	[map_star] 	mapping trimmed paired-end reads with STAR
+INFO 	2016-01-19 18:21:10 	[map_star] 	using ENCODE standard options for long RNA-seq pipeline
+INFO 	2016-01-19 18:55:34 	[map_star] 	alignments are in /users/GR/mb/jquilez/data/rnaseq/samples/siCtrl-T0/alignments/star
+TIME 	2016-01-19 18:55:34 	[map_star] 	step time for completion (seconds) = 2064
+
+INFO 	2016-01-19 18:55:34 	[make_profiles] 	make read profiles from STAR alignments
+INFO 	2016-01-19 18:55:34 	[make_profiles] 	Filtering valid pairs (for paired-end data only) and convert BAM to BED
+INFO 	2016-01-19 19:30:33 	[make_profiles] 	converting BED to bigWig (more suitable for UCSC Genome Browser uploads)
+INFO 	2016-01-19 19:51:06 	[make_profiles] 	delete intermediate BED
+TIME 	2016-01-19 19:51:09 	[make_profiles] 	step time for completion (seconds) = 3335
+
+INFO 	2016-01-19 19:51:09 	[quantification_htseq] 	quantifying abundances of transcripts using HTSeq
+INFO 	2016-01-19 19:51:09 	[quantification_htseq] 	using Ensemble genes as transcriptome reference

@@ -1,0 +1,7 @@
+
+INFO 	2016-01-11 09:57:35 	[quantification_featurecounts] 	quantifying abundances of transcripts using featureCounts
+INFO 	2016-01-11 09:57:35 	[quantification_featurecounts] 	using Ensemble genes as transcriptome reference
+INFO 	2016-01-11 11:17:16 	[quantification_featurecounts] 	quantifications are in /users/GR/mb/jquilez/data/rnaseq/samples/siPADI2-T0-R2/quantifications/featurecounts
+TIME 	2016-01-11 11:17:16 	[quantification_featurecounts] 	step time for completion (seconds) = 4781
+
+

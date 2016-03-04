@@ -1,0 +1,29 @@
+
+INFO 	2015-12-23 18:51:31 	[trim_reads] 	trimming adapter sequences for HiSeq, NextSeq or HiSeq
+INFO 	2015-12-23 18:51:31 	[trim_reads] 	trimming low-quality reads ends using trimmomatic's recommended practices
+INFO 	2015-12-23 18:51:32 	[trim_reads] 	unpaired reads are deleted
+TIME 	2015-12-23 18:51:32 	[trim_reads] 	step time for completion (seconds) = 1
+
+INFO 	2015-12-23 18:51:32 	[map_star] 	mapping trimmed paired-end reads with STAR
+INFO 	2015-12-23 18:51:32 	[map_star] 	using ENCODE standard options for long RNA-seq pipeline
+INFO 	2015-12-23 18:57:02 	[map_star] 	alignments are in /users/GR/mb/jquilez/misc/test/alignments/star
+TIME 	2015-12-23 18:57:02 	[map_star] 	step time for completion (seconds) = 330
+
+INFO 	2015-12-23 18:57:02 	[make_profiles] 	make read profiles from STAR alignments
+INFO 	2015-12-23 18:57:02 	[make_profiles] 	Filtering valid pairs (for paired-end data only) and convert BAM to BED
+INFO 	2015-12-23 18:57:03 	[make_profiles] 	converting BED to bigWig (more suitable for UCSC Genome Browser uploads)
+INFO 	2015-12-23 18:57:03 	[make_profiles] 	delete intermediate BED
+TIME 	2015-12-23 18:57:03 	[make_profiles] 	step time for completion (seconds) = 1
+
+INFO 	2015-12-23 18:57:03 	[quantification_htseq] 	quantifying abundances of transcripts using HTSeq
+INFO 	2015-12-23 18:57:03 	[quantification_htseq] 	using Ensemble genes as transcriptome reference
+INFO 	2015-12-23 18:58:46 	[quantification_htseq] 	quantifications are in /users/GR/mb/jquilez/misc/test/quantifications/htseq
+TIME 	2015-12-23 18:58:46 	[quantification_htseq] 	step time for completion (seconds) = 103
+
+INFO 	2015-12-23 18:58:46 	[quantification_kallisto] 	performing pseudoalignment and quantifying abundances of transcripts using kallisto
+INFO 	2015-12-23 18:58:46 	[quantification_kallisto] 	using Ensemble genes as transcriptome reference
+INFO 	2015-12-23 18:59:08 	[quantification_kallisto] 	converting form HDF5 to text
+INFO 	2015-12-23 18:59:10 	[quantification_kallisto] 	quantifications are in /users/GR/mb/jquilez/misc/test/quantifications/kallisto
+TIME 	2015-12-23 18:59:10 	[quantification_kallisto] 	step time for completion (seconds) = 24
+
+

@@ -1,0 +1,7 @@
+
+INFO 	2016-01-15 10:30:06 	[quantification_featurecounts] 	quantifying abundances of transcripts using featureCounts
+INFO 	2016-01-15 10:30:06 	[quantification_featurecounts] 	using Ensemble genes as transcriptome reference
+INFO 	2016-01-15 10:57:35 	[quantification_featurecounts] 	quantifications are in /users/GR/mb/jquilez/data/rnaseq/samples/siFOXA1_T6_1/quantifications/featurecounts
+TIME 	2016-01-15 10:57:35 	[quantification_featurecounts] 	step time for completion (seconds) = 1649
+
+

@@ -1,0 +1,131 @@
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 77, in emit
+    self.doRollover()
+  File "/usr/lib64/python2.6/logging/handlers.py", line 121, in doRollover
+    self.stream.close()
+IOError: [Errno 116] Stale file handle
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 76, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 150, in shouldRollover
+    self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+ValueError: I/O operation on closed file
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 76, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 150, in shouldRollover
+    self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+ValueError: I/O operation on closed file
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 76, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 150, in shouldRollover
+    self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+ValueError: I/O operation on closed file
+Error in atexit._run_exitfuncs:
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/atexit.py", line 24, in _run_exitfuncs
+    func(*targs, **kargs)
+  File "/usr/lib64/python2.6/logging/__init__.py", line 1524, in shutdown
+    h.flush()
+  File "/usr/lib64/python2.6/logging/__init__.py", line 770, in flush
+    self.stream.flush()
+ValueError: I/O operation on closed file
+Error in sys.exitfunc:
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/atexit.py", line 24, in _run_exitfuncs
+    func(*targs, **kargs)
+  File "/usr/lib64/python2.6/logging/__init__.py", line 1524, in shutdown
+    h.flush()
+  File "/usr/lib64/python2.6/logging/__init__.py", line 770, in flush
+    self.stream.flush()
+ValueError: I/O operation on closed file
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/logging/__init__.py", line 808, in emit
+    self.flush()
+  File "/usr/lib64/python2.6/logging/__init__.py", line 770, in flush
+    self.stream.flush()
+IOError: [Errno 116] Stale file handle
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 76, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 150, in shouldRollover
+    self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+IOError: [Errno 116] Stale file handle
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 76, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 150, in shouldRollover
+    self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+IOError: [Errno 116] Stale file handle
+
+INFO 	2016-03-03 14:39:21 	[trim_reads_trimmomatic] 	sequencing type = PE
+INFO 	2016-03-03 14:39:21 	[trim_reads_trimmomatic] 	trimming adapter sequences for HiSeq, NextSeq or HiSeq
+INFO 	2016-03-03 14:39:21 	[trim_reads_trimmomatic] 	trimming low-quality reads ends using trimmomatic's recommended practices
+INFO 	2016-03-03 14:39:22 	[trim_reads_trimmomatic] 	parse step log to extract generated metadata
+INFO 	2016-03-03 14:39:22 	[trim_reads_trimmomatic] 	reads after trimming = 11015
+INFO 	2016-03-03 14:39:22 	[trim_reads_trimmomatic] 	trimmed reads are in /users/GR/mb/jquilez/data/atacseq/samples/SRR1779701/fastqs_processed/trimmomatic/paired_end
+INFO 	2016-03-03 14:39:22 	[trim_reads_trimmomatic] 	unpaired reads are deleted
+TIME 	2016-03-03 14:39:22 	[trim_reads_trimmomatic] 	step time for completion (seconds) = 2
+
+INFO 	2016-03-03 14:39:22 	[align_bwa] 	align single-end reads with BWA
+INFO 	2016-03-03 14:39:22 	[align_bwa] 	alignments are converted to BAM, sorted by genomic coordinates and multi-mappings filtered out
+[M::mem_pestat] analyzing insert size distribution for orientation FF...
+[M::mem_pestat] (25, 50, 75) percentile: (108, 189, 197)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (1, 375)
+[M::mem_pestat] mean and std.dev: (156.50, 47.24)
+[M::mem_pestat] low and high boundaries for proper pairs: (1, 464)
+[M::mem_pestat] analyzing insert size distribution for orientation FR...
+[M::mem_pestat] (25, 50, 75) percentile: (142, 215, 332)
+[M::mem_pestat] low and high boundaries for computing mean and std.dev: (1, 712)
+[M::mem_pestat] mean and std.dev: (244.30, 140.84)
+[M::mem_pestat] low and high boundaries for proper pairs: (1, 902)
+[M::mem_pestat] skip orientation RF as there are not enough pairs
+[M::mem_pestat] skip orientation RR as there are not enough pairs
+[M::mem_pestat] skip orientation FF
+[main] Version: 0.7.12-r1039
+[main] CMD: /software/mb/el6.3/bwa/bwa-0.7.12/bwa mem -t 8 -M -R @RG\tID:'SRR1779701'\tLB:'SRR1779701'\tPL:illumina\tPU:'SRR1779701'\tSM:'SRR1779701' -v 0 /users/GR/mb/jquilez/assemblies/homo_sapiens/hg19/ucsc/hg19.fa /users/GR/mb/jquilez/data/atacseq/samples/SRR1779701/fastqs_processed/trimmomatic/paired_end/SRR1779701_read1.fastq.gz /users/GR/mb/jquilez/data/atacseq/samples/SRR1779701/fastqs_processed/trimmomatic/paired_end/SRR1779701_read2.fastq.gz
+[main] Real time: 51.359 sec; CPU: 9.327 sec
+INFO 	2016-03-03 14:40:14 	[align_bwa] 	reads aligned = 22030
+INFO 	2016-03-03 14:40:14 	[align_bwa] 	reads unique = 16676
+TIME 	2016-03-03 14:40:14 	[align_bwa] 	step time for completion (seconds) = 52
+
+INFO 	2016-03-03 14:40:14 	[make_tag_directory] 	converting BAM to BED --required for making tag directory
+INFO 	2016-03-03 14:40:14 	[make_tag_directory] 	make tag directory with HOMER
+INFO 	2016-03-03 14:41:42 	[make_tag_directory] 	parse step log to extract generated metadata
+INFO 	2016-03-03 14:41:42 	[make_tag_directory] 	estimated genome size = 3010877262
+INFO 	2016-03-03 14:41:42 	[make_tag_directory] 	estimated average read density per bp = 0.000006
+INFO 	2016-03-03 14:41:42 	[make_tag_directory] 	total tags = 16676.0
+INFO 	2016-03-03 14:41:42 	[make_tag_directory] 	total_positions = 13628
+INFO 	2016-03-03 14:41:42 	[make_tag_directory] 	avg. tag length = 46.3
+INFO 	2016-03-03 14:41:42 	[make_tag_directory] 	median tags per position = 1
+INFO 	2016-03-03 14:41:42 	[make_tag_directory] 	avg. tags per position = 1.224
+INFO 	2016-03-03 14:41:42 	[make_tag_directory] 	fragment length estimate = 123
+INFO 	2016-03-03 14:41:42 	[make_tag_directory] 	peak width estimate = 180
+INFO 	2016-03-03 14:41:42 	[make_tag_directory] 	autocorrelation: same strand fold enrichment = 1.4
+INFO 	2016-03-03 14:41:42 	[make_tag_directory] 	autocorrelation: diff strand fold enrichment = 1.4
+INFO 	2016-03-03 14:41:42 	[make_tag_directory] 	autocorrelation: same-to-diff strand fold enrichment = 1.0
+INFO 	2016-03-03 14:41:42 	[make_tag_directory] 	avg. fragment GC% = 43.33
+INFO 	2016-03-03 14:41:42 	[make_tag_directory] 	avg. expected GC% = 40.43
+TIME 	2016-03-03 14:41:42 	[make_tag_directory] 	step time for completion (seconds) = 88
+
+INFO 	2016-03-03 14:41:42 	[make_bigbed] 	make BigBed file
+TIME 	2016-03-03 14:41:42 	[make_bigbed] 	step time for completion (seconds) = 0
+
+INFO 	2016-03-03 14:41:42 	[calculate_rpms] 	generate reads pe million profile (RPM) fragment profile
+INFO 	2016-03-03 14:41:42 	[calculate_rpms] 	get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-03-03 14:41:42 	[calculate_rpms] 	fragment length estimate = 123
+INFO 	2016-03-03 14:41:42 	[calculate_rpms] 	fragment length correction = 123
+INFO 	2016-03-03 14:41:42 	[calculate_rpms] 	the correction will be used if the estimate is not reliable
+TIME 	2016-03-03 14:51:44 	[calculate_rpms] 	step time for completion (seconds) = 602
+
+INFO 	2016-03-03 14:51:44 	[call_peaks] 	Get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-03-03 14:51:44 	[call_peaks] 	Fragment length (l) is 123 bp (note this is not used if peak caller is zerone)
+INFO 	2016-03-03 14:51:44 	[call_peaks] 	Peak calling with MACS2
+INFO 	2016-03-03 14:51:44 	[call_peaks] 	genome size for homo_sapiens will be used
+INFO 	2016-03-03 14:51:44 	[call_peaks] 	q-value cutoff =  (default is 0.01)
+INFO 	2016-03-03 14:51:44 	[call_peaks] 	--nomodel (MACS2 will not try to model peak length but use l = 123 instead
+INFO 	2016-03-03 14:51:44 	[call_peaks] 	--call-summits = MACS reanalyzes the shape of signal profile to deconvolve subpeaks within each peak called
+INFO 	2016-03-03 14:51:44 	[call_peaks] 	peak calling with the sample alone (i.e. no input)
+INFO 	2016-03-03 14:51:44 	[call_peaks] 	peaks = 13
+

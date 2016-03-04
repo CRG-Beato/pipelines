@@ -1,0 +1,7 @@
+
+INFO 	2015-11-18 11:09:43 	[mapping] 	mapping with bowtie; only unique and valid mappings are reported
+INFO 	2015-11-18 11:50:05 	[mapping] 	sort and index BAM
+[bam_sort_core] merging from 32 files...
+TIME 	2015-11-18 12:00:16 	[mapping] 	step time for completion (seconds) = 3034
+
+

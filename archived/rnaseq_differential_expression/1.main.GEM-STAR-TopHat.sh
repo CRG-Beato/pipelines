@@ -1,0 +1,1 @@
+/users/GR/mb/dsoronellas/RNAseq/main_scripts/pipeline-split-fastq-files.2014/1.main.GEM-STAR-TopHat.sh
