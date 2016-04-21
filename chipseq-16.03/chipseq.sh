@@ -13,9 +13,11 @@ job_name=$pipeline_name-$pipeline_version
 
 # pipeline scripts
 SCRIPTS=$PIPELINE/scripts
+
 # Primary output directory
 if [[ $io_mode == "custom" ]]; then
 	SAMPLE=$CUSTOM_OUT/$sample_id
+	echo $SAMPLE
 else
 	SAMPLE=/users/GR/mb/jquilez/data/$data_type/samples/$sample_id
 fi
@@ -44,7 +46,6 @@ PEAKS=$SAMPLE/peaks/$peak_caller/$version
 
 # SHA cheksums
 CHECKSUMS=$SAMPLE/checksums/$version/$run_date
-mkdir -p $CHECKSUMS
 checksums=$CHECKSUMS/files_checksums.sha
 
 
@@ -95,13 +96,14 @@ main() {
 	echo
 	# store general parameters into the metadata
 	if [[ $integrate_metadata == "yes" ]]; then
-		$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a PIPELINE_RUN_MODE -v $pipeline_run_mode
-		$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a QUEUE -v $queue
-		$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a MEMORY -v $memory
-		$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a MAX_TIME -v $max_time
-		$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a SLOTS -v $slots
-		$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a ASSEMBLY_VERSION -v $version
-		$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a JOB_NAME -v $job_name		
+		$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a PIPELINE_RUN_MODE -v $pipeline_run_mode
+		$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a QUEUE -v $queue
+		$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a MEMORY -v $memory
+		$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a MAX_TIME -v $max_time
+		$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a SLOTS -v $slots
+		$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a ASSEMBLY_VERSION -v $version
+		$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a JOB_NAME -v $job_name		
+		$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a PATH_JOB_FILE -v $path_job_file		
 	fi
 
 	if [[ $pipeline_run_mode == 'full' ]]; then
@@ -114,6 +116,10 @@ main() {
 	elif [[ $pipeline_run_mode == 'full_no_call_peaks' ]]; then
 		trim_reads_trimmomatic
 		align_bwa
+		make_tag_directory
+		make_bigbed
+		calculate_rpms
+	elif [[ $pipeline_run_mode == 'full_from_alignments' ]]; then
 		make_tag_directory
 		make_bigbed
 		calculate_rpms
@@ -170,7 +176,7 @@ message_time_step() {
 	length=$(($time1-$time0))
 	echo -e "TIME \t`date +"%Y-%m-%d %T"` \t[$step_name] \tstep time for completion (seconds) = $length"
 	if [[ $integrate_metadata == "yes" ]]; then
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a $field_name -v $length
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a $field_name -v $length
 	fi
 	echo
 }
@@ -183,7 +189,7 @@ message_time_pipeline() {
 	length=$(($time1-$time0))
 	echo -e "TIME \t`date +"%Y-%m-%d %T"` \t[pipeline] \ttotal time for completion (seconds) = $length"
 	if [[ $integrate_metadata == "yes" ]]; then
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a $field_name -v $length
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a $field_name -v $length
 	fi
 	echo
 }
@@ -204,13 +210,14 @@ trim_reads_trimmomatic() {
 			mkdir -p $SAMPLE
 			mkdir -p $SINGLE
 			mkdir -p $LOGS
+			mkdir -p $CHECKSUMS
 			shasum $ifq1 >> $checksums
 			step_log=$SAMPLE/logs/${sample_id}_${step}_single_end.log
 			single1=$SINGLE/${sample_id}_read1.fastq.gz
 			params="$ifq1 $single1"
 			ODIR=$SINGLE
 			if [[ $integrate_metadata == "yes" ]]; then
-				$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a PATH_FASTQ_READ1 -v $ifq1
+				$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a PATH_FASTQ_READ1 -v $ifq1
 				message_info $step "paths to read1 saved to metadata database"
 			fi
 		else
@@ -222,6 +229,7 @@ trim_reads_trimmomatic() {
 			mkdir -p $PAIRED
 			mkdir -p $UNPAIRED
 			mkdir -p $LOGS
+			mkdir -p $CHECKSUMS
 			shasum $ifq1 >> $checksums
 			shasum $ifq2 >> $checksums
 			step_log=$SAMPLE/logs/${sample_id}_${step}_paired_end.log
@@ -232,8 +240,8 @@ trim_reads_trimmomatic() {
 			params="$ifq1 $ifq2 $paired1 $unpaired1 $paired2 $unpaired2"
 			ODIR=$PAIRED
 			if [[ $integrate_metadata == "yes" ]]; then
-				$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a PATH_FASTQ_READ1 -v $ifq1
-				$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a PATH_FASTQ_READ2 -v $ifq2
+				$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a PATH_FASTQ_READ1 -v $ifq1
+				$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a PATH_FASTQ_READ2 -v $ifq2
 				message_info $step "paths to read1 and read2 saved to metadata database"
 			fi
 		else
@@ -262,18 +270,18 @@ trim_reads_trimmomatic() {
 
 	# update metadata
 	if [[ $integrate_metadata == "yes" ]]; then
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a ADAPTERS_SEQS -v $seqs
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a SEED_MISMATCHES -v $seedMismatches
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a PALINDROME_CLIP_THRESHOLD -v $palindromeClipThreshold
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a SIMPLE_CLIP_THRESHOLD -v $simpleClipThreshold
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a MIN_ADAPTER_LENGTH -v $minAdapterLength
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a KEEP_BOTH_READS -v $keepBothReads
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a LEADING -v $leading
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a TRAILING -v $trailing
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a TARGET_LENGTH -v $targetLength
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a STRICTNESS -v $strictness
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a MIN_LENGTH -v $minLength
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a N_READS_TRIMMED -v $n_reads_trimmed
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a ADAPTERS_SEQS -v $seqs
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a SEED_MISMATCHES -v $seedMismatches
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a PALINDROME_CLIP_THRESHOLD -v $palindromeClipThreshold
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a SIMPLE_CLIP_THRESHOLD -v $simpleClipThreshold
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a MIN_ADAPTER_LENGTH -v $minAdapterLength
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a KEEP_BOTH_READS -v $keepBothReads
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a LEADING -v $leading
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a TRAILING -v $trailing
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a TARGET_LENGTH -v $targetLength
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a STRICTNESS -v $strictness
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a MIN_LENGTH -v $minLength
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a N_READS_TRIMMED -v $n_reads_trimmed
 		message_info $step "trimmomatic parameters and numbe of trimmed reads added to metadata"
 	fi
 
@@ -330,9 +338,9 @@ align_bwa() {
 
 	# update metadata
 	if [[ $integrate_metadata == "yes" ]]; then
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a GENOME_FASTA -v $genome_fasta
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a N_READS_ALIGNED -v $n_reads_aligned
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a N_READS_UNIQUE -v $n_reads_unique
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a GENOME_FASTA -v $genome_fasta
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a N_READS_ALIGNED -v $n_reads_aligned
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a N_READS_UNIQUE -v $n_reads_unique
 		message_info $step "path to genome sequence FASTA and number of (uniquely) aligned reads added to metadata"
 	fi
 
@@ -341,6 +349,7 @@ align_bwa() {
 	rm -f $tbam
 
 	# data integrity
+	mkdir -p $CHECKSUMS
 	shasum $obam >> $checksums
 
 
@@ -357,6 +366,11 @@ make_tag_directory() {
 
 	step="make_tag_directory"
 	time0=$(date +"%s")
+
+	# paths
+	# this paths need to be created in case mode=full_from_mapping
+	mkdir -p $LOGS
+	mkdir -p $CHECKSUMS
 
 	# to facilitate the analysis of ChIP-Seq (or any other type of short read re-sequencing data)
 	# it is useful to first transform the sequence alignment into platform independent data structure representing the experiment
@@ -417,20 +431,20 @@ make_tag_directory() {
 	
 	# update metadata
 	if [[ $integrate_metadata == "yes" ]]; then
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a ESTIMATED_GENOME_SIZE -v $estimated_genome_size
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a ESTIMETED_AVERAGE_READ_DENSITY_PER_BP -v $estimated_average_read_density_per_bp
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a TOTAL_TAGS -v $total_tags
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a TOTAL_POSITIONS -v $total_positions
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a AVG_TAG_LENGTH -v $avg_tag_length
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a MEDIAN_TAGS_PER_POSITION -v $median_tags_per_position
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a AVG_TAGS_PER_POSITION -v $avg_tags_per_position
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a FRAGMENT_LENGTH_ESTIMATE -v $fragment_length_estimate
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a PEAK_WIDTH_ESTIMATE -v $peak_width_estimate
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a AUTOCORRELATION_SAME_STRAND_FOLD_ENRICHMENT -v $autocorrelation_same_strand_fold_enrichment
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a AUTOCORRELATION_DIFF_STRAND_FOLD_ENRICHMENT -v $autocorrelation_diff_strand_fold_enrichment
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a AUTOCORRELATION_SAME_TO_DIFF_STRAND_FOLD_ENRICHMENT -v $autocorrelation_same_to_diff_strand_fold_enrichment
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a AVG_FRAGMENT_GC -v $avg_fragment_gc
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a AVG_EXPECTED_GC -v $avg_expected_gc
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a ESTIMATED_GENOME_SIZE -v $estimated_genome_size
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a ESTIMETED_AVERAGE_READ_DENSITY_PER_BP -v $estimated_average_read_density_per_bp
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a TOTAL_TAGS -v $total_tags
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a TOTAL_POSITIONS -v $total_positions
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a AVG_TAG_LENGTH -v $avg_tag_length
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a MEDIAN_TAGS_PER_POSITION -v $median_tags_per_position
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a AVG_TAGS_PER_POSITION -v $avg_tags_per_position
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a FRAGMENT_LENGTH_ESTIMATE -v $fragment_length_estimate
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a PEAK_WIDTH_ESTIMATE -v $peak_width_estimate
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a AUTOCORRELATION_SAME_STRAND_FOLD_ENRICHMENT -v $autocorrelation_same_strand_fold_enrichment
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a AUTOCORRELATION_DIFF_STRAND_FOLD_ENRICHMENT -v $autocorrelation_diff_strand_fold_enrichment
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a AUTOCORRELATION_SAME_TO_DIFF_STRAND_FOLD_ENRICHMENT -v $autocorrelation_same_to_diff_strand_fold_enrichment
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a AVG_FRAGMENT_GC -v $avg_fragment_gc
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a AVG_EXPECTED_GC -v $avg_expected_gc
 		message_info $step "ChIP-seq metrics calculated with Homer added to metadata"
 	fi
 
@@ -462,6 +476,7 @@ make_bigbed() {
 	$bedToBigBed $ibed $genome_chrom_sizes $obb 2>$step_log
 
 	# data integrity
+	mkdir -p $CHECKSUMS
 	shasum $obb >> $checksums
 
 	message_time_step $step $time0
@@ -507,6 +522,7 @@ calculate_rpms() {
 	$perl $bam2wig --bw --bwapp $bedGraphToBigWig --pos extend --ext $fragment_length_estimate_corrected --rpm --in $ibam --out $orpm > $step_log
 
 	# data integrity
+	mkdir -p $CHECKSUMS
 	shasum $orpm.bw >> $checksums
 
 	message_time_step $step $time0
@@ -550,7 +566,7 @@ call_peaks() {
 			genome_size="hs"
 		fi
 		message_info $step "genome size for $species will be used"
-		message_info $step "q-value cutoff = $macs2_q (default is 0.01)"
+		message_info $step "q-value cutoff = $macs2_qvalue (default is 0.01)"
 		message_info $step "--nomodel (MACS2 will not try to model peak length but use l = $fragment_length_estimate_corrected instead"
 		message_info $step "--call-summits = MACS reanalyzes the shape of signal profile to deconvolve subpeaks within each peak called"
 		
@@ -559,9 +575,14 @@ call_peaks() {
 			if [ ! -f $control_bam ]; then
 				message_error $step "$control_bam not found. Exiting..."
 			fi
-		 	OUTDIR=$PEAKS/with_control
+			if [[ $sequencing_type == "SE" ]]; then
+			 	OUTDIR=$PEAKS/with_control/single_end
+			 	step_log=$LOGS/${sample_id}_${step}_${peak_caller}_with_control_single_end.log
+			elif [[ $sequencing_type == "PE" ]]; then
+			 	OUTDIR=$PEAKS/with_control/paired_end
+			 	step_log=$LOGS/${sample_id}_${step}_${peak_caller}_with_control_paired_end.log
+			fi		
 		 	mkdir -p $OUTDIR
-		 	step_log=$LOGS/${sample_id}_${step}_${peak_caller}_with_control.log
 		 	message_info $step "peak calling with input DNA ($control_bam) as control"
 		 	$macs2 callpeak -t $ibam \
 		 					-c $control_bam \
@@ -578,22 +599,28 @@ call_peaks() {
 
 	 		# update metadata
 		 	if [[ $integrate_metadata == "yes" ]]; then
-			 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a PEAK_CALLER -v $peak_caller
-			 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a QVALUE_CUTOFF -v $macs2_qvalue
-			 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a PATH_CONTROL_BAM -v $control_bam
-			 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a FRAGMENT_LENGTH_ESTIMATE_CORRECTED -v $fragment_length_estimate_corrected
-			 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a N_PEAKS -v $n_peaks
+			 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a PEAK_CALLER -v $peak_caller
+			 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a QVALUE_CUTOFF -v $macs2_qvalue
+			 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a PATH_CONTROL_BAM -v $control_bam
+			 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a FRAGMENT_LENGTH_ESTIMATE_CORRECTED -v $fragment_length_estimate_corrected
+			 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a N_PEAKS -v $n_peaks
 				message_info $step "peak calling with input DNA as control added to metadata"
 			fi
 
 			# data integrity
+			mkdir -p $CHECKSUMS
 			shasum $OUTDIR/*.narrowPeak >> $checksums
 
 		# Peak calling with the sample alone
 		elif [[ $use_control == "no" ]]; then
-			OUTDIR=$PEAKS/sample_alone
+			if [[ $sequencing_type == "SE" ]]; then
+			 	OUTDIR=$PEAKS/sample_alone/single_end
+			 	step_log=$LOGS/${sample_id}_${step}_${peak_caller}_sample_alone_single_end.log
+			elif [[ $sequencing_type == "PE" ]]; then
+			 	OUTDIR=$PEAKS/sample_alone/paired_end
+			 	step_log=$LOGS/${sample_id}_${step}_${peak_caller}_sample_alone_paired_end.log
+			fi		
 			mkdir -p $OUTDIR
-			step_log=$LOGS/${sample_id}_${step}_${peak_caller}_sample_alone.log
 			message_info $step "peak calling with the sample alone (i.e. no input)"
 			$macs2 callpeak -t $ibam \
 							-q $macs2_qvalue \
@@ -609,14 +636,15 @@ call_peaks() {
 
 	 		# update metadata
 		 	if [[ $integrate_metadata == "yes" ]]; then
-			 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a PEAK_CALLER -v $peak_caller
-			 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a QVALUE_CUTOFF -v $macs2_qvalue
-			 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a FRAGMENT_LENGTH_ESTIMATE_CORRECTED -v $fragment_length_estimate_corrected
-			 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a N_PEAKS -v $n_peaks
+			 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a PEAK_CALLER -v $peak_caller
+			 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a QVALUE_CUTOFF -v $macs2_qvalue
+			 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a FRAGMENT_LENGTH_ESTIMATE_CORRECTED -v $fragment_length_estimate_corrected
+			 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a N_PEAKS -v $n_peaks
 				message_info $step "peak calling without input DNA as control added to metadata"
 			fi
 
 			# data integrity
+			mkdir -p $CHECKSUMS
 			shasum $OUTDIR/*.narrowPeak >> $checksums
 
 		fi
@@ -631,9 +659,14 @@ call_peaks() {
 			if [ ! -f $control_bam ]; then
 				message_error $step "$control_bam not found. Exiting..."
 			fi
-			OUTDIR=$PEAKS/with_control
+			if [[ $sequencing_type == "SE" ]]; then
+			 	OUTDIR=$PEAKS/with_control/single_end
+			 	step_log=$LOGS/${sample_id}_${step}_${peak_caller}_with_control_single_end.log
+			elif [[ $sequencing_type == "PE" ]]; then
+			 	OUTDIR=$PEAKS/with_control/paired_end
+			 	step_log=$LOGS/${sample_id}_${step}_${peak_caller}_with_control_paired_end.log
+			fi		
 			mkdir -p $OUTDIR
-			step_log=$LOGS/${sample_id}_${step}_${peak_caller}_with_control.log
 			message_info $step "peak calling with input DNA ($control_bam) as control"
 			# Zerone parameters
 			# -l = zerone produces an alternative output in which 
@@ -652,13 +685,14 @@ call_peaks() {
 
 	 		# update metadata
 		 	if [[ $integrate_metadata == "yes" ]]; then
-			 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a PEAK_CALLER -v $peak_caller
-			 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a PATH_CONTROL_BAM -v $control_bam
-			 	$io_metadata -m add_to_metadata -t 'jobs' -s $sample_id -u $run_date -a N_PEAKS -v $n_peaks
+			 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a PEAK_CALLER -v $peak_caller
+			 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a PATH_CONTROL_BAM -v $control_bam
+			 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a N_PEAKS -v $n_peaks
 				message_info $step "peak calling with input DNA as control added to metadata"
 			fi
 
 			# data integrity
+			mkdir -p $CHECKSUMS
 			shasum $otab1 >> $checksums
 			shasum $otab2 >> $checksums
 

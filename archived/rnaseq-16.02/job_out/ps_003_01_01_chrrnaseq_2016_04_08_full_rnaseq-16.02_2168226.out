@@ -1,0 +1,103 @@
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 77, in emit
+    self.doRollover()
+  File "/usr/lib64/python2.6/logging/handlers.py", line 134, in doRollover
+    os.rename(self.baseFilename, dfn)
+OSError: [Errno 2] No such file or directory
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 76, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 150, in shouldRollover
+    self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+ValueError: I/O operation on closed file
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 76, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 150, in shouldRollover
+    self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+ValueError: I/O operation on closed file
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 76, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 150, in shouldRollover
+    self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+ValueError: I/O operation on closed file
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 76, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 150, in shouldRollover
+    self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+ValueError: I/O operation on closed file
+Error in atexit._run_exitfuncs:
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/atexit.py", line 24, in _run_exitfuncs
+    func(*targs, **kargs)
+  File "/usr/lib64/python2.6/logging/__init__.py", line 1524, in shutdown
+    h.flush()
+  File "/usr/lib64/python2.6/logging/__init__.py", line 770, in flush
+    self.stream.flush()
+ValueError: I/O operation on closed file
+Error in sys.exitfunc:
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/atexit.py", line 24, in _run_exitfuncs
+    func(*targs, **kargs)
+  File "/usr/lib64/python2.6/logging/__init__.py", line 1524, in shutdown
+    h.flush()
+  File "/usr/lib64/python2.6/logging/__init__.py", line 770, in flush
+    self.stream.flush()
+ValueError: I/O operation on closed file
+
+INFO 	2016-04-08 10:45:49 	[trim_reads_trimmomatic] 	sequencing type = PE
+INFO 	2016-04-08 10:45:49 	[trim_reads_trimmomatic] 	trimming adapter sequences for HiSeq, NextSeq or HiSeq
+INFO 	2016-04-08 10:45:49 	[trim_reads_trimmomatic] 	trimming low-quality reads ends using trimmomatic's recommended practices
+INFO 	2016-04-08 11:45:12 	[trim_reads_trimmomatic] 	parse step log to extract generated metadata
+INFO 	2016-04-08 11:45:13 	[trim_reads_trimmomatic] 	reads after trimming = 180996473
+INFO 	2016-04-08 11:45:13 	[trim_reads_trimmomatic] 	trimmed reads are in /users/GR/mb/jquilez/data/chrrnaseq/samples/ps_003_01_01_chrrnaseq/fastqs_processed/trimmomatic/paired_end
+INFO 	2016-04-08 11:45:13 	[trim_reads_trimmomatic] 	unpaired reads are deleted
+TIME 	2016-04-08 11:45:13 	[trim_reads_trimmomatic] 	step time for completion (seconds) = 3564
+
+INFO 	2016-04-08 11:45:13 	[align_star] 	align trimmed single-end reads with STAR (version = STAR_2.4.0j)
+INFO 	2016-04-08 11:45:13 	[align_star] 	using ENCODE standard options for long RNA-seq pipeline
+INFO 	2016-04-08 13:21:04 	[align_star] 	alignments are in /users/GR/mb/jquilez/data/chrrnaseq/samples/ps_003_01_01_chrrnaseq/alignments/star/hg19/paired_end
+INFO 	2016-04-08 13:21:04 	[align_star] 	parse step log to extract generated metadata
+INFO 	2016-04-08 13:21:04 	[align_star] 	uniquely mapped reads (number) = 83700989
+INFO 	2016-04-08 13:21:04 	[align_star] 	uniquely mapped reads (percentage) = 46.24
+INFO 	2016-04-08 13:21:04 	[align_star] 	accepted multi-mappings (number) = 24789754
+INFO 	2016-04-08 13:21:04 	[align_star] 	accepted multi-mappings (percentage) = 13.70
+INFO 	2016-04-08 13:21:04 	[align_star] 	splices (number) = 298996
+TIME 	2016-04-08 13:21:04 	[align_star] 	step time for completion (seconds) = 5751
+
+INFO 	2016-04-08 13:21:04 	[quantification_featurecounts] 	quantifying read counts per gene using featureCounts
+INFO 	2016-04-08 13:21:04 	[quantification_featurecounts] 	using gene models from /users/GR/mb/jquilez/assemblies/homo_sapiens/hg19/gencode/gencode.v19.annotation.gtf
+INFO 	2016-04-08 13:21:04 	[quantification_featurecounts] 	kallisto (transcripts) and featurecounts (genes) quantifications are not directly comparable
+INFO 	2016-04-08 13:21:04 	[quantification_featurecounts] 	even if the *_mmtv version of the assembly is used, gene/transcript models are the same as for *
+INFO 	2016-04-08 13:21:04 	[quantification_featurecounts] 	sequencing type is PE so fragments are counted
+INFO 	2016-04-08 15:00:06 	[quantification_featurecounts] 	quantifications are in /users/GR/mb/jquilez/data/chrrnaseq/samples/ps_003_01_01_chrrnaseq/quantifications/featurecounts/hg19/paired_end
+INFO 	2016-04-08 15:00:06 	[quantification_featurecounts] 	parse step log to extract generated metadata
+INFO 	2016-04-08 15:00:06 	[quantification_featurecounts] 	assigned = 1222651
+INFO 	2016-04-08 15:00:06 	[quantification_featurecounts] 	ambiguous = 17130
+INFO 	2016-04-08 15:00:06 	[quantification_featurecounts] 	multi-mapping = 117295752
+INFO 	2016-04-08 15:00:06 	[quantification_featurecounts] 	no features = 82461208
+TIME 	2016-04-08 15:00:06 	[quantification_featurecounts] 	step time for completion (seconds) = 5942
+
+INFO 	2016-04-08 15:00:06 	[quantification_kallisto] 	performing pseudoalignment and quantifying abundances of transcripts using kallisto
+INFO 	2016-04-08 15:00:06 	[quantification_kallisto] 	using /users/GR/mb/jquilez/assemblies/homo_sapiens/hg19/kallisto_index/kallisto_homo_sapiens_hg19_ensGene.index as transcriptome reference
+INFO 	2016-04-08 15:00:06 	[quantification_kallisto] 	kallisto (transcripts) and featurecounts (genes) quantifications are not directly comparable
+INFO 	2016-04-08 15:00:06 	[quantification_kallisto] 	even if the *_mmtv version of the assembly is used, gene/transcript models are the same as for *
+INFO 	2016-04-08 15:00:06 	[quantification_kallisto] 	sequence based bias correction is only applied to single-end data, as it fails for paired-end
+INFO 	2016-04-08 15:00:06 	[quantification_kallisto] 	for paired-end data, the fragment length average and standard deviation are inferred from the data
+INFO 	2016-04-08 16:00:50 	[quantification_kallisto] 	converting form HDF5 to text
+INFO 	2016-04-08 16:02:13 	[quantification_kallisto] 	quantifications are in /users/GR/mb/jquilez/data/chrrnaseq/samples/ps_003_01_01_chrrnaseq/quantifications/kallisto/hg19/paired_end
+INFO 	2016-04-08 16:02:13 	[quantification_kallisto] 	parse step log to extract generated metadata
+INFO 	2016-04-08 16:02:13 	[quantification_kallisto] 	transcripts quantified (number) = 204940
+INFO 	2016-04-08 16:02:13 	[quantification_kallisto] 	reads pseudoaligned (number) = 44804455
+TIME 	2016-04-08 16:02:13 	[quantification_kallisto] 	step time for completion (seconds) = 3727
+
+INFO 	2016-04-08 16:02:13 	[make_profiles] 	make read profiles from STAR alignments
+INFO 	2016-04-08 16:02:13 	[make_profiles] 	filtering valid pairs (for paired-end data only) and convert BAM to BED
+INFO 	2016-04-08 16:56:17 	[make_profiles] 	converting BED to bigWig (more suitable for UCSC Genome Browser uploads)
+INFO 	2016-04-08 17:26:31 	[make_profiles] 	profiles are in /users/GR/mb/jquilez/data/chrrnaseq/samples/ps_003_01_01_chrrnaseq/profiles/hg19/paired_end
+INFO 	2016-04-08 17:26:32 	[make_profiles] 	delete intermediate BED
+TIME 	2016-04-08 17:26:34 	[make_profiles] 	step time for completion (seconds) = 5061
+
+

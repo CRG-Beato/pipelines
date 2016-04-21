@@ -1,0 +1,14 @@
+
+INFO 	2016-03-14 14:22:01 	[add_to_metadata] 	-t <table>, -s <sample_id>, -u <time_stamp> -a <attribute> and or -v <value> are not provided; exiting...
+INFO 	2016-03-14 14:22:01 	[add_to_metadata] 	t=chipseq s=gv_003_01_02_chipseq u=2016-03-14-14-21 a=PATH_JOB_FILE v=
+INFO 	2016-03-14 14:22:01 	[call_peaks] 	Get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-03-14 14:22:01 	[call_peaks] 	Fragment length (l) is 244 bp (note this is not used if peak caller is zerone)
+INFO 	2016-03-14 14:22:01 	[call_peaks] 	peak calling with zerone
+INFO 	2016-03-14 14:22:02 	[call_peaks] 	peak calling with input DNA (/users/GR/mb/jquilez/data/chipseq/samples/gv_007_01_01_chipseq/alignments/bwa/hg38_mmtv/single_end/gv_007_01_01_chipseq_sorted_unique.bam) as control
+INFO 	2016-03-14 14:22:02 	[call_peaks] 	making discretization
+INFO 	2016-03-14 14:26:28 	[call_peaks] 	making discretization only printing enriched regions
+INFO 	2016-03-14 14:30:18 	[call_peaks] 	peaks = 68908
+INFO 	2016-03-14 14:30:23 	[call_peaks] 	peak calling with input DNA as control added to metadata
+/usr/share/univage/soldierantcluster/spool/node-hp0409/job_scripts/2053043: line 716: /users/GR/mb/jquilez/data/chipseq/samples/gv_003_01_02_chipseq/checksums/hg38_mmtv/2016-03-14-14-21/files_checksums.sha: No such file or directory
+/usr/share/univage/soldierantcluster/spool/node-hp0409/job_scripts/2053043: line 717: /users/GR/mb/jquilez/data/chipseq/samples/gv_003_01_02_chipseq/checksums/hg38_mmtv/2016-03-14-14-21/files_checksums.sha: No such file or directory
+

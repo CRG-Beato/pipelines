@@ -1,0 +1,99 @@
+
+Traceback (most recent call last):
+  File "/users/GR/mb/jquilez/utils/io_metadata.py", line 96, in <module>
+    tab = db.get_table(table, primary_id = 'JOB_ID', primary_type = 'String')
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/database.py", line 254, in get_table
+    return self.create_table(table_name, primary_id, primary_type)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/database.py", line 194, in create_table
+    table.create(self.engine)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/sql/schema.py", line 725, in create
+    checkfirst=checkfirst)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1856, in _run_visitor
+    conn._run_visitor(visitorcallable, element, **kwargs)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1481, in _run_visitor
+    **kwargs).traverse_single(element)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/sql/visitors.py", line 121, in traverse_single
+    return meth(obj, **kw)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/sql/ddl.py", line 764, in visit_table
+    include_foreign_key_constraints=include_foreign_key_constraints
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/sql/ddl.py", line 68, in _execute_on_connection
+    return connection._execute_ddl(self, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 968, in _execute_ddl
+    compiled
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) table chipseq already exists [SQL: u'\nCREATE TABLE chipseq (\n\t"JOB_ID" VARCHAR(255) NOT NULL, \n\tPRIMARY KEY ("JOB_ID")\n)\n\n']
+INFO 	2016-03-11 10:09:17 	[add_to_metadata] 	-t <table>, -s <sample_id>, -u <time_stamp> -a <attribute> and or -v <value> are not provided; exiting...
+INFO 	2016-03-11 10:09:17 	[add_to_metadata] 	t=chipseq s=gv_011_01_01_chipseq u=2016-03-11-10-08 a=PATH_JOB_FILE v=
+INFO 	2016-03-11 10:09:45 	[trim_reads_trimmomatic] 	paths to read1 saved to metadata database
+INFO 	2016-03-11 10:09:45 	[trim_reads_trimmomatic] 	sequencing type = SE
+INFO 	2016-03-11 10:09:45 	[trim_reads_trimmomatic] 	trimming adapter sequences for HiSeq, NextSeq or HiSeq
+INFO 	2016-03-11 10:09:45 	[trim_reads_trimmomatic] 	trimming low-quality reads ends using trimmomatic's recommended practices
+INFO 	2016-03-11 10:29:30 	[trim_reads_trimmomatic] 	parse step log to extract generated metadata
+INFO 	2016-03-11 10:29:30 	[trim_reads_trimmomatic] 	reads after trimming = 52520919
+INFO 	2016-03-11 10:29:46 	[trim_reads_trimmomatic] 	trimmomatic parameters and numbe of trimmed reads added to metadata
+INFO 	2016-03-11 10:29:46 	[trim_reads_trimmomatic] 	trimmed reads are in /users/GR/mb/jquilez/data/chipseq/samples/gv_011_01_01_chipseq/fastqs_processed/trimmomatic/single_end
+TIME 	2016-03-11 10:29:46 	[trim_reads_trimmomatic] 	step time for completion (seconds) = 1229
+
+INFO 	2016-03-11 10:29:47 	[align_bwa] 	align single-end reads with BWA
+INFO 	2016-03-11 10:29:47 	[align_bwa] 	alignments are converted to BAM, sorted by genomic coordinates and multi-mappings filtered out
+[main] Version: 0.7.12-r1039
+[main] CMD: /software/mb/el6.3/bwa/bwa-0.7.12/bwa mem -t 8 -M -R @RG\tID:'gv_011_01_01_chipseq'\tLB:'gv_011_01_01_chipseq'\tPL:illumina\tPU:'gv_011_01_01_chipseq'\tSM:'gv_011_01_01_chipseq' -v 0 /users/GR/mb/jquilez/assemblies/homo_sapiens/hg38_mmtv/ucsc/hg38_mmtv.fa /users/GR/mb/jquilez/data/chipseq/samples/gv_011_01_01_chipseq/fastqs_processed/trimmomatic/single_end/gv_011_01_01_chipseq_read1.fastq.gz
+[main] Real time: 2158.293 sec; CPU: 16442.126 sec
+[bam_sort_core] merging from 24 files...
+INFO 	2016-03-11 11:21:48 	[align_bwa] 	reads aligned = 52521095
+INFO 	2016-03-11 11:21:48 	[align_bwa] 	reads unique = 41852003
+INFO 	2016-03-11 11:21:52 	[align_bwa] 	path to genome sequence FASTA and number of (uniquely) aligned reads added to metadata
+TIME 	2016-03-11 11:22:01 	[align_bwa] 	step time for completion (seconds) = 3134
+
+INFO 	2016-03-11 11:22:03 	[make_tag_directory] 	converting BAM to BED --required for making tag directory
+INFO 	2016-03-11 11:24:14 	[make_tag_directory] 	make tag directory with HOMER
+INFO 	2016-03-11 11:32:11 	[make_tag_directory] 	parse step log to extract generated metadata
+INFO 	2016-03-11 11:32:12 	[make_tag_directory] 	estimated genome size = 3030023995
+INFO 	2016-03-11 11:32:12 	[make_tag_directory] 	estimated average read density per bp = 0.013812
+INFO 	2016-03-11 11:32:12 	[make_tag_directory] 	total tags = 41852003.0
+INFO 	2016-03-11 11:32:12 	[make_tag_directory] 	total_positions = 40991848
+INFO 	2016-03-11 11:32:12 	[make_tag_directory] 	avg. tag length = 49.2
+INFO 	2016-03-11 11:32:12 	[make_tag_directory] 	median tags per position = 1
+INFO 	2016-03-11 11:32:12 	[make_tag_directory] 	avg. tags per position = 1.021
+INFO 	2016-03-11 11:32:12 	[make_tag_directory] 	fragment length estimate = 106
+INFO 	2016-03-11 11:32:12 	[make_tag_directory] 	peak width estimate = 15
+INFO 	2016-03-11 11:32:12 	[make_tag_directory] 	autocorrelation: same strand fold enrichment = 1.1
+INFO 	2016-03-11 11:32:12 	[make_tag_directory] 	autocorrelation: diff strand fold enrichment = 1.1
+INFO 	2016-03-11 11:32:12 	[make_tag_directory] 	autocorrelation: same-to-diff strand fold enrichment = 1.0
+INFO 	2016-03-11 11:32:12 	[make_tag_directory] 	avg. fragment GC% = 39.27
+INFO 	2016-03-11 11:32:12 	[make_tag_directory] 	avg. expected GC% = 40.32
+INFO 	2016-03-11 11:32:38 	[make_tag_directory] 	ChIP-seq metrics calculated with Homer added to metadata
+TIME 	2016-03-11 11:32:38 	[make_tag_directory] 	step time for completion (seconds) = 635
+
+INFO 	2016-03-11 11:32:39 	[make_bigbed] 	make BigBed file
+TIME 	2016-03-11 11:34:21 	[make_bigbed] 	step time for completion (seconds) = 102
+
+INFO 	2016-03-11 11:34:23 	[calculate_rpms] 	generate reads pe million profile (RPM) fragment profile
+INFO 	2016-03-11 11:34:23 	[calculate_rpms] 	get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-03-11 11:34:23 	[calculate_rpms] 	fragment length estimate = 106
+INFO 	2016-03-11 11:34:23 	[calculate_rpms] 	fragment length correction = 106
+INFO 	2016-03-11 11:34:23 	[calculate_rpms] 	the correction will be used if the estimate is not reliable
+TIME 	2016-03-11 12:14:23 	[calculate_rpms] 	step time for completion (seconds) = 2400
+
+INFO 	2016-03-11 12:14:25 	[call_peaks] 	Get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-03-11 12:14:26 	[call_peaks] 	Fragment length (l) is 106 bp (note this is not used if peak caller is zerone)
+INFO 	2016-03-11 12:14:26 	[call_peaks] 	Peak calling with MACS2
+INFO 	2016-03-11 12:14:26 	[call_peaks] 	genome size for homo_sapiens will be used
+INFO 	2016-03-11 12:14:26 	[call_peaks] 	q-value cutoff =  (default is 0.01)
+INFO 	2016-03-11 12:14:26 	[call_peaks] 	--nomodel (MACS2 will not try to model peak length but use l = 106 instead
+INFO 	2016-03-11 12:14:26 	[call_peaks] 	--call-summits = MACS reanalyzes the shape of signal profile to deconvolve subpeaks within each peak called
+INFO 	2016-03-11 12:14:26 	[call_peaks] 	peak calling with the sample alone (i.e. no input)
+INFO 	2016-03-11 12:19:57 	[call_peaks] 	peaks = 591
+INFO 	2016-03-11 12:20:03 	[call_peaks] 	peak calling without input DNA as control added to metadata
+

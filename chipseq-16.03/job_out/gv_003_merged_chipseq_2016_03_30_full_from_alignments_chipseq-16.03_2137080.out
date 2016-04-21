@@ -1,0 +1,32 @@
+
+INFO 	2016-03-30 16:42:41 	[make_tag_directory] 	converting BAM to BED --required for making tag directory
+INFO 	2016-03-30 16:45:36 	[make_tag_directory] 	make tag directory with HOMER
+INFO 	2016-03-30 16:56:50 	[make_tag_directory] 	parse step log to extract generated metadata
+INFO 	2016-03-30 16:56:50 	[make_tag_directory] 	estimated genome size = 3029970624
+INFO 	2016-03-30 16:56:50 	[make_tag_directory] 	estimated average read density per bp = 0.015030
+INFO 	2016-03-30 16:56:50 	[make_tag_directory] 	total tags = 45541860.0
+INFO 	2016-03-30 16:56:50 	[make_tag_directory] 	total_positions = 41415625
+INFO 	2016-03-30 16:56:50 	[make_tag_directory] 	avg. tag length = 48.8
+INFO 	2016-03-30 16:56:50 	[make_tag_directory] 	median tags per position = 1
+INFO 	2016-03-30 16:56:50 	[make_tag_directory] 	avg. tags per position = 1.100
+INFO 	2016-03-30 16:56:50 	[make_tag_directory] 	fragment length estimate = 232
+INFO 	2016-03-30 16:56:50 	[make_tag_directory] 	peak width estimate = 507
+INFO 	2016-03-30 16:56:50 	[make_tag_directory] 	autocorrelation: same strand fold enrichment = 1.2
+INFO 	2016-03-30 16:56:50 	[make_tag_directory] 	autocorrelation: diff strand fold enrichment = 1.2
+INFO 	2016-03-30 16:56:50 	[make_tag_directory] 	autocorrelation: same-to-diff strand fold enrichment = 1.0
+INFO 	2016-03-30 16:56:50 	[make_tag_directory] 	avg. fragment GC% = 42.11
+INFO 	2016-03-30 16:56:50 	[make_tag_directory] 	avg. expected GC% = 40.62
+INFO 	2016-03-30 16:57:14 	[make_tag_directory] 	ChIP-seq metrics calculated with Homer added to metadata
+TIME 	2016-03-30 16:57:14 	[make_tag_directory] 	step time for completion (seconds) = 873
+
+INFO 	2016-03-30 16:57:15 	[make_bigbed] 	make BigBed file
+TIME 	2016-03-30 16:59:15 	[make_bigbed] 	step time for completion (seconds) = 120
+
+INFO 	2016-03-30 16:59:21 	[calculate_rpms] 	generate reads pe million profile (RPM) fragment profile
+INFO 	2016-03-30 16:59:21 	[calculate_rpms] 	get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-03-30 16:59:21 	[calculate_rpms] 	fragment length estimate = 232
+INFO 	2016-03-30 16:59:21 	[calculate_rpms] 	fragment length correction = 232
+INFO 	2016-03-30 16:59:21 	[calculate_rpms] 	the correction will be used if the estimate is not reliable
+TIME 	2016-03-30 18:30:11 	[calculate_rpms] 	step time for completion (seconds) = 5450
+
+

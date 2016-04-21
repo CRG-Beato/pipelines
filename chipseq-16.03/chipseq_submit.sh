@@ -22,7 +22,7 @@ if ! [[ -n "$config" ]]; then
 	"configuration file with analysis parameters does not exist at $config ! Exiting..."
 	exit 
 else
-	samples=`cat $config | grep '=' | grep -v 'control_bam' | grep samples | sed 's/[\t]//g' | sed 's/;.*//g' | cut -f2 -d"="`
+	samples=`cat $config | grep '=' | grep -v 'control_bam\|CUSTOM_OUT' | grep samples | sed 's/[\t]//g' | sed 's/;.*//g' | cut -f2 -d"="`
 	pipeline_run_mode=`cat $config | grep pipeline_run_mode | sed 's/[ \t]//g' | cut -f2 -d"="`
 	io_mode=`cat $config | grep "^io_mode" | sed 's/[ \t]//g' | sed 's/;.*//g' | cut -f2 -d"="`
 	CUSTOM_OUT=`cat $config | grep "CUSTOM_OUT" | sed 's/[ \t]//g' | sed 's/;.*//g' | cut -f2 -d"="`
@@ -101,18 +101,22 @@ for s in $samples; do
 	# the above command excludes the `control_bam` parameter if the file path given as value contains 'samples'
 	# so the command below ensures the BAM file of the control sample is added
 	cat $config | grep '=' | grep 'control_bam' | sed 's/[ \t]//g' | sed 's/;.*//g' | sed '/^$/d' >> $job_file
+	# similarlym the above command excludes the `CUSTOM_OUT` parameter if the file path given as value contains 'samples'
+	# so the command below ensures the CUSTOM_OUT path is added
+	cat $config | grep '=' | grep 'CUSTOM_OUT' | sed 's/[ \t]//g' | sed 's/;.*//g' | sed '/^$/d' >> $job_file
 	# Add path to pipeline files and configuration file
 	echo "PIPELINE=$PIPELINE" >> $job_file
 	echo "config=$config" >> $job_file
+	echo "path_job_file=$job_file" >> $job_file
 	# Add content of the pipeline script to the submission script
 	cat $pipeline_file >> $job_file
 
 	# add path to job file in the metadata
 	run_date=`date +"%Y-%m-%d-%H-%M"`
 	job_id=${pipeline_name}-${pipeline_version}
-	if [[ $integrate_metadata == "yes" ]]; then
-	 	$io_metadata -m add_to_metadata -t 'jobs' -s $s -u $run_date -a PATH_JOB_FILE -v $job_file
-	fi
+	#if [[ $integrate_metadata == "yes" ]]; then
+	# 	$io_metadata -m add_to_metadata -t 'jobs' -s $s -u $run_date -a PATH_JOB_FILE -v $job_file
+	#fi
 
 	# Submit
 	chmod a+x $job_file

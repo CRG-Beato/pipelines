@@ -1,0 +1,93 @@
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 77, in emit
+    self.doRollover()
+  File "/usr/lib64/python2.6/logging/handlers.py", line 134, in doRollover
+    os.rename(self.baseFilename, dfn)
+OSError: [Errno 2] No such file or directory
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 76, in emit
+    if self.shouldRollover(record):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 150, in shouldRollover
+    self.stream.seek(0, 2)  #due to non-posix-compliant Windows feature
+ValueError: I/O operation on closed file
+Error in atexit._run_exitfuncs:
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/atexit.py", line 24, in _run_exitfuncs
+    func(*targs, **kargs)
+  File "/usr/lib64/python2.6/logging/__init__.py", line 1524, in shutdown
+    h.flush()
+  File "/usr/lib64/python2.6/logging/__init__.py", line 770, in flush
+    self.stream.flush()
+ValueError: I/O operation on closed file
+Error in sys.exitfunc:
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/atexit.py", line 24, in _run_exitfuncs
+    func(*targs, **kargs)
+  File "/usr/lib64/python2.6/logging/__init__.py", line 1524, in shutdown
+    h.flush()
+  File "/usr/lib64/python2.6/logging/__init__.py", line 770, in flush
+    self.stream.flush()
+ValueError: I/O operation on closed file
+
+INFO 	2016-03-04 12:09:57 	[trim_reads_trimmomatic] 	paths to read1 saved to metadata database
+INFO 	2016-03-04 12:09:57 	[trim_reads_trimmomatic] 	sequencing type = SE
+INFO 	2016-03-04 12:09:57 	[trim_reads_trimmomatic] 	trimming adapter sequences for HiSeq, NextSeq or HiSeq
+INFO 	2016-03-04 12:09:57 	[trim_reads_trimmomatic] 	trimming low-quality reads ends using trimmomatic's recommended practices
+INFO 	2016-03-04 12:54:41 	[trim_reads_trimmomatic] 	parse step log to extract generated metadata
+INFO 	2016-03-04 12:54:41 	[trim_reads_trimmomatic] 	reads after trimming = 119554258
+INFO 	2016-03-04 12:54:58 	[trim_reads_trimmomatic] 	trimmomatic parameters and numbe of trimmed reads added to metadata
+INFO 	2016-03-04 12:54:58 	[trim_reads_trimmomatic] 	trimmed reads are in /users/GR/mb/jquilez/data/chipseq/samples/gv_002_01_01_chipseq/fastqs_processed/trimmomatic/single_end
+TIME 	2016-03-04 12:54:58 	[trim_reads_trimmomatic] 	step time for completion (seconds) = 2758
+
+INFO 	2016-03-04 12:54:59 	[align_bwa] 	align single-end reads with BWA
+INFO 	2016-03-04 12:54:59 	[align_bwa] 	alignments are converted to BAM, sorted by genomic coordinates and multi-mappings filtered out
+[main] Version: 0.7.12-r1039
+[main] CMD: /software/mb/el6.3/bwa/bwa-0.7.12/bwa mem -t 8 -M -R @RG\tID:'gv_002_01_01_chipseq'\tLB:'gv_002_01_01_chipseq'\tPL:illumina\tPU:'gv_002_01_01_chipseq'\tSM:'gv_002_01_01_chipseq' -v 0 /users/GR/mb/jquilez/assemblies/homo_sapiens/hg38_mmtv/ucsc/hg38_mmtv.fa /users/GR/mb/jquilez/data/chipseq/samples/gv_002_01_01_chipseq/fastqs_processed/trimmomatic/single_end/gv_002_01_01_chipseq_read1.fastq.gz
+[main] Real time: 4843.248 sec; CPU: 37200.554 sec
+[bam_sort_core] merging from 59 files...
+INFO 	2016-03-04 14:51:43 	[align_bwa] 	reads aligned = 119554565
+INFO 	2016-03-04 14:51:43 	[align_bwa] 	reads unique = 104098834
+INFO 	2016-03-04 14:51:57 	[align_bwa] 	path to genome sequence FASTA and number of (uniquely) aligned reads added to metadata
+TIME 	2016-03-04 14:52:21 	[align_bwa] 	step time for completion (seconds) = 7042
+
+INFO 	2016-03-04 14:52:22 	[make_tag_directory] 	converting BAM to BED --required for making tag directory
+INFO 	2016-03-04 14:58:07 	[make_tag_directory] 	make tag directory with HOMER
+INFO 	2016-03-04 15:17:37 	[make_tag_directory] 	parse step log to extract generated metadata
+INFO 	2016-03-04 15:17:37 	[make_tag_directory] 	estimated genome size = 3030071593
+INFO 	2016-03-04 15:17:37 	[make_tag_directory] 	estimated average read density per bp = 0.034355
+INFO 	2016-03-04 15:17:37 	[make_tag_directory] 	total tags = 104098834.0
+INFO 	2016-03-04 15:17:37 	[make_tag_directory] 	total_positions = 96744391
+INFO 	2016-03-04 15:17:37 	[make_tag_directory] 	avg. tag length = 48.5
+INFO 	2016-03-04 15:17:37 	[make_tag_directory] 	median tags per position = 1
+INFO 	2016-03-04 15:17:37 	[make_tag_directory] 	avg. tags per position = 1.076
+INFO 	2016-03-04 15:17:37 	[make_tag_directory] 	fragment length estimate = 201
+INFO 	2016-03-04 15:17:37 	[make_tag_directory] 	peak width estimate = 145
+INFO 	2016-03-04 15:17:37 	[make_tag_directory] 	autocorrelation: same strand fold enrichment = 1.1
+INFO 	2016-03-04 15:17:37 	[make_tag_directory] 	autocorrelation: diff strand fold enrichment = 1.1
+INFO 	2016-03-04 15:17:37 	[make_tag_directory] 	autocorrelation: same-to-diff strand fold enrichment = 1.0
+INFO 	2016-03-04 15:17:37 	[make_tag_directory] 	avg. fragment GC% = 38.90
+INFO 	2016-03-04 15:17:37 	[make_tag_directory] 	avg. expected GC% = 40.58
+INFO 	2016-03-04 15:17:57 	[make_tag_directory] 	ChIP-seq metrics calculated with Homer added to metadata
+TIME 	2016-03-04 15:17:57 	[make_tag_directory] 	step time for completion (seconds) = 1535
+
+INFO 	2016-03-04 15:17:59 	[make_bigbed] 	make BigBed file
+TIME 	2016-03-04 15:22:23 	[make_bigbed] 	step time for completion (seconds) = 264
+
+INFO 	2016-03-04 15:22:26 	[calculate_rpms] 	generate reads pe million profile (RPM) fragment profile
+INFO 	2016-03-04 15:22:26 	[calculate_rpms] 	get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-03-04 15:22:26 	[calculate_rpms] 	fragment length estimate = 201
+INFO 	2016-03-04 15:22:26 	[calculate_rpms] 	fragment length correction = 201
+INFO 	2016-03-04 15:22:26 	[calculate_rpms] 	the correction will be used if the estimate is not reliable
+TIME 	2016-03-04 17:05:18 	[calculate_rpms] 	step time for completion (seconds) = 6172
+
+INFO 	2016-03-04 17:05:31 	[call_peaks] 	Get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-03-04 17:05:31 	[call_peaks] 	Fragment length (l) is 201 bp (note this is not used if peak caller is zerone)
+INFO 	2016-03-04 17:05:31 	[call_peaks] 	Peak calling with MACS2
+INFO 	2016-03-04 17:05:31 	[call_peaks] 	genome size for homo_sapiens will be used
+INFO 	2016-03-04 17:05:31 	[call_peaks] 	q-value cutoff =  (default is 0.01)
+INFO 	2016-03-04 17:05:31 	[call_peaks] 	--nomodel (MACS2 will not try to model peak length but use l = 201 instead
+INFO 	2016-03-04 17:05:31 	[call_peaks] 	--call-summits = MACS reanalyzes the shape of signal profile to deconvolve subpeaks within each peak called
+INFO 	2016-03-04 17:05:31 	[call_peaks] 	peak calling with the sample alone (i.e. no input)
+INFO 	2016-03-04 17:18:23 	[call_peaks] 	peaks = 7862
+INFO 	2016-03-04 17:18:26 	[call_peaks] 	peak calling without input DNA as control added to metadata
+

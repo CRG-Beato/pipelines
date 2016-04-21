@@ -3,6 +3,9 @@
 
 **Pipeline to call binding site peaks using ChIP-seq data**
 
+## TO-DO list
+- `call_peaks`: make paths aware of single-end or paired-end
+
 
 ## NEW
 - both single- (`SE`) and paired-end (`PE`) data are accepted in `sequencing_type`

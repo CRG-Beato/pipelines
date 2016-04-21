@@ -1,0 +1,58 @@
+
+INFO 	2016-03-16 14:24:21 	[trim_reads_trimmomatic] 	sequencing type = SE
+INFO 	2016-03-16 14:24:21 	[trim_reads_trimmomatic] 	trimming adapter sequences for HiSeq, NextSeq or HiSeq
+INFO 	2016-03-16 14:24:21 	[trim_reads_trimmomatic] 	trimming low-quality reads ends using trimmomatic's recommended practices
+INFO 	2016-03-16 14:50:49 	[trim_reads_trimmomatic] 	parse step log to extract generated metadata
+INFO 	2016-03-16 14:50:49 	[trim_reads_trimmomatic] 	reads after trimming = 87072944
+INFO 	2016-03-16 14:50:49 	[trim_reads_trimmomatic] 	trimmed reads are in /users/GR/mb/jquilez/data/chipseq/samples/PR_T60_R5020/fastqs_processed/trimmomatic/single_end
+TIME 	2016-03-16 14:50:49 	[trim_reads_trimmomatic] 	step time for completion (seconds) = 1629
+
+INFO 	2016-03-16 14:50:49 	[align_bwa] 	align single-end reads with BWA
+INFO 	2016-03-16 14:50:49 	[align_bwa] 	alignments are converted to BAM, sorted by genomic coordinates and multi-mappings filtered out
+[main] Version: 0.7.12-r1039
+[main] CMD: /software/mb/el6.3/bwa/bwa-0.7.12/bwa mem -t 8 -M -R @RG\tID:'PR_T60_R5020'\tLB:'PR_T60_R5020'\tPL:illumina\tPU:'PR_T60_R5020'\tSM:'PR_T60_R5020' -v 0 /users/GR/mb/jquilez/assemblies/homo_sapiens/hg38_mmtv/ucsc/hg38_mmtv.fa /users/GR/mb/jquilez/data/chipseq/samples/PR_T60_R5020/fastqs_processed/trimmomatic/single_end/PR_T60_R5020_read1.fastq.gz
+[main] Real time: 3520.001 sec; CPU: 26638.184 sec
+[bam_sort_core] merging from 40 files...
+INFO 	2016-03-16 16:15:41 	[align_bwa] 	reads aligned = 87072965
+INFO 	2016-03-16 16:15:41 	[align_bwa] 	reads unique = 74572079
+TIME 	2016-03-16 16:15:56 	[align_bwa] 	step time for completion (seconds) = 5107
+
+INFO 	2016-03-16 16:15:56 	[make_tag_directory] 	converting BAM to BED --required for making tag directory
+INFO 	2016-03-16 16:19:42 	[make_tag_directory] 	make tag directory with HOMER
+INFO 	2016-03-16 16:33:01 	[make_tag_directory] 	parse step log to extract generated metadata
+INFO 	2016-03-16 16:33:01 	[make_tag_directory] 	estimated genome size = 3030063884
+INFO 	2016-03-16 16:33:01 	[make_tag_directory] 	estimated average read density per bp = 0.024611
+INFO 	2016-03-16 16:33:01 	[make_tag_directory] 	total tags = 74572079.0
+INFO 	2016-03-16 16:33:01 	[make_tag_directory] 	total_positions = 65305641
+INFO 	2016-03-16 16:33:01 	[make_tag_directory] 	avg. tag length = 45.9
+INFO 	2016-03-16 16:33:01 	[make_tag_directory] 	median tags per position = 1
+INFO 	2016-03-16 16:33:01 	[make_tag_directory] 	avg. tags per position = 1.142
+INFO 	2016-03-16 16:33:01 	[make_tag_directory] 	fragment length estimate = 140
+INFO 	2016-03-16 16:33:01 	[make_tag_directory] 	peak width estimate = 179
+INFO 	2016-03-16 16:33:01 	[make_tag_directory] 	autocorrelation: same strand fold enrichment = 2.4
+INFO 	2016-03-16 16:33:01 	[make_tag_directory] 	autocorrelation: diff strand fold enrichment = 2.4
+INFO 	2016-03-16 16:33:01 	[make_tag_directory] 	autocorrelation: same-to-diff strand fold enrichment = 1.0
+INFO 	2016-03-16 16:33:01 	[make_tag_directory] 	avg. fragment GC% = 43.84
+INFO 	2016-03-16 16:33:01 	[make_tag_directory] 	avg. expected GC% = 40.45
+TIME 	2016-03-16 16:33:01 	[make_tag_directory] 	step time for completion (seconds) = 1025
+
+INFO 	2016-03-16 16:33:01 	[make_bigbed] 	make BigBed file
+TIME 	2016-03-16 16:35:56 	[make_bigbed] 	step time for completion (seconds) = 175
+
+INFO 	2016-03-16 16:35:56 	[calculate_rpms] 	generate reads pe million profile (RPM) fragment profile
+INFO 	2016-03-16 16:35:56 	[calculate_rpms] 	get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-03-16 16:35:56 	[calculate_rpms] 	fragment length estimate = 140
+INFO 	2016-03-16 16:35:56 	[calculate_rpms] 	fragment length correction = 140
+INFO 	2016-03-16 16:35:56 	[calculate_rpms] 	the correction will be used if the estimate is not reliable
+TIME 	2016-03-16 17:43:00 	[calculate_rpms] 	step time for completion (seconds) = 4024
+
+INFO 	2016-03-16 17:43:00 	[call_peaks] 	Get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-03-16 17:43:00 	[call_peaks] 	Fragment length (l) is 140 bp (note this is not used if peak caller is zerone)
+INFO 	2016-03-16 17:43:00 	[call_peaks] 	Peak calling with MACS2
+INFO 	2016-03-16 17:43:00 	[call_peaks] 	genome size for homo_sapiens will be used
+INFO 	2016-03-16 17:43:00 	[call_peaks] 	q-value cutoff = 0.05 (default is 0.01)
+INFO 	2016-03-16 17:43:00 	[call_peaks] 	--nomodel (MACS2 will not try to model peak length but use l = 140 instead
+INFO 	2016-03-16 17:43:00 	[call_peaks] 	--call-summits = MACS reanalyzes the shape of signal profile to deconvolve subpeaks within each peak called
+INFO 	2016-03-16 17:43:00 	[call_peaks] 	peak calling with the sample alone (i.e. no input)
+INFO 	2016-03-16 17:53:08 	[call_peaks] 	peaks = 97373
+

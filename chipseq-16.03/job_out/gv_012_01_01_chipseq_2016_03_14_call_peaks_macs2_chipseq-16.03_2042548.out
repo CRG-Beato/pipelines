@@ -1,0 +1,15 @@
+
+INFO 	2016-03-14 11:00:39 	[add_to_metadata] 	-t <table>, -s <sample_id>, -u <time_stamp> -a <attribute> and or -v <value> are not provided; exiting...
+INFO 	2016-03-14 11:00:39 	[add_to_metadata] 	t=chipseq s=gv_012_01_01_chipseq u=2016-03-14-11-00 a=PATH_JOB_FILE v=
+INFO 	2016-03-14 11:00:39 	[call_peaks] 	Get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-03-14 11:00:39 	[call_peaks] 	Fragment length (l) is 231 bp (note this is not used if peak caller is zerone)
+INFO 	2016-03-14 11:00:39 	[call_peaks] 	Peak calling with MACS2
+INFO 	2016-03-14 11:00:39 	[call_peaks] 	genome size for homo_sapiens will be used
+INFO 	2016-03-14 11:00:39 	[call_peaks] 	q-value cutoff =  (default is 0.01)
+INFO 	2016-03-14 11:00:39 	[call_peaks] 	--nomodel (MACS2 will not try to model peak length but use l = 231 instead
+INFO 	2016-03-14 11:00:39 	[call_peaks] 	--call-summits = MACS reanalyzes the shape of signal profile to deconvolve subpeaks within each peak called
+INFO 	2016-03-14 11:00:39 	[call_peaks] 	peak calling with input DNA (/users/GR/mb/jquilez/data/chipseq/samples/T0_roberto_input/alignments/bwa/hg38_mmtv/single_end/T0_roberto_input_sorted_unique.bam) as control
+INFO 	2016-03-14 11:50:30 	[call_peaks] 	peaks = 8939
+INFO 	2016-03-14 11:50:37 	[call_peaks] 	peak calling with input DNA as control added to metadata
+/usr/share/univage/soldierantcluster/spool/node-hp0215/job_scripts/2042548: line 644: /users/GR/mb/jquilez/data/chipseq/samples/gv_012_01_01_chipseq/checksums/hg38_mmtv/2016-03-14-11-00/files_checksums.sha: No such file or directory
+

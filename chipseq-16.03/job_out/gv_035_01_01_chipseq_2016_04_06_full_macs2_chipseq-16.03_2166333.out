@@ -1,0 +1,50 @@
+
+INFO 	2016-04-06 12:35:16 	[trim_reads_trimmomatic] 	paths to read1 saved to metadata database
+INFO 	2016-04-06 12:35:16 	[trim_reads_trimmomatic] 	sequencing type = SE
+INFO 	2016-04-06 12:35:16 	[trim_reads_trimmomatic] 	trimming adapter sequences for HiSeq, NextSeq or HiSeq
+INFO 	2016-04-06 12:35:16 	[trim_reads_trimmomatic] 	trimming low-quality reads ends using trimmomatic's recommended practices
+INFO 	2016-04-06 13:39:06 	[trim_reads_trimmomatic] 	parse step log to extract generated metadata
+INFO 	2016-04-06 13:39:06 	[trim_reads_trimmomatic] 	reads after trimming = 179366475
+INFO 	2016-04-06 13:39:22 	[trim_reads_trimmomatic] 	trimmomatic parameters and numbe of trimmed reads added to metadata
+INFO 	2016-04-06 13:39:22 	[trim_reads_trimmomatic] 	trimmed reads are in /users/GR/mb/jquilez/data/chipseq/samples/gv_035_01_01_chipseq/fastqs_processed/trimmomatic/single_end
+TIME 	2016-04-06 13:39:22 	[trim_reads_trimmomatic] 	step time for completion (seconds) = 3942
+
+INFO 	2016-04-06 13:39:24 	[align_bwa] 	align single-end reads with BWA
+INFO 	2016-04-06 13:39:24 	[align_bwa] 	alignments are converted to BAM, sorted by genomic coordinates and multi-mappings filtered out
+[main] Version: 0.7.12-r1039
+[main] CMD: /software/mb/el6.3/bwa/bwa-0.7.12/bwa mem -t 8 -M -R @RG\tID:'gv_035_01_01_chipseq'\tLB:'gv_035_01_01_chipseq'\tPL:illumina\tPU:'gv_035_01_01_chipseq'\tSM:'gv_035_01_01_chipseq' -v 0 /users/GR/mb/jquilez/assemblies/homo_sapiens/hg38_mmtv/ucsc/hg38_mmtv.fa /users/GR/mb/jquilez/data/chipseq/samples/gv_035_01_01_chipseq/fastqs_processed/trimmomatic/single_end/gv_035_01_01_chipseq_read1.fastq.gz
+[main] Real time: 7956.790 sec; CPU: 60955.881 sec
+[bam_sort_core] merging from 100 files...
+INFO 	2016-04-06 16:49:22 	[align_bwa] 	reads aligned = 179367103
+INFO 	2016-04-06 16:49:22 	[align_bwa] 	reads unique = 150803163
+INFO 	2016-04-06 16:49:32 	[align_bwa] 	path to genome sequence FASTA and number of (uniquely) aligned reads added to metadata
+TIME 	2016-04-06 16:50:05 	[align_bwa] 	step time for completion (seconds) = 11441
+
+INFO 	2016-04-06 16:50:07 	[make_tag_directory] 	converting BAM to BED --required for making tag directory
+INFO 	2016-04-06 16:56:47 	[make_tag_directory] 	make tag directory with HOMER
+INFO 	2016-04-06 17:24:09 	[make_tag_directory] 	parse step log to extract generated metadata
+INFO 	2016-04-06 17:24:09 	[make_tag_directory] 	estimated genome size = 3030072165
+INFO 	2016-04-06 17:24:09 	[make_tag_directory] 	estimated average read density per bp = 0.049769
+INFO 	2016-04-06 17:24:09 	[make_tag_directory] 	total tags = 150803163.0
+INFO 	2016-04-06 17:24:09 	[make_tag_directory] 	total_positions = 141768611
+INFO 	2016-04-06 17:24:09 	[make_tag_directory] 	avg. tag length = 49.1
+INFO 	2016-04-06 17:24:09 	[make_tag_directory] 	median tags per position = 1
+INFO 	2016-04-06 17:24:09 	[make_tag_directory] 	avg. tags per position = 1.064
+INFO 	2016-04-06 17:24:09 	[make_tag_directory] 	fragment length estimate = 151
+INFO 	2016-04-06 17:24:09 	[make_tag_directory] 	peak width estimate = 188
+INFO 	2016-04-06 17:24:09 	[make_tag_directory] 	autocorrelation: same strand fold enrichment = 1.1
+INFO 	2016-04-06 17:24:09 	[make_tag_directory] 	autocorrelation: diff strand fold enrichment = 1.1
+INFO 	2016-04-06 17:24:09 	[make_tag_directory] 	autocorrelation: same-to-diff strand fold enrichment = 1.0
+INFO 	2016-04-06 17:24:09 	[make_tag_directory] 	avg. fragment GC% = 44.13
+INFO 	2016-04-06 17:24:09 	[make_tag_directory] 	avg. expected GC% = 40.48
+INFO 	2016-04-06 17:24:28 	[make_tag_directory] 	ChIP-seq metrics calculated with Homer added to metadata
+TIME 	2016-04-06 17:24:28 	[make_tag_directory] 	step time for completion (seconds) = 2061
+
+INFO 	2016-04-06 17:24:29 	[make_bigbed] 	make BigBed file
+TIME 	2016-04-06 17:31:26 	[make_bigbed] 	step time for completion (seconds) = 417
+
+INFO 	2016-04-06 17:31:28 	[calculate_rpms] 	generate reads pe million profile (RPM) fragment profile
+INFO 	2016-04-06 17:31:28 	[calculate_rpms] 	get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-04-06 17:31:28 	[calculate_rpms] 	fragment length estimate = 151
+INFO 	2016-04-06 17:31:28 	[calculate_rpms] 	fragment length correction = 151
+INFO 	2016-04-06 17:31:28 	[calculate_rpms] 	the correction will be used if the estimate is not reliable
