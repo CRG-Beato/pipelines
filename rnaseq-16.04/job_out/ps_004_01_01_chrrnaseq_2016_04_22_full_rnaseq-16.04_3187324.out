@@ -1,0 +1,14 @@
+
+INFO 	2016-04-22 15:28:49 	[trim_reads_trimmomatic] 	paths to read1 and read2 saved to metadata database
+INFO 	2016-04-22 15:28:49 	[trim_reads_trimmomatic] 	sequencing type = PE
+INFO 	2016-04-22 15:28:49 	[trim_reads_trimmomatic] 	trimming adapter sequences for HiSeq, NextSeq or HiSeq
+INFO 	2016-04-22 15:28:49 	[trim_reads_trimmomatic] 	trimming low-quality reads ends using trimmomatic's recommended practices
+INFO 	2016-04-22 16:07:21 	[trim_reads_trimmomatic] 	parse step log to extract generated metadata
+INFO 	2016-04-22 16:07:21 	[trim_reads_trimmomatic] 	reads after trimming = 136525241
+INFO 	2016-04-22 16:07:34 	[trim_reads_trimmomatic] 	trimmomatic parameters and numbe of trimmed reads added to metadata
+INFO 	2016-04-22 16:07:34 	[trim_reads_trimmomatic] 	trimmed reads are in /users/GR/mb/jquilez/data/chrrnaseq/samples/ps_004_01_01_chrrnaseq/fastqs_processed/trimmomatic/paired_end
+INFO 	2016-04-22 16:07:34 	[trim_reads_trimmomatic] 	unpaired reads are deleted
+TIME 	2016-04-22 16:08:20 	[trim_reads_trimmomatic] 	step time for completion (seconds) = 2374
+
+INFO 	2016-04-22 16:08:22 	[align_star] 	align trimmed single-end reads with STAR (version = STAR_2.5.1b_modified)
+INFO 	2016-04-22 16:08:22 	[align_star] 	using ENCODE standard options for long RNA-seq pipeline

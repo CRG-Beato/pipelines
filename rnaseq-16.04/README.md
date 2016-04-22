@@ -4,11 +4,6 @@
 **Pipeline to quantify gene/transcript abundance using RNA-seq data**
 
 
-## To-do
-- convert alignments to reads per million (RPM) profiles, use rpm directory as in chipseq-16.03 **use cpu option**
-- integrate metadata
-
-
 ## New features
 - possibility to integrate metadata
 - genome reference sequence (used by STAR) includes chromosomes 1-22, X, Y, M and un-placed/un-localized scaffolds 

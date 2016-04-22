@@ -101,7 +101,7 @@ for s in $samples; do
 	# the above command excludes the `control_bam` parameter if the file path given as value contains 'samples'
 	# so the command below ensures the BAM file of the control sample is added
 	cat $config | grep '=' | grep 'control_bam' | sed 's/[ \t]//g' | sed 's/;.*//g' | sed '/^$/d' >> $job_file
-	# similarlym the above command excludes the `CUSTOM_OUT` parameter if the file path given as value contains 'samples'
+	# similarly the above command excludes the `CUSTOM_OUT` parameter if the file path given as value contains 'samples'
 	# so the command below ensures the CUSTOM_OUT path is added
 	cat $config | grep '=' | grep 'CUSTOM_OUT' | sed 's/[ \t]//g' | sed 's/;.*//g' | sed '/^$/d' >> $job_file
 	# Add path to pipeline files and configuration file
