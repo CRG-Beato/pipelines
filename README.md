@@ -37,3 +37,11 @@ git push -u origin master
 	- Kallisto's option to perform sequence based bias correction (such option failed in Kallisto versions prior to 0.42.5)
 	- true read per million (RPM) profiles are generated, in rnaseq-16.02 reads piled up profiles were generated instead
 - `rnaseq-16.02` is moved to `archived`
+
+**2016-04-26**
+- `chipseq-16.04` is released, with new features:
+	- genome reference sequence includes chromosomes 1-22, X, Y, M and un-placed/un-localized scaffolds 
+	- use of qualimap to generate quality metrics of the alignments
+	- `make_bigbed` is deprecated as it was the resulting `*.bb` file was not used
+	- values for the fields `read_length` and `sequencing_type` are retrieved from the metadata database of `integrate_metadata=yes`
+- `chipseq-16.03` is moved to `archived`

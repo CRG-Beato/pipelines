@@ -1,0 +1,9 @@
+
+INFO 	2016-04-25 12:05:31 	[make_profiles] 	make read profiles from STAR alignments
+INFO 	2016-04-25 12:05:31 	[make_profiles] 	filtering valid pairs (for paired-end data only) and generate reads per million (RPM) profiles
+TIME 	2016-04-25 12:46:52 	[make_profiles] 	step time for completion (seconds) = 2481
+
+
+INFO 	2016-04-25 12:46:52 	[pipeline] 	completed successfully
+TIME 	2016-04-25 12:46:52 	[pipeline] 	total time for completion (seconds) = 2481
+

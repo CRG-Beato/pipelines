@@ -1,3 +1,55 @@
+#!/bin/bash
+#$ -N ps_004_01_01_chrrnaseq_2016_04_25_make_profiles_rnaseq-16.04
+#$ -q long-sl65
+#$ -l virtual_free=60G
+#$ -l h_rt=24:00:00
+#$ -o /users/GR/mb/jquilez/pipelines/rnaseq-16.04/job_out/ps_004_01_01_chrrnaseq_2016_04_25_make_profiles_rnaseq-16.04_$JOB_ID.out
+#$ -e /users/GR/mb/jquilez/pipelines/rnaseq-16.04/job_out/ps_004_01_01_chrrnaseq_2016_04_25_make_profiles_rnaseq-16.04_$JOB_ID.err
+#$ -j y
+#$ -M javier.quilez@crg.eu
+#$ -m abe
+#$ -pe smp 8
+
+submitted_on=2016_04_25
+pipeline_version=16.04
+sample_id=ps_004_01_01_chrrnaseq
+data_type=chrrnaseq
+pipeline_name=rnaseq
+pipeline_version=16.04
+pipeline_run_mode=make_profiles
+io_mode=standard
+CUSTOM_IN=/users/GR/mb/jquilez/pipelines/rnaseq-16.04/test
+CUSTOM_OUT=/users/GR/mb/jquilez/misc/rnaseq
+sample_to_fastqs=sample_to_fastqs.txt
+submit_to_cluster=yes
+queue=long-sl65
+memory=60G
+max_time=24:00:00
+slots=8
+email=javier.quilez@crg.eu
+integrate_metadata=no
+sequencing_type=PE
+seedMismatches=2
+palindromeClipThreshold=30
+simpleClipThreshold=12
+leading=3
+trailing=3
+minAdapterLength=1
+keepBothReads=true
+minQual=3
+strictness=0.999
+minLength=36
+species=homo_sapiens
+version=hg19
+read_length=50
+n_bootstraps=100
+fragment_length_avg=150
+fragment_length_sd=30
+strand_specific=1
+CUSTOM_OUT=/users/GR/mb/jquilez/misc/rnaseq
+PIPELINE=/users/GR/mb/jquilez/pipelines/rnaseq-16.04
+config=pipelines/rnaseq-16.04/rnaseq.config
+path_job_file=/users/GR/mb/jquilez/pipelines/rnaseq-16.04/job_cmd/ps_004_01_01_chrrnaseq_2016_04_25_make_profiles_rnaseq-16.04.sh
 time_start=$(date +"%s")
 run_date=`date +"%Y-%m-%d-%H-%M"`
 job_name=$pipeline_name-$pipeline_version
@@ -551,7 +603,6 @@ quality_alignments() {
 
 }
 
-
 # =================================================================================================
 # Transcript quantification with featureCounts
 # =================================================================================================
@@ -719,7 +770,6 @@ make_profiles() {
 	 		ibam=$IDIR/${sample_id}.Aligned.sortedByCoord.out.bam
 	 		orpm=$ODIR/${sample_id}.rpm
  			step_log=$LOGS/${sample_id}_${step}_single_end.log
-	 		$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $ibam --strand --out $orpm --cpu $slots >$step_log 2>&1
 	 		$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $ibam --out $orpm --cpu $slots >$step_log 2>&1
 	 	else
 			message_error $step "$IDIR not found. Exiting..."
@@ -734,8 +784,7 @@ make_profiles() {
  			step_log=$LOGS/${sample_id}_${step}_paired_end.log
  			tbam=$ODIR/tmp.bam
 	 		$samtools view -bf 0x2 $ibam > $tbam
-	 		$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $tbam --strand --out $orpm --cpu $slots >$step_log 2>&1
-	 		$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $tbam --out $orpm --cpu $slots >$step_log 2>&1
+	 		$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $tbam --stran --out $orpm --cpu $slots >$step_log 2>&1
 	 		rm $tbam $tbam.bai
 	 	else
 			message_error $step "$IDIR not found. Exiting..."
