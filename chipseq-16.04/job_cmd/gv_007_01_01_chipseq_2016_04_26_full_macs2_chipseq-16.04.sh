@@ -1,3 +1,55 @@
+#!/bin/bash
+#$ -N gv_007_01_01_chipseq_2016_04_26_full_macs2_chipseq-16.04
+#$ -q long-sl65
+#$ -l virtual_free=60G
+#$ -l h_rt=20:00:00
+#$ -o /users/GR/mb/jquilez/pipelines/chipseq-16.04/job_out/gv_007_01_01_chipseq_2016_04_26_full_macs2_chipseq-16.04_$JOB_ID.out
+#$ -e /users/GR/mb/jquilez/pipelines/chipseq-16.04/job_out/gv_007_01_01_chipseq_2016_04_26_full_macs2_chipseq-16.04_$JOB_ID.err
+#$ -j y
+#$ -M javier.quilez@crg.eu
+#$ -m abe
+#$ -pe smp 8
+
+submitted_on=2016_04_26
+pipeline_version=16.04
+sample_id=gv_007_01_01_chipseq
+data_type=chipseq
+pipeline_name=chipseq
+pipeline_version=16.04
+pipeline_run_mode=full
+io_mode=standard
+CUSTOM_IN=data/chipseq/raw/2016-03-11
+sample_to_fastqs=sample_to_fastqs.txt
+submit_to_cluster=yes
+queue=long-sl65
+memory=60G
+max_time=20:00:00
+slots=8
+email=javier.quilez@crg.eu
+integrate_metadata=yes
+sequencing_type=
+seedMismatches=2
+palindromeClipThreshold=30
+simpleClipThreshold=12
+leading=3
+trailing=3
+minAdapterLength=1
+keepBothReads=true
+minQual=3
+strictness=0.999
+minLength=36
+read_length=
+species=homo_sapiens
+version=hg38_mmtv
+strand_specific=1
+peak_caller=macs2
+use_control=no
+macs2_qvalue=0.05
+control_bam=/users/GR/mb/jquilez/data/chipseq/samples/gv_007_01_01_chipseq/alignments/bwa/hg38_mmtv/single_end/gv_007_01_01_chipseq_sorted_unique.bam
+CUSTOM_OUT=/users/GR/mb/jquilez/data/chipseq/samples/T0_roberto_input
+PIPELINE=/users/GR/mb/jquilez/pipelines/chipseq-16.04
+config=pipelines/chipseq-16.04/chipseq.config
+path_job_file=/users/GR/mb/jquilez/pipelines/chipseq-16.04/job_cmd/gv_007_01_01_chipseq_2016_04_26_full_macs2_chipseq-16.04.sh
 # additional run variables
 time_start=$(date +"%s")
 run_date=`date +"%Y-%m-%d-%H-%M"`
@@ -404,12 +456,9 @@ quality_alignments() {
 	message_info $step "parse step log to extract generated metadata"
 	genome_results=$BAMQC/genome_results.txt
 	# globals
-	if [[ $sequencing_type == "PE" ]]; then
-		n_mapped_paired_reads=`grep "number of mapped paired reads (first in pair)" $genome_results |cut -f2 -d"=" | sed "s/[ ,]//g"`
-		n_overlapping_read_pairs=`grep "number of overlapping read pairs" $genome_results |cut -f2 -d"=" | sed "s/[ ,]//g"`
-		p_overlapping_read_pairs=`echo "(100 * $n_overlapping_read_pairs) / $n_mapped_paired_reads" | bc -l`
-		message_info $step "percentage of overlapping read pais = $p_overlapping_read_pairs"
-	fi
+	n_mapped_paired_reads=`grep "number of mapped paired reads (first in pair)" $genome_results |cut -f2 -d"=" | sed "s/[ ,]//g"`
+	n_overlapping_read_pairs=`grep "number of overlapping read pairs" $genome_results |cut -f2 -d"=" | sed "s/[ ,]//g"`
+	p_overlapping_read_pairs=`echo "(100 * $n_overlapping_read_pairs) / $n_mapped_paired_reads" | bc -l`
 	p_duplication=`grep "duplication rate" $genome_results | cut -f2 -d"=" | sed "s/[ %]//g"`
 	# insert size
 	median_insert_size=`grep "median insert size" $genome_results | cut -f2 -d"=" | sed "s/[ ,]//g"`
@@ -423,6 +472,7 @@ quality_alignments() {
 		mean_coverage_paired_end=`grep "paired-end adapted mean coverage" $genome_results | cut -f2 -d"=" | sed "s/[ X]//g"`
 	fi
 	# print values
+	message_info $step "percentage of overlapping read pais = $p_overlapping_read_pairs"
 	message_info $step "percentage duplication = $p_duplication"
 	message_info $step "median insert size (bp) = $median_insert_size"
 	message_info $step "mean mapping quality = $mean_mapping_quality"
@@ -431,10 +481,8 @@ quality_alignments() {
 
 	# update metadata
 	if [[ $integrate_metadata == "yes" ]]; then
-		if [[ $sequencing_type == "PE" ]]; then
-		 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a N_MAPPED_PAIRED_READS -v $n_mapped_paired_reads
-		 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a P_OVERLAPPING_READ_PAIRS -v $p_overlapping_read_pairs
-	 	fi
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a N_MAPPED_PAIRED_READS -v $n_mapped_paired_reads
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a P_OVERLAPPING_READ_PAIRS -v $p_overlapping_read_pairs
 	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a P_DUPLICATION -v $p_duplication
 	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a MEDIAN_INSERT_SIZE -v $median_insert_size
 	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a MEAN_MAPPING_QUALITY -v $mean_mapping_quality
