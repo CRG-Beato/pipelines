@@ -1,0 +1,69 @@
+
+INFO 	2016-04-27 15:32:31 	[trim_reads_trimmomatic] 	paths to read1 saved to metadata database
+INFO 	2016-04-27 15:32:31 	[trim_reads_trimmomatic] 	sequencing type = SE
+INFO 	2016-04-27 15:32:31 	[trim_reads_trimmomatic] 	trimming adapter sequences for HiSeq, NextSeq or HiSeq
+INFO 	2016-04-27 15:32:31 	[trim_reads_trimmomatic] 	trimming low-quality reads ends using trimmomatic's recommended practices
+INFO 	2016-04-27 15:50:04 	[trim_reads_trimmomatic] 	parse step log to extract generated metadata
+INFO 	2016-04-27 15:50:04 	[trim_reads_trimmomatic] 	reads after trimming = 46610896
+INFO 	2016-04-27 15:50:25 	[trim_reads_trimmomatic] 	trimmomatic parameters and numbe of trimmed reads added to metadata
+INFO 	2016-04-27 15:50:25 	[trim_reads_trimmomatic] 	trimmed reads are in /users/GR/mb/jquilez/data/chipseq/samples/gv_067_01_01_chipseq/fastqs_processed/trimmomatic/single_end
+TIME 	2016-04-27 15:50:25 	[trim_reads_trimmomatic] 	step time for completion (seconds) = 1093
+
+INFO 	2016-04-27 15:50:27 	[align_bwa] 	align single-end reads with BWA
+INFO 	2016-04-27 15:50:27 	[align_bwa] 	alignments are converted to BAM, sorted by genomic coordinates and multi-mappings filtered out
+[main] Version: 0.7.12-r1039
+[main] CMD: /software/mb/el6.3/bwa/bwa-0.7.12/bwa mem -t 8 -M -R @RG\tID:'gv_067_01_01_chipseq'\tLB:'gv_067_01_01_chipseq'\tPL:illumina\tPU:'gv_067_01_01_chipseq'\tSM:'gv_067_01_01_chipseq' -v 0 /users/GR/mb/jquilez/assemblies/homo_sapiens/hg38_mmtv/ucsc/hg38_mmtv_chr1-22XYMUn.fa /users/GR/mb/jquilez/data/chipseq/samples/gv_067_01_01_chipseq/fastqs_processed/trimmomatic/single_end/gv_067_01_01_chipseq_read1.fastq.gz
+[main] Real time: 1939.949 sec; CPU: 14680.464 sec
+[bam_sort_core] merging from 21 files...
+INFO 	2016-04-27 16:36:50 	[align_bwa] 	reads aligned = 46611230
+INFO 	2016-04-27 16:36:50 	[align_bwa] 	reads unique = 38633510
+INFO 	2016-04-27 16:36:56 	[align_bwa] 	path to genome sequence FASTA and number of (uniquely) aligned reads added to metadata
+TIME 	2016-04-27 16:37:04 	[align_bwa] 	step time for completion (seconds) = 2797
+
+INFO 	2016-04-27 16:37:06 	[quality_alignments] 	general QC of the BAM (using qualimap's bamqc)
+INFO 	2016-04-27 16:39:46 	[quality_alignments] 	parse step log to extract generated metadata
+INFO 	2016-04-27 16:39:46 	[quality_alignments] 	percentage duplication = 22.95
+INFO 	2016-04-27 16:39:46 	[quality_alignments] 	median insert size (bp) = 0
+INFO 	2016-04-27 16:39:46 	[quality_alignments] 	mean mapping quality = 43.7389
+INFO 	2016-04-27 16:39:47 	[quality_alignments] 	mean coverage (X) = 0.6231
+INFO 	2016-04-27 16:39:47 	[quality_alignments] 	mean coverage adjusted paired-end = .
+TIME 	2016-04-27 16:39:55 	[quality_alignments] 	step time for completion (seconds) = 169
+
+INFO 	2016-04-27 16:39:57 	[make_tag_directory] 	converting BAM to BED --required for making tag directory
+INFO 	2016-04-27 16:41:53 	[make_tag_directory] 	make tag directory with HOMER
+INFO 	2016-04-27 16:50:19 	[make_tag_directory] 	parse step log to extract generated metadata
+INFO 	2016-04-27 16:50:19 	[make_tag_directory] 	estimated genome size = 3090831069
+INFO 	2016-04-27 16:50:19 	[make_tag_directory] 	estimated average read density per bp = 0.012499
+INFO 	2016-04-27 16:50:19 	[make_tag_directory] 	total tags = 38633510.0
+INFO 	2016-04-27 16:50:19 	[make_tag_directory] 	total_positions = 30216756
+INFO 	2016-04-27 16:50:19 	[make_tag_directory] 	avg. tag length = 49.9
+INFO 	2016-04-27 16:50:19 	[make_tag_directory] 	median tags per position = 1
+INFO 	2016-04-27 16:50:19 	[make_tag_directory] 	avg. tags per position = 1.279
+INFO 	2016-04-27 16:50:19 	[make_tag_directory] 	fragment length estimate = 212
+INFO 	2016-04-27 16:50:19 	[make_tag_directory] 	peak width estimate = 194
+INFO 	2016-04-27 16:50:19 	[make_tag_directory] 	autocorrelation: same strand fold enrichment = 1.1
+INFO 	2016-04-27 16:50:19 	[make_tag_directory] 	autocorrelation: diff strand fold enrichment = 1.1
+INFO 	2016-04-27 16:50:19 	[make_tag_directory] 	autocorrelation: same-to-diff strand fold enrichment = 1.0
+INFO 	2016-04-27 16:50:19 	[make_tag_directory] 	avg. fragment GC% = 40.23
+INFO 	2016-04-27 16:50:19 	[make_tag_directory] 	avg. expected GC% = 40.59
+INFO 	2016-04-27 16:50:43 	[make_tag_directory] 	ChIP-seq metrics calculated with Homer added to metadata
+TIME 	2016-04-27 16:50:43 	[make_tag_directory] 	step time for completion (seconds) = 646
+
+INFO 	2016-04-27 16:50:45 	[make_profiles] 	generate reads per million profile (RPM) fragment profile
+INFO 	2016-04-27 17:35:50 	[make_profiles] 	get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-04-27 17:35:50 	[make_profiles] 	fragment length estimate = 212
+INFO 	2016-04-27 17:35:50 	[make_profiles] 	fragment length correction = 212
+INFO 	2016-04-27 17:35:50 	[make_profiles] 	the correction will be used if the estimate is not reliable
+TIME 	2016-04-27 17:35:52 	[make_profiles] 	step time for completion (seconds) = 2707
+
+INFO 	2016-04-27 17:35:54 	[call_peaks] 	Get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-04-27 17:35:54 	[call_peaks] 	Fragment length (l) is 212 bp (note this is not used if peak caller is zerone)
+INFO 	2016-04-27 17:35:54 	[call_peaks] 	Peak calling with MACS2
+INFO 	2016-04-27 17:35:54 	[call_peaks] 	genome size for homo_sapiens will be used
+INFO 	2016-04-27 17:35:54 	[call_peaks] 	q-value cutoff = 0.05 (default is 0.01)
+INFO 	2016-04-27 17:35:54 	[call_peaks] 	--nomodel (MACS2 will not try to model peak length but use l = 212 instead
+INFO 	2016-04-27 17:35:54 	[call_peaks] 	--call-summits = MACS reanalyzes the shape of signal profile to deconvolve subpeaks within each peak called
+INFO 	2016-04-27 17:35:55 	[call_peaks] 	peak calling with the sample alone (i.e. no input)
+INFO 	2016-04-27 17:40:37 	[call_peaks] 	peaks = 273
+INFO 	2016-04-27 17:40:44 	[call_peaks] 	peak calling without input DNA as control added to metadata
+

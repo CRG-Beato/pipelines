@@ -1,0 +1,48 @@
+
+INFO 	2016-05-04 11:59:04 	[trim_reads_trimmomatic] 	sequencing type = SE
+INFO 	2016-05-04 11:59:04 	[trim_reads_trimmomatic] 	trimming adapter sequences for HiSeq, NextSeq or HiSeq
+INFO 	2016-05-04 11:59:04 	[trim_reads_trimmomatic] 	trimming low-quality reads ends using trimmomatic's recommended practices
+INFO 	2016-05-04 12:55:43 	[trim_reads_trimmomatic] 	parse step log to extract generated metadata
+INFO 	2016-05-04 12:55:43 	[trim_reads_trimmomatic] 	reads after trimming = 175982277
+INFO 	2016-05-04 12:55:43 	[trim_reads_trimmomatic] 	trimmed reads are in /users/GR/mb/jquilez/data/chipseq/samples/PR_T0/fastqs_processed/trimmomatic/single_end
+TIME 	2016-05-04 12:55:43 	[trim_reads_trimmomatic] 	step time for completion (seconds) = 3468
+
+INFO 	2016-05-04 12:55:43 	[align_bwa] 	align single-end reads with BWA
+INFO 	2016-05-04 12:55:43 	[align_bwa] 	alignments are converted to BAM, sorted by genomic coordinates and multi-mappings filtered out
+[main] Version: 0.7.12-r1039
+[main] CMD: /software/mb/el6.3/bwa/bwa-0.7.12/bwa mem -t 8 -M -R @RG\tID:'PR_T0'\tLB:'PR_T0'\tPL:illumina\tPU:'PR_T0'\tSM:'PR_T0' -v 0 /users/GR/mb/jquilez/assemblies/homo_sapiens/hg38_mmtv/ucsc/hg38_mmtv_chr1-22XYMUn.fa /users/GR/mb/jquilez/data/chipseq/samples/PR_T0/fastqs_processed/trimmomatic/single_end/PR_T0_read1.fastq.gz
+[main] Real time: 7366.128 sec; CPU: 56138.177 sec
+[bam_sort_core] merging from 89 files...
+INFO 	2016-05-04 15:49:03 	[align_bwa] 	reads aligned = 175983227
+INFO 	2016-05-04 15:49:03 	[align_bwa] 	reads unique = 148765144
+TIME 	2016-05-04 15:49:32 	[align_bwa] 	step time for completion (seconds) = 10429
+
+INFO 	2016-05-04 15:49:32 	[quality_alignments] 	general QC of the BAM (using qualimap's bamqc)
+INFO 	2016-05-04 15:58:10 	[quality_alignments] 	parse step log to extract generated metadata
+INFO 	2016-05-04 15:58:10 	[quality_alignments] 	percentage duplication = 12.96
+INFO 	2016-05-04 15:58:10 	[quality_alignments] 	median insert size (bp) = 0
+INFO 	2016-05-04 15:58:10 	[quality_alignments] 	mean mapping quality = 43.7303
+INFO 	2016-05-04 15:58:10 	[quality_alignments] 	mean coverage (X) = 2.3999
+INFO 	2016-05-04 15:58:10 	[quality_alignments] 	mean coverage adjusted paired-end = .
+TIME 	2016-05-04 15:58:10 	[quality_alignments] 	step time for completion (seconds) = 518
+
+INFO 	2016-05-04 15:58:10 	[make_tag_directory] 	converting BAM to BED --required for making tag directory
+INFO 	2016-05-04 16:03:59 	[make_tag_directory] 	make tag directory with HOMER
+INFO 	2016-05-04 16:26:11 	[make_tag_directory] 	parse step log to extract generated metadata
+INFO 	2016-05-04 16:26:11 	[make_tag_directory] 	estimated genome size = 3090961323
+INFO 	2016-05-04 16:26:11 	[make_tag_directory] 	estimated average read density per bp = 0.048129
+INFO 	2016-05-04 16:26:11 	[make_tag_directory] 	total tags = 148765144.0
+INFO 	2016-05-04 16:26:11 	[make_tag_directory] 	total_positions = 131301845
+INFO 	2016-05-04 16:26:11 	[make_tag_directory] 	avg. tag length = 49.9
+INFO 	2016-05-04 16:26:11 	[make_tag_directory] 	median tags per position = 1
+INFO 	2016-05-04 16:26:11 	[make_tag_directory] 	avg. tags per position = 1.133
+INFO 	2016-05-04 16:26:11 	[make_tag_directory] 	fragment length estimate = 113
+INFO 	2016-05-04 16:26:11 	[make_tag_directory] 	peak width estimate = 194
+INFO 	2016-05-04 16:26:11 	[make_tag_directory] 	autocorrelation: same strand fold enrichment = 1.1
+INFO 	2016-05-04 16:26:11 	[make_tag_directory] 	autocorrelation: diff strand fold enrichment = 1.1
+INFO 	2016-05-04 16:26:11 	[make_tag_directory] 	autocorrelation: same-to-diff strand fold enrichment = 1.0
+INFO 	2016-05-04 16:26:11 	[make_tag_directory] 	avg. fragment GC% = 42.37
+INFO 	2016-05-04 16:26:11 	[make_tag_directory] 	avg. expected GC% = 40.34
+TIME 	2016-05-04 16:26:11 	[make_tag_directory] 	step time for completion (seconds) = 1681
+
+INFO 	2016-05-04 16:26:11 	[make_profiles] 	generate reads per million profile (RPM) fragment profile

@@ -1,0 +1,275 @@
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/logging/handlers.py", line 77, in emit
+    self.doRollover()
+  File "/usr/lib64/python2.6/logging/handlers.py", line 134, in doRollover
+    os.rename(self.baseFilename, dfn)
+OSError: [Errno 2] No such file or directory
+Error in atexit._run_exitfuncs:
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/atexit.py", line 24, in _run_exitfuncs
+    func(*targs, **kargs)
+  File "/usr/lib64/python2.6/logging/__init__.py", line 1524, in shutdown
+    h.flush()
+  File "/usr/lib64/python2.6/logging/__init__.py", line 770, in flush
+    self.stream.flush()
+ValueError: I/O operation on closed file
+Error in sys.exitfunc:
+Traceback (most recent call last):
+  File "/usr/lib64/python2.6/atexit.py", line 24, in _run_exitfuncs
+    func(*targs, **kargs)
+  File "/usr/lib64/python2.6/logging/__init__.py", line 1524, in shutdown
+    h.flush()
+  File "/usr/lib64/python2.6/logging/__init__.py", line 770, in flush
+    self.stream.flush()
+ValueError: I/O operation on closed file
+
+Traceback (most recent call last):
+  File "/users/GR/mb/jquilez/utils/io_metadata.py", line 101, in <module>
+    tab.upsert(new_data, ['SAMPLE_ID'])
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/table.py", line 183, in upsert
+    return self.insert(row, ensure=ensure, types=types)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/table.py", line 75, in insert
+    res = self.database.executable.execute(self.table.insert(row))
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1991, in execute
+    return connection.execute(statement, *multiparams, **params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) database is locked [SQL: u'INSERT INTO chipseq ("SAMPLE_ID", "PIPELINE_RUN_MODE") VALUES (?, ?)'] [parameters: ('gv_042_01_01_chipseq', 'full')]
+Traceback (most recent call last):
+  File "/users/GR/mb/jquilez/utils/io_metadata.py", line 101, in <module>
+    tab.upsert(new_data, ['SAMPLE_ID'])
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/table.py", line 183, in upsert
+    return self.insert(row, ensure=ensure, types=types)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/table.py", line 75, in insert
+    res = self.database.executable.execute(self.table.insert(row))
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1991, in execute
+    return connection.execute(statement, *multiparams, **params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) database is locked [SQL: u'INSERT INTO chipseq ("SAMPLE_ID", "QUEUE") VALUES (?, ?)'] [parameters: ('gv_042_01_01_chipseq', 'long-sl65')]
+Traceback (most recent call last):
+  File "/users/GR/mb/jquilez/utils/io_metadata.py", line 101, in <module>
+    tab.upsert(new_data, ['SAMPLE_ID'])
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/table.py", line 183, in upsert
+    return self.insert(row, ensure=ensure, types=types)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/table.py", line 75, in insert
+    res = self.database.executable.execute(self.table.insert(row))
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1991, in execute
+    return connection.execute(statement, *multiparams, **params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) database is locked [SQL: u'INSERT INTO chipseq ("SAMPLE_ID", "MEMORY") VALUES (?, ?)'] [parameters: ('gv_042_01_01_chipseq', '60G')]
+Traceback (most recent call last):
+  File "/users/GR/mb/jquilez/utils/io_metadata.py", line 101, in <module>
+    tab.upsert(new_data, ['SAMPLE_ID'])
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/table.py", line 183, in upsert
+    return self.insert(row, ensure=ensure, types=types)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/table.py", line 75, in insert
+    res = self.database.executable.execute(self.table.insert(row))
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1991, in execute
+    return connection.execute(statement, *multiparams, **params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) database is locked [SQL: u'INSERT INTO chipseq ("SAMPLE_ID", "MAX_TIME") VALUES (?, ?)'] [parameters: ('gv_042_01_01_chipseq', '20:00:00')]
+Traceback (most recent call last):
+  File "/users/GR/mb/jquilez/utils/io_metadata.py", line 101, in <module>
+    tab.upsert(new_data, ['SAMPLE_ID'])
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/table.py", line 183, in upsert
+    return self.insert(row, ensure=ensure, types=types)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/table.py", line 75, in insert
+    res = self.database.executable.execute(self.table.insert(row))
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1991, in execute
+    return connection.execute(statement, *multiparams, **params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) database is locked [SQL: u'INSERT INTO chipseq ("SAMPLE_ID", "SLOTS") VALUES (?, ?)'] [parameters: ('gv_042_01_01_chipseq', '8')]
+Traceback (most recent call last):
+  File "/users/GR/mb/jquilez/utils/io_metadata.py", line 101, in <module>
+    tab.upsert(new_data, ['SAMPLE_ID'])
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/table.py", line 183, in upsert
+    return self.insert(row, ensure=ensure, types=types)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/table.py", line 75, in insert
+    res = self.database.executable.execute(self.table.insert(row))
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1991, in execute
+    return connection.execute(statement, *multiparams, **params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) database is locked [SQL: u'INSERT INTO chipseq ("SAMPLE_ID", "ASSEMBLY_VERSION") VALUES (?, ?)'] [parameters: ('gv_042_01_01_chipseq', 'hg38_mmtv')]
+Traceback (most recent call last):
+  File "/users/GR/mb/jquilez/utils/io_metadata.py", line 101, in <module>
+    tab.upsert(new_data, ['SAMPLE_ID'])
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/table.py", line 183, in upsert
+    return self.insert(row, ensure=ensure, types=types)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/table.py", line 75, in insert
+    res = self.database.executable.execute(self.table.insert(row))
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1991, in execute
+    return connection.execute(statement, *multiparams, **params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) database is locked [SQL: u'INSERT INTO chipseq ("SAMPLE_ID", "JOB_NAME") VALUES (?, ?)'] [parameters: ('gv_042_01_01_chipseq', 'chipseq-16.04')]
+INFO 	2016-04-27 15:36:47 	[trim_reads_trimmomatic] 	paths to read1 saved to metadata database
+INFO 	2016-04-27 15:36:47 	[trim_reads_trimmomatic] 	sequencing type = SE
+INFO 	2016-04-27 15:36:47 	[trim_reads_trimmomatic] 	trimming adapter sequences for HiSeq, NextSeq or HiSeq
+INFO 	2016-04-27 15:36:47 	[trim_reads_trimmomatic] 	trimming low-quality reads ends using trimmomatic's recommended practices
+INFO 	2016-04-27 16:08:44 	[trim_reads_trimmomatic] 	parse step log to extract generated metadata
+INFO 	2016-04-27 16:08:44 	[trim_reads_trimmomatic] 	reads after trimming = 94169976
+INFO 	2016-04-27 16:09:02 	[trim_reads_trimmomatic] 	trimmomatic parameters and numbe of trimmed reads added to metadata
+INFO 	2016-04-27 16:09:02 	[trim_reads_trimmomatic] 	trimmed reads are in /users/GR/mb/jquilez/data/chipseq/samples/gv_042_01_01_chipseq/fastqs_processed/trimmomatic/single_end
+TIME 	2016-04-27 16:09:02 	[trim_reads_trimmomatic] 	step time for completion (seconds) = 1988
+
+INFO 	2016-04-27 16:09:04 	[align_bwa] 	align single-end reads with BWA
+INFO 	2016-04-27 16:09:04 	[align_bwa] 	alignments are converted to BAM, sorted by genomic coordinates and multi-mappings filtered out
+[main] Version: 0.7.12-r1039
+[main] CMD: /software/mb/el6.3/bwa/bwa-0.7.12/bwa mem -t 8 -M -R @RG\tID:'gv_042_01_01_chipseq'\tLB:'gv_042_01_01_chipseq'\tPL:illumina\tPU:'gv_042_01_01_chipseq'\tSM:'gv_042_01_01_chipseq' -v 0 /users/GR/mb/jquilez/assemblies/homo_sapiens/hg38_mmtv/ucsc/hg38_mmtv_chr1-22XYMUn.fa /users/GR/mb/jquilez/data/chipseq/samples/gv_042_01_01_chipseq/fastqs_processed/trimmomatic/single_end/gv_042_01_01_chipseq_read1.fastq.gz
+[main] Real time: 3517.878 sec; CPU: 26688.597 sec
+[bam_sort_core] merging from 47 files...
+INFO 	2016-04-27 17:36:13 	[align_bwa] 	reads aligned = 94170002
+INFO 	2016-04-27 17:36:13 	[align_bwa] 	reads unique = 77353664
+INFO 	2016-04-27 17:36:19 	[align_bwa] 	path to genome sequence FASTA and number of (uniquely) aligned reads added to metadata
+TIME 	2016-04-27 17:36:32 	[align_bwa] 	step time for completion (seconds) = 5248
+
+INFO 	2016-04-27 17:36:34 	[quality_alignments] 	general QC of the BAM (using qualimap's bamqc)
+INFO 	2016-04-27 17:40:52 	[quality_alignments] 	parse step log to extract generated metadata
+INFO 	2016-04-27 17:40:52 	[quality_alignments] 	percentage duplication = 46.03
+INFO 	2016-04-27 17:40:52 	[quality_alignments] 	median insert size (bp) = 0
+INFO 	2016-04-27 17:40:52 	[quality_alignments] 	mean mapping quality = 45.2673
+INFO 	2016-04-27 17:40:52 	[quality_alignments] 	mean coverage (X) = 1.15
+INFO 	2016-04-27 17:40:52 	[quality_alignments] 	mean coverage adjusted paired-end = .
+TIME 	2016-04-27 17:41:04 	[quality_alignments] 	step time for completion (seconds) = 270
+
+INFO 	2016-04-27 17:41:06 	[make_tag_directory] 	converting BAM to BED --required for making tag directory
+INFO 	2016-04-27 17:44:17 	[make_tag_directory] 	make tag directory with HOMER
+INFO 	2016-04-27 17:54:56 	[make_tag_directory] 	parse step log to extract generated metadata
+INFO 	2016-04-27 17:54:56 	[make_tag_directory] 	estimated genome size = 3090782692
+INFO 	2016-04-27 17:54:56 	[make_tag_directory] 	estimated average read density per bp = 0.025027
+INFO 	2016-04-27 17:54:56 	[make_tag_directory] 	total tags = 77353664.0
+INFO 	2016-04-27 17:54:56 	[make_tag_directory] 	total_positions = 43775306
+INFO 	2016-04-27 17:54:56 	[make_tag_directory] 	avg. tag length = 46.0
+INFO 	2016-04-27 17:54:56 	[make_tag_directory] 	median tags per position = 1
+INFO 	2016-04-27 17:54:56 	[make_tag_directory] 	avg. tags per position = 1.767
+INFO 	2016-04-27 17:54:56 	[make_tag_directory] 	fragment length estimate = 157
+INFO 	2016-04-27 17:54:56 	[make_tag_directory] 	peak width estimate = 202
+INFO 	2016-04-27 17:54:56 	[make_tag_directory] 	autocorrelation: same strand fold enrichment = 1.4
+INFO 	2016-04-27 17:54:56 	[make_tag_directory] 	autocorrelation: diff strand fold enrichment = 1.4
+INFO 	2016-04-27 17:54:56 	[make_tag_directory] 	autocorrelation: same-to-diff strand fold enrichment = 1.0
+INFO 	2016-04-27 17:54:56 	[make_tag_directory] 	avg. fragment GC% = 48.71
+INFO 	2016-04-27 17:54:56 	[make_tag_directory] 	avg. expected GC% = 40.49
+INFO 	2016-04-27 17:55:18 	[make_tag_directory] 	ChIP-seq metrics calculated with Homer added to metadata
+TIME 	2016-04-27 17:55:18 	[make_tag_directory] 	step time for completion (seconds) = 852
+
+INFO 	2016-04-27 17:55:19 	[make_profiles] 	generate reads per million profile (RPM) fragment profile
+INFO 	2016-04-27 18:47:16 	[make_profiles] 	get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-04-27 18:47:16 	[make_profiles] 	fragment length estimate = 157
+INFO 	2016-04-27 18:47:16 	[make_profiles] 	fragment length correction = 157
+INFO 	2016-04-27 18:47:16 	[make_profiles] 	the correction will be used if the estimate is not reliable
+TIME 	2016-04-27 18:47:18 	[make_profiles] 	step time for completion (seconds) = 3119
+
+INFO 	2016-04-27 18:47:20 	[call_peaks] 	Get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-04-27 18:47:20 	[call_peaks] 	Fragment length (l) is 157 bp (note this is not used if peak caller is zerone)
+INFO 	2016-04-27 18:47:20 	[call_peaks] 	Peak calling with MACS2
+INFO 	2016-04-27 18:47:20 	[call_peaks] 	genome size for homo_sapiens will be used
+INFO 	2016-04-27 18:47:20 	[call_peaks] 	q-value cutoff = 0.05 (default is 0.01)
+INFO 	2016-04-27 18:47:20 	[call_peaks] 	--nomodel (MACS2 will not try to model peak length but use l = 157 instead
+INFO 	2016-04-27 18:47:20 	[call_peaks] 	--call-summits = MACS reanalyzes the shape of signal profile to deconvolve subpeaks within each peak called
+INFO 	2016-04-27 18:47:20 	[call_peaks] 	peak calling with the sample alone (i.e. no input)
+INFO 	2016-04-27 18:57:22 	[call_peaks] 	peaks = 282221
+INFO 	2016-04-27 18:57:28 	[call_peaks] 	peak calling without input DNA as control added to metadata
+

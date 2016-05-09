@@ -361,6 +361,10 @@ align_star() {
 	rm -fr $TMP_DIR
 	message_info $step "alignments are in $ODIR"
 
+	# index BAM
+	rm -f $ODIR/$sample_id.Aligned.sortedByCoord.out.bam.bai
+	$samtools index $ODIR/.Aligned.sortedByCoord.out.bam
+
 	# parse step log to extract generated metadata
 	message_info $step "parse step log to extract generated metadata"
 	# parse
@@ -708,8 +712,7 @@ make_profiles() {
 	step="make_profiles"
 	time0=$(date +"%s")
 
-	message_info $step "make read profiles from STAR alignments"
-	message_info $step "filtering valid pairs (for paired-end data only) and generate reads per million (RPM) profiles"
+	message_info $step "make read per million (RPM) profiles from STAR alignments"
 
 	if [[ $sequencing_type == 'SE' ]]; then
 		IDIR=$STAR/single_end
@@ -732,10 +735,8 @@ make_profiles() {
 	 		ibam=$IDIR/${sample_id}.Aligned.sortedByCoord.out.bam
 	 		orpm=$ODIR/${sample_id}.rpm
  			step_log=$LOGS/${sample_id}_${step}_paired_end.log
- 			tbam=$ODIR/tmp.bam
-	 		$samtools view -bf 0x2 $ibam > $tbam
-	 		$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $tbam --strand --out $orpm --cpu $slots >$step_log 2>&1
-	 		$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $tbam --out $orpm --cpu $slots >$step_log 2>&1
+	 		$perl $bam2wig --bw --bwapp $wigToBigWig --pe --pos mid --rpm --in $tbam --strand --out $orpm --cpu $slots >$step_log 2>&1
+	 		$perl $bam2wig --bw --bwapp $wigToBigWig --pe --pos mid --rpm --in $tbam --out $orpm --cpu $slots >$step_log 2>&1
 	 		rm $tbam $tbam.bai
 	 	else
 			message_error $step "$IDIR not found. Exiting..."
