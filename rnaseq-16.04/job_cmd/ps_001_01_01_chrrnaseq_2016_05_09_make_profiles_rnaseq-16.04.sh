@@ -775,7 +775,7 @@ make_profiles() {
 	 		orpm=$ODIR/${sample_id}.rpm
  			step_log=$LOGS/${sample_id}_${step}_single_end.log
 	 		$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $ibam --strand --out $orpm --cpu $slots >$step_log 2>&1
-	 		$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $ibam --out $orpm --cpu $slots >$step_log 2>&1
+	 		#$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $ibam --out $orpm --cpu $slots >$step_log 2>&1
 	 	else
 			message_error $step "$IDIR not found. Exiting..."
 		fi
@@ -788,7 +788,7 @@ make_profiles() {
 	 		orpm=$ODIR/${sample_id}.rpm
  			step_log=$LOGS/${sample_id}_${step}_paired_end.log
 	 		$perl $bam2wig --bw --bwapp $wigToBigWig --pe --pos mid --rpm --in $ibam --strand --out $orpm --cpu $slots >$step_log 2>&1
-	 		$perl $bam2wig --bw --bwapp $wigToBigWig --pe --pos mid --rpm --in $ibam --out $orpm --cpu $slots >$step_log 2>&1
+	 		#$perl $bam2wig --bw --bwapp $wigToBigWig --pe --pos mid --rpm --in $ibam --out $orpm --cpu $slots >$step_log 2>&1
 	 	else
 			message_error $step "$IDIR not found. Exiting..."
 		fi

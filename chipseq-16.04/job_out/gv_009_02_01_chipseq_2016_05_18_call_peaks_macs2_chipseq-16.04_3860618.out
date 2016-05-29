@@ -1,0 +1,12 @@
+
+INFO 	2016-05-18 09:41:18 	[call_peaks] 	Get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-05-18 09:41:18 	[call_peaks] 	Fragment length (l) is 113 bp (note this is not used if peak caller is zerone)
+INFO 	2016-05-18 09:41:18 	[call_peaks] 	Peak calling with MACS2
+INFO 	2016-05-18 09:41:18 	[call_peaks] 	genome size for homo_sapiens will be used
+INFO 	2016-05-18 09:41:18 	[call_peaks] 	q-value cutoff = 0.05 (default is 0.01)
+INFO 	2016-05-18 09:41:18 	[call_peaks] 	--nomodel (MACS2 will not try to model peak length but use l = 113 instead
+INFO 	2016-05-18 09:41:18 	[call_peaks] 	--call-summits = MACS reanalyzes the shape of signal profile to deconvolve subpeaks within each peak called
+INFO 	2016-05-18 09:41:18 	[call_peaks] 	peak calling with input DNA (/users/GR/mb/jquilez/data/chipseq/samples/T0_roberto_input/alignments/bwa/hg38_mmtv/single_end/T0_roberto_input_sorted_unique.bam) as control
+INFO 	2016-05-18 10:40:54 	[call_peaks] 	peaks = 1245
+INFO 	2016-05-18 10:41:24 	[call_peaks] 	peak calling with input DNA as control added to metadata
+

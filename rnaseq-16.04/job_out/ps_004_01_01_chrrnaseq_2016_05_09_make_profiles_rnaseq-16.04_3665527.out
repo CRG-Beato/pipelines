@@ -1,2 +1,8 @@
 
 INFO 	2016-05-09 15:04:17 	[make_profiles] 	make read per million (RPM) profiles from STAR alignments
+TIME 	2016-05-09 15:34:39 	[make_profiles] 	step time for completion (seconds) = 1822
+
+
+INFO 	2016-05-09 15:34:39 	[pipeline] 	completed successfully
+TIME 	2016-05-09 15:34:39 	[pipeline] 	total time for completion (seconds) = 1822
+

@@ -1,0 +1,5 @@
+
+INFO 	2016-05-29 14:25:34 	[trim_reads_trimmomatic] 	paths to read1 saved to metadata database
+INFO 	2016-05-29 14:25:34 	[trim_reads_trimmomatic] 	sequencing type = SE
+INFO 	2016-05-29 14:25:34 	[trim_reads_trimmomatic] 	trimming adapter sequences for HiSeq, NextSeq or HiSeq
+INFO 	2016-05-29 14:25:34 	[trim_reads_trimmomatic] 	trimming low-quality reads ends using trimmomatic's recommended practices
