@@ -42,3 +42,73 @@ TIME 	2016-05-29 14:35:49 	[trim_reads_trimmomatic] 	step time for completion (s
 
 INFO 	2016-05-29 14:35:50 	[align_star] 	align trimmed single-end reads with STAR (version = STAR_2.5.1b_modified)
 INFO 	2016-05-29 14:35:50 	[align_star] 	using ENCODE standard options for long RNA-seq pipeline
+INFO 	2016-05-29 14:49:32 	[align_star] 	alignments are in /users/GR/mb/jquilez/data/rnaseq/samples/rf_020_01_01_rnaseq/alignments/star/hg38_mmtv/paired_end
+INFO 	2016-05-29 14:50:26 	[align_star] 	parse step log to extract generated metadata
+INFO 	2016-05-29 14:50:26 	[align_star] 	reads unique (number) = 32170399
+INFO 	2016-05-29 14:50:26 	[align_star] 	reads unique (percentage) = 90.13
+INFO 	2016-05-29 14:50:26 	[align_star] 	accepted multi-mappings (number) = 1707805
+INFO 	2016-05-29 14:50:26 	[align_star] 	accepted multi-mappings (percentage) = 4.78
+INFO 	2016-05-29 14:50:26 	[align_star] 	excluded multi-mappings (percentage) = 0.03
+INFO 	2016-05-29 14:50:26 	[align_star] 	reads unmapped too short (percentage) = 4.36
+INFO 	2016-05-29 14:50:26 	[align_star] 	splices (number) = 14788375
+TIME 	2016-05-29 14:51:08 	[align_star] 	step time for completion (seconds) = 918
+
+INFO 	2016-05-29 14:51:10 	[quality_alignments] 	general QC of the BAM (using qualimap's bamqc)
+INFO 	2016-05-29 15:02:28 	[quality_alignments] 	parse step log to extract generated metadata
+INFO 	2016-05-29 15:02:28 	[quality_alignments] 	percentage of overlapping read pais = 17.91694549979907033748
+INFO 	2016-05-29 15:02:28 	[quality_alignments] 	percentage duplication = 37.29
+INFO 	2016-05-29 15:02:28 	[quality_alignments] 	median insert size (bp) = 276
+INFO 	2016-05-29 15:02:28 	[quality_alignments] 	mean mapping quality = 21.4383
+INFO 	2016-05-29 15:02:28 	[quality_alignments] 	mean coverage (X) = 18.1085
+INFO 	2016-05-29 15:02:28 	[quality_alignments] 	mean coverage adjusted paired-end = 17.5299
+
+INFO 	2016-05-29 15:02:39 	[quality_alignments] 	RNAseq-specific QC of the BAM (using qualimap's rnaseq)
+INFO 	2016-05-29 15:12:20 	[quality_alignments] 	parse step log to extract generated metadata
+INFO 	2016-05-29 15:12:20 	[quality_alignments] 	total alignments = 75379612
+INFO 	2016-05-29 15:12:20 	[quality_alignments] 	percentage secondary alignments = 10.11308468926584551801
+INFO 	2016-05-29 15:12:20 	[quality_alignments] 	percentage non-unique alignments = 0
+INFO 	2016-05-29 15:12:20 	[quality_alignments] 	percentage aligned to genes = .06244394041189811377
+INFO 	2016-05-29 15:12:20 	[quality_alignments] 	percentage no feature assigned = 3.76890239233388465836
+INFO 	2016-05-29 15:12:20 	[quality_alignments] 	percentage not aligned = 0
+INFO 	2016-05-29 15:12:20 	[quality_alignments] 	percentage exonic = 1.63
+INFO 	2016-05-29 15:12:20 	[quality_alignments] 	percentage intronic = 73.79
+INFO 	2016-05-29 15:12:20 	[quality_alignments] 	percentage intergenic = 24.58
+INFO 	2016-05-29 15:12:20 	[quality_alignments] 	percentage overlapping exon = 2.65
+TIME 	2016-05-29 15:12:42 	[quality_alignments] 	step time for completion (seconds) = 1292
+
+INFO 	2016-05-29 15:12:44 	[quantification_featurecounts] 	quantifying read counts per gene using featureCounts
+INFO 	2016-05-29 15:12:44 	[quantification_featurecounts] 	using gene models from /users/GR/mb/jquilez/assemblies/homo_sapiens/hg38/gencode/gencode.v24.annotation.gtf
+INFO 	2016-05-29 15:12:44 	[quantification_featurecounts] 	kallisto (transcripts) and featurecounts (genes) quantifications are not directly comparable
+INFO 	2016-05-29 15:12:44 	[quantification_featurecounts] 	even if the *_mmtv version of the assembly is used, gene/transcript models are the same as for *
+INFO 	2016-05-29 15:12:44 	[quantification_featurecounts] 	sequencing type is PE so fragments are counted
+INFO 	2016-05-29 15:25:13 	[quantification_featurecounts] 	quantifications are in /users/GR/mb/jquilez/data/rnaseq/samples/rf_020_01_01_rnaseq/quantifications/featurecounts/hg38_mmtv/paired_end
+INFO 	2016-05-29 15:25:13 	[quantification_featurecounts] 	parse step log to extract generated metadata
+INFO 	2016-05-29 15:25:13 	[quantification_featurecounts] 	total fragments = 37689806
+INFO 	2016-05-29 15:25:13 	[quantification_featurecounts] 	percentage fragments assigned = 4.30050236926133289197
+INFO 	2016-05-29 15:25:13 	[quantification_featurecounts] 	percentage fragments ambiguous = .08318960304544947777
+INFO 	2016-05-29 15:25:13 	[quantification_featurecounts] 	percentage fragments multi-mapping = 14.64429665676708444718
+INFO 	2016-05-29 15:25:13 	[quantification_featurecounts] 	percentage fragments no features = 80.97201137092613318306
+TIME 	2016-05-29 15:25:20 	[quantification_featurecounts] 	step time for completion (seconds) = 756
+
+INFO 	2016-05-29 15:25:22 	[quantification_kallisto] 	performing pseudoalignment and quantifying abundances of transcripts using kallisto, version 0.42.5
+INFO 	2016-05-29 15:25:22 	[quantification_kallisto] 	using /users/GR/mb/jquilez/assemblies/homo_sapiens/hg38/kallisto_index/kallisto_homo_sapiens_hg38_gencode_v24.index as transcriptome reference
+INFO 	2016-05-29 15:25:22 	[quantification_kallisto] 	kallisto (transcripts) and featurecounts (genes) quantifications are not directly comparable
+INFO 	2016-05-29 15:25:22 	[quantification_kallisto] 	even if the *_mmtv version of the assembly is used, gene/transcript models are the same as for *
+INFO 	2016-05-29 15:25:22 	[quantification_kallisto] 	sequence based bias correction is only applied to single-end data, as it fails for paired-end
+INFO 	2016-05-29 15:25:22 	[quantification_kallisto] 	for paired-end data, the fragment length average and standard deviation are inferred from the data
+INFO 	2016-05-29 15:47:53 	[quantification_kallisto] 	converting form HDF5 to text
+INFO 	2016-05-29 15:49:11 	[quantification_kallisto] 	quantifications are in /users/GR/mb/jquilez/data/rnaseq/samples/rf_020_01_01_rnaseq/quantifications/kallisto/hg38_mmtv/paired_end
+INFO 	2016-05-29 15:49:11 	[quantification_kallisto] 	parse step log to extract generated metadata
+INFO 	2016-05-29 15:49:11 	[quantification_kallisto] 	number transcripts quantified = 199169
+INFO 	2016-05-29 15:49:11 	[quantification_kallisto] 	number reads processed = 35691735
+INFO 	2016-05-29 15:49:11 	[quantification_kallisto] 	percentage reads pseudoaligned = 82.93139854366844312836
+INFO 	2016-05-29 15:49:11 	[quantification_kallisto] 	estimated average fragment length (bp) = 219.767
+TIME 	2016-05-29 15:49:20 	[quantification_kallisto] 	step time for completion (seconds) = 1438
+
+INFO 	2016-05-29 15:49:21 	[make_profiles] 	make read per million (RPM) profiles from STAR alignments
+TIME 	2016-05-29 15:53:15 	[make_profiles] 	step time for completion (seconds) = 234
+
+
+INFO 	2016-05-29 15:53:17 	[pipeline] 	completed successfully
+TIME 	2016-05-29 15:53:17 	[pipeline] 	total time for completion (seconds) = 5950
+

@@ -1,0 +1,19 @@
+
+INFO 	2016-06-03 17:40:25 	[quantification_featurecounts] 	quantifying read counts per gene using featureCounts
+INFO 	2016-06-03 17:40:25 	[quantification_featurecounts] 	using gene models from /users/GR/mb/jquilez/assemblies/homo_sapiens/hg38/gencode/gencode.v24.annotation.gtf
+INFO 	2016-06-03 17:40:25 	[quantification_featurecounts] 	kallisto (transcripts) and featurecounts (genes) quantifications are not directly comparable
+INFO 	2016-06-03 17:40:25 	[quantification_featurecounts] 	even if the *_mmtv version of the assembly is used, gene/transcript models are the same as for *
+INFO 	2016-06-03 17:40:25 	[quantification_featurecounts] 	sequencing type is PE so fragments are counted
+INFO 	2016-06-03 18:00:19 	[quantification_featurecounts] 	quantifications are in /users/GR/mb/jquilez/data/rnaseq/samples/rf_023_01_01_rnaseq/quantifications/featurecounts/hg38_mmtv/paired_end
+INFO 	2016-06-03 18:00:19 	[quantification_featurecounts] 	parse step log to extract generated metadata
+INFO 	2016-06-03 18:00:19 	[quantification_featurecounts] 	total fragments = 49587988
+INFO 	2016-06-03 18:00:19 	[quantification_featurecounts] 	percentage fragments assigned = 66.23664585867045059380
+INFO 	2016-06-03 18:00:19 	[quantification_featurecounts] 	percentage fragments ambiguous = 1.59117768601541163557
+INFO 	2016-06-03 18:00:19 	[quantification_featurecounts] 	percentage fragments multi-mapping = 18.79322064851673352828
+INFO 	2016-06-03 18:00:19 	[quantification_featurecounts] 	percentage fragments no features = 13.37895580679740424233
+TIME 	2016-06-03 18:00:24 	[quantification_featurecounts] 	step time for completion (seconds) = 1199
+
+
+INFO 	2016-06-03 18:00:25 	[pipeline] 	completed successfully
+TIME 	2016-06-03 18:00:25 	[pipeline] 	total time for completion (seconds) = 1221
+
