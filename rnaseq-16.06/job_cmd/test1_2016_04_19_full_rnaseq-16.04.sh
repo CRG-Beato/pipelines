@@ -1,3 +1,56 @@
+#!/bin/bash
+#$ -N test1_2016_04_19_full_rnaseq-16.04
+#$ -q long-sl65
+#$ -l virtual_free=60G
+#$ -l h_rt=24:00:00
+#$ -o /users/GR/mb/jquilez/pipelines/rnaseq-16.04/job_out/test1_2016_04_19_full_rnaseq-16.04_$JOB_ID.out
+#$ -e /users/GR/mb/jquilez/pipelines/rnaseq-16.04/job_out/test1_2016_04_19_full_rnaseq-16.04_$JOB_ID.err
+#$ -j y
+#$ -M javier.quilez@crg.eu
+#$ -m abe
+#$ -pe smp 8
+
+submitted_on=2016_04_19
+pipeline_version=16.04
+sample_id=test1
+data_type=chrrnaseq
+pipeline_name=rnaseq
+pipeline_version=16.04
+pipeline_run_mode=full
+io_mode=standard
+CUSTOM_IN=/users/GR/mb/jquilez/pipelines/rnaseq-16.04/test
+CUSTOM_OUT=/users/GR/mb/jquilez/misc/rnaseq
+sample_to_fastqs=sample_to_fastqs.txt
+submit_to_cluster=no
+queue=long-sl65
+memory=60G
+max_time=24:00:00
+slots=8
+email=javier.quilez@crg.eu
+integrate_metadata=no
+sequencing_type=PE
+seedMismatches=2
+palindromeClipThreshold=30
+simpleClipThreshold=12
+leading=3
+trailing=3
+minAdapterLength=1
+keepBothReads=true
+minQual=3
+targetLength=40
+strictness=0.999
+minLength=36
+species=homo_sapiens
+version=hg19
+read_length=50
+n_bootstraps=100
+fragment_length_avg=150
+fragment_length_sd=30
+strand_specific=1
+CUSTOM_OUT=/users/GR/mb/jquilez/misc/rnaseq
+PIPELINE=/users/GR/mb/jquilez/pipelines/rnaseq-16.04
+config=pipelines/rnaseq-16.04/rnaseq.config
+path_job_file=/users/GR/mb/jquilez/pipelines/rnaseq-16.04/job_cmd/test1_2016_04_19_full_rnaseq-16.04.sh
 time_start=$(date +"%s")
 run_date=`date +"%Y-%m-%d-%H-%M"`
 job_name=$pipeline_name-$pipeline_version
@@ -62,7 +115,6 @@ fi
 # tools
 trimmomatic=`which trimmomatic`
 star=`which star`
-qualimap=/software/mb/el6.3/qualimap_v2.2/qualimap
 # + as of 2015-11-03, the `which samtools` version of samtools fails to sort the BAM of some samples
 # Quique mentioned he had a similar problem and recommended me to use the '/software/mb/el6.3/samtools-1.2/samtools'
 # version
@@ -73,16 +125,13 @@ kallisto=`which kallisto`
 htseq_count=`which htseq-count`
 featureCounts=`which featureCounts`
 bamToBed=`which bamToBed`
-perl=`which perl`
-bam2wig=`which bam2wig.pl`
-wigToBigWig=`which wigToBigWig`
 
 # indices and annotation
 chrom_sizes=/users/GR/mb/jquilez/assemblies/$species/$version/ucsc/$version.chrom.sizes.chr1-22XYMUn
 if [[ $version == "hg19" || $version == "hg19_mmtv" ]]; then
 	kallisto_index=/users/GR/mb/jquilez/assemblies/$species/hg19/kallisto_index/kallisto_${species}_hg19_ensGene.index
 	transcripts_gtf=/users/GR/mb/jquilez/assemblies/$species/hg19/gencode/gencode.v19.annotation.gtf
-elif [[ $version == "hg38" || $version == "hg38_mmtv" ]]; then
+elif [[ $version == "hg38" ]]; then
 	kallisto_index=/users/GR/mb/jquilez/assemblies/$species/hg38/kallisto_index/kallisto_${species}_hg38_gencode_v24.index
 	transcripts_gtf=/users/GR/mb/jquilez/assemblies/$species/hg38/gencode/gencode.v24.annotation.gtf
 fi
@@ -113,23 +162,17 @@ main() {
 
 	if [[ $pipeline_run_mode == 'full' ]]; then
 		trim_reads_trimmomatic
-		align_star
-		quality_alignments
-		quantification_featurecounts
-		quantification_kallisto
-		make_profiles
+		#align_star
+		#quantification_featurecounts
+		#quantification_kallisto
+		#make_profiles
 	elif [[ $pipeline_run_mode == 'trim_reads_trimmomatic' ]]; then trim_reads_trimmomatic
 	elif [[ $pipeline_run_mode == 'align_star' ]]; then align_star
-	elif [[ $pipeline_run_mode == 'quality_alignments' ]]; then quality_alignments
 	elif [[ $pipeline_run_mode == 'quantification_featurecounts' ]]; then quantification_featurecounts
 	elif [[ $pipeline_run_mode == 'quantification_kallisto' ]]; then quantification_kallisto
 	elif [[ $pipeline_run_mode == 'make_profiles' ]]; then make_profiles
 	fi
 	echo
-
-	# Final message
-	message_info "pipeline" "completed successfully"
-	message_time_pipeline 	
 
 }
 
@@ -248,7 +291,6 @@ trim_reads_trimmomatic() {
 	message_info $step "trimming adapter sequences for HiSeq, NextSeq or HiSeq"
 	message_info $step "trimming low-quality reads ends using trimmomatic's recommended practices"
 	seqs=$ADAPTERS/TruSeq3-$sequencing_type.fa
-	targetLength=$read_length
 	$trimmomatic $sequencing_type \
  					$params \
  					ILLUMINACLIP:$seqs:$seedMismatches:$palindromeClipThreshold:$simpleClipThreshold:$minAdapterLength:$keepBothReads \
@@ -284,15 +326,6 @@ trim_reads_trimmomatic() {
 	if [[ $sequencing_type == "PE" ]]; then
 		message_info $step "unpaired reads are deleted"
 		rm -fr $UNPAIRED
-	fi
-
-	# data integrity
-	mkdir -p $CHECKSUMS
-	if [[ $sequencing_type == "SE" ]]; then
-		shasum $ifq1 >> $checksums
-	elif [[ $sequencing_type == "PE" ]]; then
-		shasum $ifq1 >> $checksums
-		shasum $ifq2 >> $checksums
 	fi
 
 	message_time_step $step $time0
@@ -361,10 +394,6 @@ align_star() {
 	rm -fr $TMP_DIR
 	message_info $step "alignments are in $ODIR"
 
-	# index BAM
-	rm -f $ODIR/$sample_id.Aligned.sortedByCoord.out.bam.bai
-	$samtools index $ODIR/$sample_id.Aligned.sortedByCoord.out.bam
-
 	# parse step log to extract generated metadata
 	message_info $step "parse step log to extract generated metadata"
 	# parse
@@ -391,17 +420,6 @@ align_star() {
 
 	# update metadata
 	if [[ $integrate_metadata == "yes" ]]; then
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a GENOME_DIR -v $GENOME_DIR 	
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a OUT_FILTER_TYPE -v BySJout 	
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a OUT_FILTER_MULTIMAP_N_MAX -v 20 	
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a ALIGN_SJ_OVERHANG_MIN -v 8 	
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a ALIGN_SJDB_OVERHANG_MIN -v 1 	
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a OUT_FILTER_MISMATCH_N_MAX -v 999 	
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a OUT_FILTER_MISMATCH_N_OVER_L_MAX -v 0.04	
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a ALIGN_INTRON_MIN -v 20 	
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a ALIGN_INTRON_MAX -v 1000000 	
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a ALIGN_MATES_GAP_MAX -v 1000000 	
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a VERSION_STAR -v $star_version 	
 	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a N_READS_UNIQUE -v $n_reads_unique 
 	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_READS_UNIQUE -v $p_reads_unique 
 	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a N_READS_MULTI_MAPPING_ACCEPTED -v $n_reads_multi_mapping_accepted 
@@ -414,142 +432,6 @@ align_star() {
 	# data integrity
 	mkdir -p $CHECKSUMS
 	shasum $ODIR/$sample_id.*bam >> $checksums
-
-	message_time_step $step $time0
-
-}
-
-
-# =================================================================================================
-# Quality control of the mappings
-# =================================================================================================
-
-quality_alignments() {
-
-	step="quality_alignments"
-	time0=$(date +"%s")
-
-	if [[ $sequencing_type == "SE" ]]; then
-		step_log=$LOGS/${sample_id}_${step}_single_end.log
-		ibam=$STAR/single_end/$sample_id.Aligned.sortedByCoord.out.bam
-		BAMQC=$STAR/single_end/qualimap_bamqc
-		RNASEQ=$STAR/single_end/qualimap_rnaseq
-	elif [[ $sequencing_type == "PE" ]]; then
-		step_log=$LOGS/${sample_id}_${step}_paired_end.log
-		ibam=$STAR/paired_end/$sample_id.Aligned.sortedByCoord.out.bam
-		BAMQC=$STAR/paired_end/qualimap_bamqc
-		RNASEQ=$STAR/paired_end/qualimap_rnaseq
-	fi
-
-	# general QC of the BAM (bamqc)
-	if [[ $strand_specific == 0 ]]; then p="non-strand-specific"
-	elif [[ $strand_specific == 1 ]]; then p="forward-stranded"
-	elif [[ $strand_specific == 2 ]]; then p="reverse-stranded"
-	fi
-	message_info $step "general QC of the BAM (using qualimap's bamqc)"
-	$qualimap bamqc --java-mem-size=$memory -bam $ibam -outdir $BAMQC -c -ip -nt $slots -p $p >$step_log 2>&1
-
-	# parse step log to extract generated metadata
-	message_info $step "parse step log to extract generated metadata"
-	genome_results=$BAMQC/genome_results.txt
-	# globals
-	n_mapped_paired_reads=`grep "number of mapped paired reads (first in pair)" $genome_results |cut -f2 -d"=" | sed "s/[ ,]//g"`
-	n_overlapping_read_pairs=`grep "number of overlapping read pairs" $genome_results |cut -f2 -d"=" | sed "s/[ ,]//g"`
-	p_overlapping_read_pairs=`echo "(100 * $n_overlapping_read_pairs) / $n_mapped_paired_reads" | bc -l`
-	p_duplication=`grep "duplication rate" $genome_results | cut -f2 -d"=" | sed "s/[ %]//g"`
-	# insert size
-	median_insert_size=`grep "median insert size" $genome_results | cut -f2 -d"=" | sed "s/[ ,]//g"`
-	# mapping quality
-	mean_mapping_quality=`grep "mean mapping quality" $genome_results | cut -f2 -d"=" | sed "s/[ ,]//g"`
-	# coverage (the paired-end coverage only makes sense for such kind of data)
-	mean_coverage=`grep "mean coverageData" $genome_results | cut -f2 -d"=" | sed "s/[ X]//g"`
-	if [[ $sequencing_type == "SE" ]]; then
-		mean_coverage_paired_end='.'
-	elif [[ $sequencing_type == "PE" ]]; then
-		mean_coverage_paired_end=`grep "paired-end adapted mean coverage" $genome_results | cut -f2 -d"=" | sed "s/[ X]//g"`
-	fi
-	# print values
-	message_info $step "percentage of overlapping read pais = $p_overlapping_read_pairs"
-	message_info $step "percentage duplication = $p_duplication"
-	message_info $step "median insert size (bp) = $median_insert_size"
-	message_info $step "mean mapping quality = $mean_mapping_quality"
-	message_info $step "mean coverage (X) = $mean_coverage"
-	message_info $step "mean coverage adjusted paired-end = $mean_coverage_paired_end"
-
-	# update metadata
-	if [[ $integrate_metadata == "yes" ]]; then
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a N_MAPPED_PAIRED_READS -v $n_mapped_paired_reads
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_OVERLAPPING_READ_PAIRS -v $p_overlapping_read_pairs
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_DUPLICATION -v $p_duplication
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a MEDIAN_INSERT_SIZE -v $median_insert_size
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a MEAN_MAPPING_QUALITY -v $mean_mapping_quality
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a MEAN_COVERAGE -v $mean_coverage
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a MEAN_COVERAGE_PAIRED_END -v $mean_coverage_paired_end
-	fi
-
-	# RNAseq-specific QC
-	if [[ $strand_specific == 0 ]]; then p="non-strand-specific"
-	elif [[ $strand_specific == 1 ]]; then p="strand-specific-forward"
-	elif [[ $strand_specific == 2 ]]; then p="strand-specific-reverse"
-	fi
-	# sequencing type
-	if [[ $sequencing_type == "PE" ]]; then
-		pe="-pe"
-	else
-		pe=""
-	fi
-	echo
-	message_info $step "RNAseq-specific QC of the BAM (using qualimap's rnaseq)"
-	$qualimap rnaseq --java-mem-size=$memory -a proportional -bam $ibam -outdir $RNASEQ -gtf $transcripts_gtf -p $p $pe -s >$step_log 2>&1
-
-	# parse step log to extract generated metadata
-	message_info $step "parse step log to extract generated metadata"
-	rnaseq_qc_results=$RNASEQ/rnaseq_qc_results.txt
-	# reads alignment
-	alignments_total=`grep "total alignments" $rnaseq_qc_results | cut -f2 -d'=' | sed "s/[ ,]//g"`
-	alignments_secondary=`grep "secondary alignments" $rnaseq_qc_results | cut -f2 -d'=' | sed "s/[ ,]//g"`
-	alignments_non_unique=`grep "non-unique alignments" $rnaseq_qc_results | cut -f2 -d'=' | sed "s/[ ,]//g"`
-	alignments_to_genes=`grep "aligned to genes" $rnaseq_qc_results | cut -f2 -d'=' | sed "s/[ ,]//g"`
-	alignments_no_feature_assigned=`grep "no feature assigned" $rnaseq_qc_results | cut -f2 -d'=' | sed "s/[ ,]//g"`
-	not_aligned=`grep "not aligned" $rnaseq_qc_results | cut -f2 -d'=' | sed "s/[ ,]//g"`
-	p_alignments_secondary=`echo "(100 * $alignments_secondary) / $alignments_total" | bc -l`
-	p_alignments_non_unique=`echo "(100 * $alignments_non_unique) / $alignments_total" | bc -l`
-	p_alignments_to_genes=`echo "(100 * $alignments_to_genes) / $alignments_total" | bc -l`
-	p_alignments_no_feature_assigned=`echo "(100 * $alignments_no_feature_assigned) / $alignments_total" | bc -l`
-	p_not_aligned=`echo "(100 * $not_aligned) / $alignments_total" | bc -l`
-	# reads genomic origin
-	p_alignments_exonic=`grep "exonic" $rnaseq_qc_results | cut -f2 -d'(' | sed "s/[,%)]//g"`
-	p_alignments_intronic=`grep "intronic" $rnaseq_qc_results | cut -f2 -d'(' | sed "s/[,%)]//g"`
-	p_alignments_intergenic=`grep "intergenic" $rnaseq_qc_results | cut -f2 -d'(' | sed "s/[,%)]//g"`
-	p_alignments_overlapping_exon=`grep "overlapping exon" $rnaseq_qc_results | cut -f2 -d'(' | sed "s/[,%)]//g"`
-	# print values
-	message_info $step "total alignments = $alignments_total"
-	message_info $step "percentage secondary alignments = $p_alignments_secondary"
-	message_info $step "percentage non-unique alignments = $p_alignments_non_unique"
-	message_info $step "percentage aligned to genes = $p_alignments_to_genes"
-	message_info $step "percentage no feature assigned = $p_alignments_no_feature_assigned"
-	message_info $step "percentage not aligned = $p_not_aligned"
-	message_info $step "percentage exonic = $p_alignments_exonic"
-	message_info $step "percentage intronic = $p_alignments_intronic"
-	message_info $step "percentage intergenic = $p_alignments_intergenic"
-	message_info $step "percentage overlapping exon = $p_alignments_overlapping_exon"
-
-	# update metadata
-	if [[ $integrate_metadata == "yes" ]]; then
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a N_TOTAL_ALIGNMENTS -v $alignments_total
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_ALIGNMENTS_SECONDARY -v $p_alignments_secondary
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_ALIGNMENTS_NON_UNIQUE -v $p_alignments_non_unique
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_ALIGNMENTS_TO_GENES -v $p_alignments_to_genes
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_ALIGNMENTS_NO_FEATURE_ASSIGNED -v $p_alignments_no_feature_assigned
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_NOT_ALIGNED -v $p_not_aligned
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_ALIGNMENTS_EXONIC -v $p_alignments_exonic
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_ALIGNMENTS_INTRONIC -v $p_alignments_intronic
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_ALIGNMENTS_INTERGENIC -v $p_alignments_intergenic
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_ALIGNMENTS_OVERLAPPING_EXON -v $p_alignments_overlapping_exon
-	fi
-
-	# remove log file for this step as this is very big (~40GB!)
-	rm -f $step_log
 
 	message_time_step $step $time0
 
@@ -597,7 +479,7 @@ quantification_featurecounts() {
 					-T $slots \
 					-a $transcripts_gtf \
 					-o $ofile \
-					$ibam >$step_log 2>&1
+					$ibam 2>$step_log
 
 	message_info $step "quantifications are in $ODIR"
 
@@ -605,29 +487,14 @@ quantification_featurecounts() {
 	message_info $step "parse step log to extract generated metadata"
 	# parse
 	log_final=$ODIR/*txt.summary
-	fragments_total=`grep "Total fragments" $step_log | cut -f2 -d':' | sed "s/[ |]//g"`
-	fragments_assigned=`grep "Assigned" $log_final | cut -f2`
-	fragments_ambiguous=`grep "Ambiguity" $log_final | cut -f2`
-	fragments_multimapping=`grep "MultiMapping" $log_final | cut -f2`
-	fragments_no_features=`grep "NoFeatures" $log_final | cut -f2`
-	p_fragments_assigned=`echo "(100 * $fragments_assigned) / $fragments_total" | bc -l`
-	p_fragments_ambiguous=`echo "(100 * $fragments_ambiguous) / $fragments_total" | bc -l`
-	p_fragments_multimapping=`echo "(100 * $fragments_multimapping) / $fragments_total" | bc -l`
-	p_fragments_no_features=`echo "(100 * $fragments_no_features) / $fragments_total" | bc -l`
-	message_info $step "total fragments = $fragments_total"
-	message_info $step "percentage fragments assigned = $p_fragments_assigned"
-	message_info $step "percentage fragments ambiguous = $p_fragments_ambiguous"
-	message_info $step "percentage fragments multi-mapping = $p_fragments_multimapping"
-	message_info $step "percentage fragments no features = $p_fragments_no_features"
-
-	# update metadata
-	if [[ $integrate_metadata == "yes" ]]; then
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a N_FRAGMENTS_TOTAL -v $fragments_total
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_FRAGMENTS_ASSIGNED -v $p_fragments_assigned
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_FRAGMENTS_AMBIGUOUS -v $p_fragments_ambiguous
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_FRAGMENTS_MULTIMAPPING -v $p_fragments_multimapping
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_FRAGMENTS_NO_FEATURES -v $p_fragments_no_features
-	fi
+	assigned=`grep "Assigned" $log_final | cut -f2`
+	ambiguity=`grep "Ambiguity" $log_final | cut -f2`
+	multimapping=`grep "MultiMapping" $log_final | cut -f2`
+	no_features=`grep "NoFeatures" $log_final | cut -f2`
+	message_info $step "assigned = $assigned"
+	message_info $step "ambiguous = $ambiguity"
+	message_info $step "multi-mapping = $multimapping"
+	message_info $step "no features = $no_features"
 
 	message_time_step $step $time0
 
@@ -647,8 +514,7 @@ quantification_kallisto() {
 	# Using the option '--bias' produces an error
 	# this has been reported and it should be fixed in the future:
 	# https://groups.google.com/forum/#!searchin/kallisto-sleuth-users/bias|sort:date/kallisto-sleuth-users/d8nBIxrgESs/GSMKwhhfCgAJ
-	kallisto_version=`$kallisto version`
-	message_info $step "performing pseudoalignment and quantifying abundances of transcripts using $kallisto_version"
+	message_info $step "performing pseudoalignment and quantifying abundances of transcripts using kallisto"
 	message_info $step "using $kallisto_index as transcriptome reference"
 	message_info $step "kallisto (transcripts) and featurecounts (genes) quantifications are not directly comparable"
 	message_info $step "even if the *_mmtv version of the assembly is used, gene/transcript models are the same as for *"
@@ -664,7 +530,7 @@ quantification_kallisto() {
 		ODIR=$KALLISTO_QUANT/paired_end
 		paired1=$PAIRED/${sample_id}_read1.fastq.gz
 		paired2=$PAIRED/${sample_id}_read2.fastq.gz
-		params="$paired1 $paired2 --bias"
+		params="$paired1 $paired2"
 		step_log=$LOGS/${sample_id}_${step}_paired_end.log
 		message_info $step "for paired-end data, the fragment length average and standard deviation are inferred from the data"
 	fi
@@ -678,25 +544,10 @@ quantification_kallisto() {
 
 	# parse step log to extract generated metadata
 	message_info $step "parse step log to extract generated metadata"
-	n_transcripts_target=`grep "number of targets:" $step_log | grep -v ',' |cut -f2 -d':' |sed "s/ //g"`
-	n_reads_processed=`grep "pseudoaligned" $step_log |sed "s/ /;/g" |cut -f3 -d';' |sed "s/,//g"`
-	n_reads_pseudoaligned=`grep "pseudoaligned" $step_log |sed "s/ /;/g" |cut -f5 -d';' |sed "s/,//g"`
-	estimated_average_fragment_length=`grep "estimated average fragment length" $step_log | cut -f2 -d':' | sed "s/[ ,]//g"`
-	p_reads_pseudoaligned=`echo "(100 * $n_reads_pseudoaligned) / $n_reads_processed" | bc -l`
-	message_info $step "number transcripts quantified = $n_transcripts_target"
-	message_info $step "number reads processed = $n_reads_processed"
-	message_info $step "percentage reads pseudoaligned = $p_reads_pseudoaligned"
-	message_info $step "estimated average fragment length (bp) = $estimated_average_fragment_length"
-
-	# update metadata
-	if [[ $integrate_metadata == "yes" ]]; then
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a N_TRANSCRIPTS_TARGET -v $n_transcripts_target
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a N_READS_PROCESSED -v $n_reads_processed
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_READS_PSEUDOALIGNED -v $p_reads_pseudoaligned
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a ESTIMATED_AVERAGE_FRAGMENT_LENGTH -v $estimated_average_fragment_length
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a KALLISTO_VERSION -v $kallisto_version
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a N_BOOTSTRAPS -v $n_bootstraps
-	fi
+	n_target_transcripts=`grep "number of targets:" $step_log | grep -v ',' |cut -f2 -d':' |sed "s/ //g"`
+	n_pseudoaligned=`grep "pseudoaligned" $step_log |sed "s/ /;/g" |cut -f5 -d';' |sed "s/,//g"`
+	message_info $step "transcripts quantified (number) = $n_target_transcripts"
+	message_info $step "reads pseudoaligned (number) = $n_pseudoaligned"
 
 	message_time_step $step $time0
 
@@ -712,7 +563,8 @@ make_profiles() {
 	step="make_profiles"
 	time0=$(date +"%s")
 
-	message_info $step "make read per million (RPM) profiles from STAR alignments"
+	message_info $step "make read profiles from STAR alignments"
+	message_info $step "filtering valid pairs (for paired-end data only) and convert BAM to BED"
 
 	if [[ $sequencing_type == 'SE' ]]; then
 		IDIR=$STAR/single_end
@@ -720,10 +572,9 @@ make_profiles() {
 			ODIR=$PROFILES/single_end
 			mkdir -p $ODIR
 	 		ibam=$IDIR/${sample_id}.Aligned.sortedByCoord.out.bam
-	 		orpm=$ODIR/${sample_id}.rpm
+	 		obed=$ODIR/${sample_id}.bed
  			step_log=$LOGS/${sample_id}_${step}_single_end.log
-	 		#$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $ibam --strand --out $orpm --cpu $slots >$step_log 2>&1
-	 		$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $ibam --out $orpm --cpu $slots >$step_log 2>&1
+	 		$bamToBed -i $ibam > $obed
 	 	else
 			message_error $step "$IDIR not found. Exiting..."
 		fi
@@ -733,14 +584,23 @@ make_profiles() {
 			ODIR=$PROFILES/paired_end
 			mkdir -p $ODIR
 	 		ibam=$IDIR/${sample_id}.Aligned.sortedByCoord.out.bam
-	 		orpm=$ODIR/${sample_id}.rpm
+	 		obed=$ODIR/${sample_id}.bed
  			step_log=$LOGS/${sample_id}_${step}_paired_end.log
-	 		$perl $bam2wig --bw --bwapp $wigToBigWig --pe --pos mid --rpm --in $ibam --strand --out $orpm --cpu $slots >$step_log 2>&1
-	 		#$perl $bam2wig --bw --bwapp $wigToBigWig --pe --pos mid --rpm --in $ibam --out $orpm --cpu $slots >$step_log 2>&1
+	 		$samtools view -bf 0x2 $ibam | $bamToBed -i stdin > $obed
 	 	else
 			message_error $step "$IDIR not found. Exiting..."
 		fi
 	fi
+
+	# convert BED to bigWig (more suitable for UCSC Genome Browser uploads)
+	message_info $step "converting BED to bigBed (more suitable for UCSC Genome Browser uploads)"
+	obb=$ODIR/${sample_id}.bb
+	$bed2bb $obed $chrom_sizes $obb >$step_log 2>&1
+	message_info $step "profiles are in $ODIR"
+
+	# delete intermediate BED
+	message_info $step "delete intermediate BED"
+	rm $obed
 
 	message_time_step $step $time0
 

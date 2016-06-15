@@ -1,3 +1,55 @@
+#!/bin/bash
+#$ -N rf_018_01_01_rnaseq_2016_05_25_full_rnaseq-16.04
+#$ -q long-sl65
+#$ -l virtual_free=40G
+#$ -l h_rt=24:00:00
+#$ -o /users/GR/mb/jquilez/pipelines/rnaseq-16.04/job_out/rf_018_01_01_rnaseq_2016_05_25_full_rnaseq-16.04_$JOB_ID.out
+#$ -e /users/GR/mb/jquilez/pipelines/rnaseq-16.04/job_out/rf_018_01_01_rnaseq_2016_05_25_full_rnaseq-16.04_$JOB_ID.err
+#$ -j y
+#$ -M javier.quilez@crg.eu
+#$ -m abe
+#$ -pe smp 8
+
+submitted_on=2016_05_25
+pipeline_version=16.04
+sample_id=rf_018_01_01_rnaseq
+data_type=chrrnaseq
+pipeline_name=rnaseq
+pipeline_version=16.04
+pipeline_run_mode=full
+io_mode=standard
+CUSTOM_IN=/users/GR/mb/jquilez/pipelines/rnaseq-16.04/test
+CUSTOM_OUT=/users/GR/mb/jquilez/misc/rnaseq/test1_no_threads_1slot
+sample_to_fastqs=sample_to_fastqs.txt
+submit_to_cluster=yes
+queue=long-sl65
+memory=40G
+max_time=24:00:00
+slots=8
+email=javier.quilez@crg.eu
+integrate_metadata=yes
+sequencing_type=PE
+seedMismatches=2
+palindromeClipThreshold=30
+simpleClipThreshold=12
+leading=3
+trailing=3
+minAdapterLength=1
+keepBothReads=true
+minQual=3
+strictness=0.999
+minLength=36
+species=homo_sapiens
+version=hg38_mmtv
+read_length=75
+n_bootstraps=100
+fragment_length_avg=150
+fragment_length_sd=30
+strand_specific=1
+CUSTOM_OUT=/users/GR/mb/jquilez/misc/rnaseq/test1_no_threads_1slot
+PIPELINE=/users/GR/mb/jquilez/pipelines/rnaseq-16.04
+config=pipelines/rnaseq-16.04/rnaseq.config
+path_job_file=/users/GR/mb/jquilez/pipelines/rnaseq-16.04/job_cmd/rf_018_01_01_rnaseq_2016_05_25_full_rnaseq-16.04.sh
 time_start=$(date +"%s")
 run_date=`date +"%Y-%m-%d-%H-%M"`
 job_name=$pipeline_name-$pipeline_version
@@ -82,7 +134,7 @@ chrom_sizes=/users/GR/mb/jquilez/assemblies/$species/$version/ucsc/$version.chro
 if [[ $version == "hg19" || $version == "hg19_mmtv" ]]; then
 	kallisto_index=/users/GR/mb/jquilez/assemblies/$species/hg19/kallisto_index/kallisto_${species}_hg19_ensGene.index
 	transcripts_gtf=/users/GR/mb/jquilez/assemblies/$species/hg19/gencode/gencode.v19.annotation.gtf
-elif [[ $version == "hg38" || $version == "hg38_mmtv" ]]; then
+elif [[ $version == "hg38" ]]; then
 	kallisto_index=/users/GR/mb/jquilez/assemblies/$species/hg38/kallisto_index/kallisto_${species}_hg38_gencode_v24.index
 	transcripts_gtf=/users/GR/mb/jquilez/assemblies/$species/hg38/gencode/gencode.v24.annotation.gtf
 fi
@@ -363,7 +415,7 @@ align_star() {
 
 	# index BAM
 	rm -f $ODIR/$sample_id.Aligned.sortedByCoord.out.bam.bai
-	$samtools index $ODIR/$sample_id.Aligned.sortedByCoord.out.bam
+	$samtools index $ODIR/.Aligned.sortedByCoord.out.bam
 
 	# parse step log to extract generated metadata
 	message_info $step "parse step log to extract generated metadata"
@@ -431,7 +483,7 @@ quality_alignments() {
 
 	if [[ $sequencing_type == "SE" ]]; then
 		step_log=$LOGS/${sample_id}_${step}_single_end.log
-		ibam=$STAR/single_end/$sample_id.Aligned.sortedByCoord.out.bam
+		ibam=$STAR/single_end/$s.Aligned.sortedByCoord.out.bam
 		BAMQC=$STAR/single_end/qualimap_bamqc
 		RNASEQ=$STAR/single_end/qualimap_rnaseq
 	elif [[ $sequencing_type == "PE" ]]; then
@@ -447,7 +499,7 @@ quality_alignments() {
 	elif [[ $strand_specific == 2 ]]; then p="reverse-stranded"
 	fi
 	message_info $step "general QC of the BAM (using qualimap's bamqc)"
-	$qualimap bamqc --java-mem-size=$memory -bam $ibam -outdir $BAMQC -c -ip -nt $slots -p $p >$step_log 2>&1
+	$qualimap bamqc -bam $ibam -outdir $BAMQC -c -ip -nt $slots -p $p >$step_log 2>&1
 
 	# parse step log to extract generated metadata
 	message_info $step "parse step log to extract generated metadata"
@@ -500,7 +552,7 @@ quality_alignments() {
 	fi
 	echo
 	message_info $step "RNAseq-specific QC of the BAM (using qualimap's rnaseq)"
-	$qualimap rnaseq --java-mem-size=$memory -a proportional -bam $ibam -outdir $RNASEQ -gtf $transcripts_gtf -p $p $pe -s >$step_log 2>&1
+	$qualimap rnaseq -a proportional -bam $ibam -outdir $RNASEQ -gtf $transcripts_gtf -p $p $pe -s >$step_log 2>&1
 
 	# parse step log to extract generated metadata
 	message_info $step "parse step log to extract generated metadata"
@@ -722,8 +774,8 @@ make_profiles() {
 	 		ibam=$IDIR/${sample_id}.Aligned.sortedByCoord.out.bam
 	 		orpm=$ODIR/${sample_id}.rpm
  			step_log=$LOGS/${sample_id}_${step}_single_end.log
-	 		#$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $ibam --strand --out $orpm --cpu $slots >$step_log 2>&1
-	 		$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $ibam --out $orpm --cpu $slots >$step_log 2>&1
+	 		$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $ibam --strand --out $orpm --cpu $slots >$step_log 2>&1
+	 		#$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $ibam --out $orpm --cpu $slots >$step_log 2>&1
 	 	else
 			message_error $step "$IDIR not found. Exiting..."
 		fi

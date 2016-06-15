@@ -76,9 +76,10 @@ bamToBed=`which bamToBed`
 perl=`which perl`
 bam2wig=`which bam2wig.pl`
 wigToBigWig=`which wigToBigWig`
+bedGraphToBigWig=`which bedGraphToBigWig`
 
 # indices and annotation
-chrom_sizes=/users/GR/mb/jquilez/assemblies/$species/$version/ucsc/$version.chrom.sizes.chr1-22XYMUn
+chrom_sizes=/users/GR/mb/jquilez/assemblies/$species/$version/ucsc/${version}_chr1-22XYMUn.chrom.sizes
 if [[ $version == "hg19" || $version == "hg19_mmtv" ]]; then
 	kallisto_index=/users/GR/mb/jquilez/assemblies/$species/hg19/kallisto_index/kallisto_${species}_hg19_ensGene.index
 	transcripts_gtf=/users/GR/mb/jquilez/assemblies/$species/hg19/gencode/gencode.v19.annotation.gtf
@@ -117,13 +118,15 @@ main() {
 		quality_alignments
 		quantification_featurecounts
 		quantification_kallisto
-		make_profiles
+		clean_up
+		#make_profiles
 	elif [[ $pipeline_run_mode == 'trim_reads_trimmomatic' ]]; then trim_reads_trimmomatic
 	elif [[ $pipeline_run_mode == 'align_star' ]]; then align_star
 	elif [[ $pipeline_run_mode == 'quality_alignments' ]]; then quality_alignments
 	elif [[ $pipeline_run_mode == 'quantification_featurecounts' ]]; then quantification_featurecounts
 	elif [[ $pipeline_run_mode == 'quantification_kallisto' ]]; then quantification_kallisto
-	elif [[ $pipeline_run_mode == 'make_profiles' ]]; then make_profiles
+	elif [[ $pipeline_run_mode == 'clean_up' ]]; then clean_up
+	#elif [[ $pipeline_run_mode == 'make_profiles' ]]; then make_profiles
 	fi
 	echo
 
@@ -326,20 +329,26 @@ align_star() {
 	# --alignIntronMin 20: ...
 	# --alignIntronMax 1000000: maximum intron length
 	# --outSAMtype BAM SortedByCoordinate = output sorted by coordinate
+	# --outWigType: make read per million profile files. 4 files in total:
+	# forward and reverse
+	# unique alignments and multiple-alignments (provided the latter have less than outFilterMultimapNmax placements)  
 	if [[ $sequencing_type == "SE" ]]; then
 		step_log=$LOGS/${sample_id}_${step}_single_end.log
 		single1=$SINGLE/${sample_id}_read1.fastq.gz
-		ODIR=$STAR/single_end
+		ODIR1=$STAR/single_end
+		ODIR2=$PROFILES/single_end
 		params="$single1"
 	elif [[ $sequencing_type == "PE" ]]; then
 		step_log=$LOGS/${sample_id}_${step}_paired_end.log
 		paired1=$PAIRED/${sample_id}_read1.fastq.gz
 		paired2=$PAIRED/${sample_id}_read2.fastq.gz
-		ODIR=$STAR/paired_end
+		ODIR1=$STAR/paired_end
+		ODIR2=$PROFILES/paired_end
 		params="$paired1 $paired2"
 	fi
-	mkdir -p $ODIR
-	TMP_DIR=$ODIR/my_tmp
+	mkdir -p $ODIR1
+	mkdir -p $ODIR2
+	TMP_DIR=$ODIR1/my_tmp
 	$star \
 		    --genomeDir $GENOME_DIR/ \
 			--genomeLoad NoSharedMemory \
@@ -356,19 +365,42 @@ align_star() {
 			--readFilesIn $params \
 			--outSAMtype BAM SortedByCoordinate \
 			--outTmpDir $TMP_DIR/ \
-			--outFileNamePrefix $ODIR/$sample_id. \
+			--outFileNamePrefix $ODIR1/$sample_id. \
+			--outWigType bedGraph \
 			--readFilesCommand zcat >$step_log 2>&1
 	rm -fr $TMP_DIR
-	message_info $step "alignments are in $ODIR"
+	message_info $step "alignments are in $ODIR1"
 
 	# index BAM
-	rm -f $ODIR/$sample_id.Aligned.sortedByCoord.out.bam.bai
-	$samtools index $ODIR/$sample_id.Aligned.sortedByCoord.out.bam
+	rm -f $ODIR1/$sample_id.Aligned.sortedByCoord.out.bam.bai
+	$samtools index $ODIR1/$sample_id.Aligned.sortedByCoord.out.bam
+
+	# convert bedGraph to bigWig (more suitable for UCSC browser upload)
+	# unique alignments, strand1
+	ibg=$ODIR1/$sample_id.Signal.Unique.str1.out.bg
+	obw=$ODIR2/${sample_id}_unique_strand1_rpm.bw
+	$bedGraphToBigWig $ibg $chrom_sizes $obw
+	rm -f $ibg
+	# unique alignments, strand2
+	ibg=$ODIR1/$sample_id.Signal.Unique.str2.out.bg
+	obw=$ODIR2/${sample_id}_unique_strand2_rpm.bw
+	$bedGraphToBigWig $ibg $chrom_sizes $obw 
+	rm -f $ibg
+	# unique and multi alignments, strand1
+	ibg=$ODIR1/$sample_id.Signal.UniqueMultiple.str1.out.bg
+	obw=$ODIR2/${sample_id}_unique_multiple_strand1_rpm.bw
+	$bedGraphToBigWig $ibg $chrom_sizes $obw
+	rm -f $ibg
+	# unique alignments, strand2
+	ibg=$ODIR1/$sample_id.Signal.UniqueMultiple.str2.out.bg
+	obw=$ODIR2/${sample_id}_unique_multiple_strand2_rpm.bw
+	$bedGraphToBigWig $ibg $chrom_sizes $obw
+	rm -f $ibg
 
 	# parse step log to extract generated metadata
 	message_info $step "parse step log to extract generated metadata"
 	# parse
-	star_log_final=$ODIR/*Log.final.out
+	star_log_final=$ODIR1/*Log.final.out
 	# uniquely mapped reads
 	n_reads_unique=`grep "Uniquely mapped reads number" $star_log_final |cut -f2 -d'|' | sed "s/\t//g"`
 	p_reads_unique=`grep "Uniquely mapped reads %" $star_log_final |cut -f2 -d'|' | sed "s/%//g" | sed "s/\t//g"`
@@ -703,47 +735,66 @@ quantification_kallisto() {
 }
 
 
-# =================================================================================================
-# Make RNA-seq read profiles
-# =================================================================================================
+# # =================================================================================================
+# # Make RNA-seq read profiles
+# # =================================================================================================
 
-make_profiles() {
+# make_profiles() {
 
-	step="make_profiles"
+# 	step="make_profiles"
+# 	time0=$(date +"%s")
+
+# 	message_info $step "make read per million (RPM) profiles from STAR alignments"
+
+# 	if [[ $sequencing_type == 'SE' ]]; then
+# 		IDIR=$STAR/single_end
+# 		if [ -d $IDIR ]; then
+# 			ODIR=$PROFILES/single_end
+# 			mkdir -p $ODIR
+# 	 		ibam=$IDIR/${sample_id}.Aligned.sortedByCoord.out.bam
+# 	 		orpm=$ODIR/${sample_id}.rpm
+#  			step_log=$LOGS/${sample_id}_${step}_single_end.log
+# 	 		#$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $ibam --strand --out $orpm --cpu $slots >$step_log 2>&1
+# 	 		$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $ibam --out $orpm --cpu $slots >$step_log 2>&1
+# 	 	else
+# 			message_error $step "$IDIR not found. Exiting..."
+# 		fi
+# 	elif [[ $sequencing_type == 'PE' ]]; then
+# 		IDIR=$STAR/paired_end
+# 		if [ -d $IDIR ]; then
+# 			ODIR=$PROFILES/paired_end
+# 			mkdir -p $ODIR
+# 	 		ibam=$IDIR/${sample_id}.Aligned.sortedByCoord.out.bam
+# 	 		orpm=$ODIR/${sample_id}.rpm
+#  			step_log=$LOGS/${sample_id}_${step}_paired_end.log
+# 	 		$perl $bam2wig --bw --bwapp $wigToBigWig --pe --pos mid --rpm --in $ibam --strand --out $orpm --cpu $slots >$step_log 2>&1
+# 	 		#$perl $bam2wig --bw --bwapp $wigToBigWig --pe --pos mid --rpm --in $ibam --out $orpm --cpu $slots >$step_log 2>&1
+# 	 	else
+# 			message_error $step "$IDIR not found. Exiting..."
+# 		fi
+# 	fi
+
+# 	message_time_step $step $time0
+
+# }
+
+
+# ========================================================================================
+# Deletes intermediate files
+# ========================================================================================
+
+clean_up() {
+
+	step="clean_up"
 	time0=$(date +"%s")
 
-	message_info $step "make read per million (RPM) profiles from STAR alignments"
-
-	if [[ $sequencing_type == 'SE' ]]; then
-		IDIR=$STAR/single_end
-		if [ -d $IDIR ]; then
-			ODIR=$PROFILES/single_end
-			mkdir -p $ODIR
-	 		ibam=$IDIR/${sample_id}.Aligned.sortedByCoord.out.bam
-	 		orpm=$ODIR/${sample_id}.rpm
- 			step_log=$LOGS/${sample_id}_${step}_single_end.log
-	 		#$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $ibam --strand --out $orpm --cpu $slots >$step_log 2>&1
-	 		$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $ibam --out $orpm --cpu $slots >$step_log 2>&1
-	 	else
-			message_error $step "$IDIR not found. Exiting..."
-		fi
-	elif [[ $sequencing_type == 'PE' ]]; then
-		IDIR=$STAR/paired_end
-		if [ -d $IDIR ]; then
-			ODIR=$PROFILES/paired_end
-			mkdir -p $ODIR
-	 		ibam=$IDIR/${sample_id}.Aligned.sortedByCoord.out.bam
-	 		orpm=$ODIR/${sample_id}.rpm
- 			step_log=$LOGS/${sample_id}_${step}_paired_end.log
-	 		$perl $bam2wig --bw --bwapp $wigToBigWig --pe --pos mid --rpm --in $ibam --strand --out $orpm --cpu $slots >$step_log 2>&1
-	 		#$perl $bam2wig --bw --bwapp $wigToBigWig --pe --pos mid --rpm --in $ibam --out $orpm --cpu $slots >$step_log 2>&1
-	 	else
-			message_error $step "$IDIR not found. Exiting..."
-		fi
-	fi
-
+	message_info $step "deleting the following intermediate files/directories:"
+	message_info $step "$SAMPLE/fastqs_processed/trimmomatic/*/*"
+	message_info $step "$SAMPLE/mapped_reads"
+	rm -f $SAMPLE/fastqs_processed/trimmomatic/*/*
 	message_time_step $step $time0
 
 }
+
 
 main

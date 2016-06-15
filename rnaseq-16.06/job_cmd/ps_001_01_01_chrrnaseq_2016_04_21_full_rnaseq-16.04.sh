@@ -1,3 +1,56 @@
+#!/bin/bash
+#$ -N ps_001_01_01_chrrnaseq_2016_04_21_full_rnaseq-16.04
+#$ -q long-sl65
+#$ -l virtual_free=60G
+#$ -l h_rt=24:00:00
+#$ -o /users/GR/mb/jquilez/pipelines/rnaseq-16.04/job_out/ps_001_01_01_chrrnaseq_2016_04_21_full_rnaseq-16.04_$JOB_ID.out
+#$ -e /users/GR/mb/jquilez/pipelines/rnaseq-16.04/job_out/ps_001_01_01_chrrnaseq_2016_04_21_full_rnaseq-16.04_$JOB_ID.err
+#$ -j y
+#$ -M javier.quilez@crg.eu
+#$ -m abe
+#$ -pe smp 8
+
+submitted_on=2016_04_21
+pipeline_version=16.04
+sample_id=ps_001_01_01_chrrnaseq
+data_type=chrrnaseq
+pipeline_name=rnaseq
+pipeline_version=16.04
+pipeline_run_mode=full
+io_mode=standard
+CUSTOM_IN=/users/GR/mb/jquilez/pipelines/rnaseq-16.04/test
+CUSTOM_OUT=/users/GR/mb/jquilez/misc/rnaseq
+sample_to_fastqs=sample_to_fastqs.txt
+submit_to_cluster=yes
+queue=long-sl65
+memory=60G
+max_time=24:00:00
+slots=8
+email=javier.quilez@crg.eu
+integrate_metadata=yes
+sequencing_type=PE
+seedMismatches=2
+palindromeClipThreshold=30
+simpleClipThreshold=12
+leading=3
+trailing=3
+minAdapterLength=1
+keepBothReads=true
+minQual=3
+targetLength=40
+strictness=0.999
+minLength=36
+species=homo_sapiens
+version=hg19
+read_length=50
+n_bootstraps=100
+fragment_length_avg=150
+fragment_length_sd=30
+strand_specific=1
+CUSTOM_OUT=/users/GR/mb/jquilez/misc/rnaseq
+PIPELINE=/users/GR/mb/jquilez/pipelines/rnaseq-16.04
+config=pipelines/rnaseq-16.04/rnaseq.config
+path_job_file=/users/GR/mb/jquilez/pipelines/rnaseq-16.04/job_cmd/ps_001_01_01_chrrnaseq_2016_04_21_full_rnaseq-16.04.sh
 time_start=$(date +"%s")
 run_date=`date +"%Y-%m-%d-%H-%M"`
 job_name=$pipeline_name-$pipeline_version
@@ -82,7 +135,7 @@ chrom_sizes=/users/GR/mb/jquilez/assemblies/$species/$version/ucsc/$version.chro
 if [[ $version == "hg19" || $version == "hg19_mmtv" ]]; then
 	kallisto_index=/users/GR/mb/jquilez/assemblies/$species/hg19/kallisto_index/kallisto_${species}_hg19_ensGene.index
 	transcripts_gtf=/users/GR/mb/jquilez/assemblies/$species/hg19/gencode/gencode.v19.annotation.gtf
-elif [[ $version == "hg38" || $version == "hg38_mmtv" ]]; then
+elif [[ $version == "hg38" ]]; then
 	kallisto_index=/users/GR/mb/jquilez/assemblies/$species/hg38/kallisto_index/kallisto_${species}_hg38_gencode_v24.index
 	transcripts_gtf=/users/GR/mb/jquilez/assemblies/$species/hg38/gencode/gencode.v24.annotation.gtf
 fi
@@ -248,7 +301,6 @@ trim_reads_trimmomatic() {
 	message_info $step "trimming adapter sequences for HiSeq, NextSeq or HiSeq"
 	message_info $step "trimming low-quality reads ends using trimmomatic's recommended practices"
 	seqs=$ADAPTERS/TruSeq3-$sequencing_type.fa
-	targetLength=$read_length
 	$trimmomatic $sequencing_type \
  					$params \
  					ILLUMINACLIP:$seqs:$seedMismatches:$palindromeClipThreshold:$simpleClipThreshold:$minAdapterLength:$keepBothReads \
@@ -361,10 +413,6 @@ align_star() {
 	rm -fr $TMP_DIR
 	message_info $step "alignments are in $ODIR"
 
-	# index BAM
-	rm -f $ODIR/$sample_id.Aligned.sortedByCoord.out.bam.bai
-	$samtools index $ODIR/$sample_id.Aligned.sortedByCoord.out.bam
-
 	# parse step log to extract generated metadata
 	message_info $step "parse step log to extract generated metadata"
 	# parse
@@ -431,7 +479,7 @@ quality_alignments() {
 
 	if [[ $sequencing_type == "SE" ]]; then
 		step_log=$LOGS/${sample_id}_${step}_single_end.log
-		ibam=$STAR/single_end/$sample_id.Aligned.sortedByCoord.out.bam
+		ibam=$STAR/single_end/$s.Aligned.sortedByCoord.out.bam
 		BAMQC=$STAR/single_end/qualimap_bamqc
 		RNASEQ=$STAR/single_end/qualimap_rnaseq
 	elif [[ $sequencing_type == "PE" ]]; then
@@ -447,7 +495,7 @@ quality_alignments() {
 	elif [[ $strand_specific == 2 ]]; then p="reverse-stranded"
 	fi
 	message_info $step "general QC of the BAM (using qualimap's bamqc)"
-	$qualimap bamqc --java-mem-size=$memory -bam $ibam -outdir $BAMQC -c -ip -nt $slots -p $p >$step_log 2>&1
+	$qualimap bamqc -bam $ibam -outdir $BAMQC -c -ip -nt $slots -p $p >$step_log 2>&1
 
 	# parse step log to extract generated metadata
 	message_info $step "parse step log to extract generated metadata"
@@ -500,7 +548,7 @@ quality_alignments() {
 	fi
 	echo
 	message_info $step "RNAseq-specific QC of the BAM (using qualimap's rnaseq)"
-	$qualimap rnaseq --java-mem-size=$memory -a proportional -bam $ibam -outdir $RNASEQ -gtf $transcripts_gtf -p $p $pe -s >$step_log 2>&1
+	$qualimap rnaseq -a proportional -bam $ibam -outdir $RNASEQ -gtf $transcripts_gtf -p $p $pe -s >$step_log 2>&1
 
 	# parse step log to extract generated metadata
 	message_info $step "parse step log to extract generated metadata"
@@ -548,13 +596,9 @@ quality_alignments() {
 	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_ALIGNMENTS_OVERLAPPING_EXON -v $p_alignments_overlapping_exon
 	fi
 
-	# remove log file for this step as this is very big (~40GB!)
-	rm -f $step_log
-
 	message_time_step $step $time0
 
 }
-
 
 # =================================================================================================
 # Transcript quantification with featureCounts
@@ -712,7 +756,8 @@ make_profiles() {
 	step="make_profiles"
 	time0=$(date +"%s")
 
-	message_info $step "make read per million (RPM) profiles from STAR alignments"
+	message_info $step "make read profiles from STAR alignments"
+	message_info $step "filtering valid pairs (for paired-end data only) and generate reads per million (RPM) profiles"
 
 	if [[ $sequencing_type == 'SE' ]]; then
 		IDIR=$STAR/single_end
@@ -722,7 +767,6 @@ make_profiles() {
 	 		ibam=$IDIR/${sample_id}.Aligned.sortedByCoord.out.bam
 	 		orpm=$ODIR/${sample_id}.rpm
  			step_log=$LOGS/${sample_id}_${step}_single_end.log
-	 		#$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $ibam --strand --out $orpm --cpu $slots >$step_log 2>&1
 	 		$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $ibam --out $orpm --cpu $slots >$step_log 2>&1
 	 	else
 			message_error $step "$IDIR not found. Exiting..."
@@ -735,8 +779,10 @@ make_profiles() {
 	 		ibam=$IDIR/${sample_id}.Aligned.sortedByCoord.out.bam
 	 		orpm=$ODIR/${sample_id}.rpm
  			step_log=$LOGS/${sample_id}_${step}_paired_end.log
-	 		$perl $bam2wig --bw --bwapp $wigToBigWig --pe --pos mid --rpm --in $ibam --strand --out $orpm --cpu $slots >$step_log 2>&1
-	 		#$perl $bam2wig --bw --bwapp $wigToBigWig --pe --pos mid --rpm --in $ibam --out $orpm --cpu $slots >$step_log 2>&1
+ 			tbam=$ODIR/tmp.bam
+	 		$samtools view -bf 0x2 $ibam > $tbam
+	 		$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $tbam --out $orpm --cpu $slots >$step_log 2>&1
+	 		rm $tbam $tbam.bai
 	 	else
 			message_error $step "$IDIR not found. Exiting..."
 		fi
