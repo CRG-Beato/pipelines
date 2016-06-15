@@ -119,14 +119,12 @@ main() {
 		quantification_featurecounts
 		quantification_kallisto
 		clean_up
-		#make_profiles
 	elif [[ $pipeline_run_mode == 'trim_reads_trimmomatic' ]]; then trim_reads_trimmomatic
 	elif [[ $pipeline_run_mode == 'align_star' ]]; then align_star
 	elif [[ $pipeline_run_mode == 'quality_alignments' ]]; then quality_alignments
 	elif [[ $pipeline_run_mode == 'quantification_featurecounts' ]]; then quantification_featurecounts
 	elif [[ $pipeline_run_mode == 'quantification_kallisto' ]]; then quantification_kallisto
 	elif [[ $pipeline_run_mode == 'clean_up' ]]; then clean_up
-	#elif [[ $pipeline_run_mode == 'make_profiles' ]]; then make_profiles
 	fi
 	echo
 
@@ -735,50 +733,6 @@ quantification_kallisto() {
 }
 
 
-# # =================================================================================================
-# # Make RNA-seq read profiles
-# # =================================================================================================
-
-# make_profiles() {
-
-# 	step="make_profiles"
-# 	time0=$(date +"%s")
-
-# 	message_info $step "make read per million (RPM) profiles from STAR alignments"
-
-# 	if [[ $sequencing_type == 'SE' ]]; then
-# 		IDIR=$STAR/single_end
-# 		if [ -d $IDIR ]; then
-# 			ODIR=$PROFILES/single_end
-# 			mkdir -p $ODIR
-# 	 		ibam=$IDIR/${sample_id}.Aligned.sortedByCoord.out.bam
-# 	 		orpm=$ODIR/${sample_id}.rpm
-#  			step_log=$LOGS/${sample_id}_${step}_single_end.log
-# 	 		#$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $ibam --strand --out $orpm --cpu $slots >$step_log 2>&1
-# 	 		$perl $bam2wig --bw --bwapp $wigToBigWig --rpm --in $ibam --out $orpm --cpu $slots >$step_log 2>&1
-# 	 	else
-# 			message_error $step "$IDIR not found. Exiting..."
-# 		fi
-# 	elif [[ $sequencing_type == 'PE' ]]; then
-# 		IDIR=$STAR/paired_end
-# 		if [ -d $IDIR ]; then
-# 			ODIR=$PROFILES/paired_end
-# 			mkdir -p $ODIR
-# 	 		ibam=$IDIR/${sample_id}.Aligned.sortedByCoord.out.bam
-# 	 		orpm=$ODIR/${sample_id}.rpm
-#  			step_log=$LOGS/${sample_id}_${step}_paired_end.log
-# 	 		$perl $bam2wig --bw --bwapp $wigToBigWig --pe --pos mid --rpm --in $ibam --strand --out $orpm --cpu $slots >$step_log 2>&1
-# 	 		#$perl $bam2wig --bw --bwapp $wigToBigWig --pe --pos mid --rpm --in $ibam --out $orpm --cpu $slots >$step_log 2>&1
-# 	 	else
-# 			message_error $step "$IDIR not found. Exiting..."
-# 		fi
-# 	fi
-
-# 	message_time_step $step $time0
-
-# }
-
-
 # ========================================================================================
 # Deletes intermediate files
 # ========================================================================================
@@ -790,7 +744,6 @@ clean_up() {
 
 	message_info $step "deleting the following intermediate files/directories:"
 	message_info $step "$SAMPLE/fastqs_processed/trimmomatic/*/*"
-	message_info $step "$SAMPLE/mapped_reads"
 	rm -f $SAMPLE/fastqs_processed/trimmomatic/*/*
 	message_time_step $step $time0
 
