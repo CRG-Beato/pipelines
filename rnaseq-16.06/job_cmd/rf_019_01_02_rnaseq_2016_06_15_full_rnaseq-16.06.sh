@@ -1,3 +1,55 @@
+#!/bin/bash
+#$ -N rf_019_01_02_rnaseq_2016_06_15_full_rnaseq-16.06
+#$ -q long-sl65
+#$ -l virtual_free=40G
+#$ -l h_rt=24:00:00
+#$ -o /users/GR/mb/jquilez/pipelines/rnaseq-16.06/job_out/rf_019_01_02_rnaseq_2016_06_15_full_rnaseq-16.06_$JOB_ID.out
+#$ -e /users/GR/mb/jquilez/pipelines/rnaseq-16.06/job_out/rf_019_01_02_rnaseq_2016_06_15_full_rnaseq-16.06_$JOB_ID.err
+#$ -j y
+#$ -M javier.quilez@crg.eu
+#$ -m abe
+#$ -pe smp 8
+
+submitted_on=2016_06_15
+pipeline_version=16.06
+sample_id=rf_019_01_02_rnaseq
+data_type=rnaseq
+pipeline_name=rnaseq
+pipeline_version=16.06
+pipeline_run_mode=full
+io_mode=standard
+CUSTOM_IN=/users/GR/mb/jquilez/pipelines/rnaseq-16.06/test
+CUSTOM_OUT=/users/GR/mb/jquilez/misc/rnaseq
+sample_to_fastqs=sample_to_fastqs.txt
+submit_to_cluster=yes
+queue=long-sl65
+memory=40G
+max_time=24:00:00
+slots=8
+email=javier.quilez@crg.eu
+integrate_metadata=yes
+sequencing_type=PE
+seedMismatches=2
+palindromeClipThreshold=30
+simpleClipThreshold=12
+leading=3
+trailing=3
+minAdapterLength=1
+keepBothReads=true
+minQual=3
+strictness=0.999
+minLength=36
+species=homo_sapiens
+version=hg38_mmtv
+read_length=50
+n_bootstraps=100
+fragment_length_avg=150
+fragment_length_sd=30
+strand_specific=2
+CUSTOM_OUT=/users/GR/mb/jquilez/misc/rnaseq
+PIPELINE=/users/GR/mb/jquilez/pipelines/rnaseq-16.06
+config=pipelines/rnaseq-16.06/rnaseq.config
+path_job_file=/users/GR/mb/jquilez/pipelines/rnaseq-16.06/job_cmd/rf_019_01_02_rnaseq_2016_06_15_full_rnaseq-16.06.sh
 time_start=$(date +"%s")
 run_date=`date +"%Y-%m-%d-%H-%M"`
 job_name=$pipeline_name-$pipeline_version
@@ -443,7 +495,7 @@ align_star() {
 
 	# data integrity
 	mkdir -p $CHECKSUMS
-	shasum $ODIR1/$sample_id.*bam >> $checksums
+	shasum $ODIR/$sample_id.*bam >> $checksums
 
 	message_time_step $step $time0
 
