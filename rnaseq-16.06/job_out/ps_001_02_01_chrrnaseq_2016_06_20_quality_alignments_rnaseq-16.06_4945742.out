@@ -1,0 +1,28 @@
+
+INFO 	2016-06-20 09:41:31 	[quality_alignments] 	general QC of the BAM (using qualimap's bamqc)
+INFO 	2016-06-20 12:24:15 	[quality_alignments] 	parse step log to extract generated metadata
+INFO 	2016-06-20 12:24:15 	[quality_alignments] 	percentage of overlapping read pais = 1.17927314955729776993
+INFO 	2016-06-20 12:24:15 	[quality_alignments] 	percentage duplication = 11.49
+INFO 	2016-06-20 12:24:15 	[quality_alignments] 	median insert size (bp) = 171
+INFO 	2016-06-20 12:24:15 	[quality_alignments] 	mean mapping quality = 124.3335
+INFO 	2016-06-20 12:24:15 	[quality_alignments] 	mean coverage (X) = 10.8685
+INFO 	2016-06-20 12:24:15 	[quality_alignments] 	mean coverage adjusted paired-end = 10.8542
+
+INFO 	2016-06-20 12:24:32 	[quality_alignments] 	RNAseq-specific QC of the BAM (using qualimap's rnaseq)
+INFO 	2016-06-20 12:41:59 	[quality_alignments] 	parse step log to extract generated metadata
+INFO 	2016-06-20 12:42:00 	[quality_alignments] 	total alignments = 467355676
+INFO 	2016-06-20 12:42:00 	[quality_alignments] 	percentage secondary alignments = 48.10589183900272134493
+INFO 	2016-06-20 12:42:00 	[quality_alignments] 	percentage non-unique alignments = 0
+INFO 	2016-06-20 12:42:00 	[quality_alignments] 	percentage aligned to genes = .03831000867099771780
+INFO 	2016-06-20 12:42:00 	[quality_alignments] 	percentage no feature assigned = 2.37006044193202437965
+INFO 	2016-06-20 12:42:00 	[quality_alignments] 	percentage not aligned = 0
+INFO 	2016-06-20 12:42:00 	[quality_alignments] 	percentage exonic = 1.59
+INFO 	2016-06-20 12:42:00 	[quality_alignments] 	percentage intronic = 33.03
+INFO 	2016-06-20 12:42:00 	[quality_alignments] 	percentage intergenic = 65.38
+INFO 	2016-06-20 12:42:00 	[quality_alignments] 	percentage overlapping exon = 0.52
+TIME 	2016-06-20 12:42:20 	[quality_alignments] 	step time for completion (seconds) = 10849
+
+
+INFO 	2016-06-20 12:42:22 	[pipeline] 	completed successfully
+TIME 	2016-06-20 12:42:22 	[pipeline] 	total time for completion (seconds) = 10871
+

@@ -1,0 +1,172 @@
+
+Traceback (most recent call last):
+  File "/users/GR/mb/jquilez/utils/io_metadata.py", line 101, in <module>
+    tab.upsert(new_data, ['SAMPLE_ID'])
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/table.py", line 172, in upsert
+    row_count = self.update(row, keys, ensure=ensure, types=types)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/table.py", line 145, in update
+    rp = self.database.executable.execute(stmt)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1991, in execute
+    return connection.execute(statement, *multiparams, **params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1166, in _execute_context
+    self._root._commit_impl(autocommit=True)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 693, in _commit_impl
+    self.connection._reset_agent is self.__transaction:
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 318, in connection
+    self._handle_dbapi_exception(e, None, None, None, None)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1344, in _handle_dbapi_exception
+    util.reraise(*exc_info)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 316, in connection
+    return self._revalidate_connection()
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 396, in _revalidate_connection
+    raise exc.ResourceClosedError("This Connection is closed")
+sqlalchemy.exc.ResourceClosedError: This Connection is closed
+Traceback (most recent call last):
+  File "/users/GR/mb/jquilez/utils/io_metadata.py", line 101, in <module>
+    tab.upsert(new_data, ['SAMPLE_ID'])
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/table.py", line 172, in upsert
+    row_count = self.update(row, keys, ensure=ensure, types=types)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/table.py", line 145, in update
+    rp = self.database.executable.execute(stmt)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1991, in execute
+    return connection.execute(statement, *multiparams, **params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1166, in _execute_context
+    self._root._commit_impl(autocommit=True)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 693, in _commit_impl
+    self.connection._reset_agent is self.__transaction:
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 318, in connection
+    self._handle_dbapi_exception(e, None, None, None, None)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1344, in _handle_dbapi_exception
+    util.reraise(*exc_info)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 316, in connection
+    return self._revalidate_connection()
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 396, in _revalidate_connection
+    raise exc.ResourceClosedError("This Connection is closed")
+sqlalchemy.exc.ResourceClosedError: This Connection is closed
+Traceback (most recent call last):
+  File "/users/GR/mb/jquilez/utils/io_metadata.py", line 33, in <module>
+    db = dataset.connect('sqlite:///%s' % metadata)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/__init__.py", line 42, in connect
+    row_type=row_type)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/database.py", line 50, in __init__
+    self.metadata.reflect(self.engine, views=reflect_views)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/sql/schema.py", line 3612, in reflect
+    bind.engine.table_names(schema, connection=conn))
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 2055, in table_names
+    return self.dialect.get_table_names(conn, schema)
+  File "<string>", line 2, in get_table_names
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/reflection.py", line 42, in cache
+    return fn(self, con, *args, **kw)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/dialects/sqlite/base.py", line 1106, in get_table_names
+    rs = connection.execute(s)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 906, in execute
+    return self._execute_text(object, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1054, in _execute_text
+    statement, parameters
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1146, in _execute_context
+    context)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1341, in _handle_dbapi_exception
+    exc_info
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1139, in _execute_context
+    context)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/default.py", line 450, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) database is locked [SQL: "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name"]
+INFO 	2016-06-17 15:18:45 	[trim_reads_trimmomatic] 	paths to read1 and read2 saved to metadata database
+INFO 	2016-06-17 15:18:45 	[trim_reads_trimmomatic] 	sequencing type = PE
+INFO 	2016-06-17 15:18:45 	[trim_reads_trimmomatic] 	trimming adapter sequences for HiSeq, NextSeq or HiSeq
+INFO 	2016-06-17 15:18:45 	[trim_reads_trimmomatic] 	trimming low-quality reads ends using trimmomatic's recommended practices
+INFO 	2016-06-17 16:04:13 	[trim_reads_trimmomatic] 	parse step log to extract generated metadata
+INFO 	2016-06-17 16:04:13 	[trim_reads_trimmomatic] 	reads after trimming = 136525241
+INFO 	2016-06-17 16:04:50 	[trim_reads_trimmomatic] 	trimmomatic parameters and numbe of trimmed reads added to metadata
+INFO 	2016-06-17 16:04:50 	[trim_reads_trimmomatic] 	trimmed reads are in /users/GR/mb/jquilez/data/chrrnaseq/samples/ps_004_01_01_chrrnaseq/fastqs_processed/trimmomatic/paired_end
+INFO 	2016-06-17 16:04:50 	[trim_reads_trimmomatic] 	unpaired reads are deleted
+TIME 	2016-06-17 16:05:40 	[trim_reads_trimmomatic] 	step time for completion (seconds) = 2821
+
+INFO 	2016-06-17 16:05:44 	[align_star] 	align trimmed single-end reads with STAR (version = STAR_2.5.1b_modified)
+INFO 	2016-06-17 16:05:44 	[align_star] 	using ENCODE standard options for long RNA-seq pipeline
+INFO 	2016-06-17 17:34:10 	[align_star] 	alignments are in /users/GR/mb/jquilez/data/chrrnaseq/samples/ps_004_01_01_chrrnaseq/alignments/star/hg19/paired_end
+INFO 	2016-06-17 17:49:31 	[align_star] 	parse step log to extract generated metadata
+INFO 	2016-06-17 17:49:31 	[align_star] 	reads unique (number) = 67728097
+INFO 	2016-06-17 17:49:31 	[align_star] 	reads unique (percentage) = 49.61
+INFO 	2016-06-17 17:49:31 	[align_star] 	accepted multi-mappings (number) = 17870507
+INFO 	2016-06-17 17:49:31 	[align_star] 	accepted multi-mappings (percentage) = 13.09
+INFO 	2016-06-17 17:49:31 	[align_star] 	excluded multi-mappings (percentage) = 1.38
+INFO 	2016-06-17 17:49:31 	[align_star] 	reads unmapped too short (percentage) = 31.47
+INFO 	2016-06-17 17:49:31 	[align_star] 	splices (number) = 515637
+TIME 	2016-06-17 17:51:07 	[align_star] 	step time for completion (seconds) = 6323
+
+INFO 	2016-06-17 17:51:10 	[quality_alignments] 	general QC of the BAM (using qualimap's bamqc)
+INFO 	2016-06-17 18:23:23 	[quality_alignments] 	parse step log to extract generated metadata
+INFO 	2016-06-17 18:23:23 	[quality_alignments] 	percentage of overlapping read pais = 1.02271396163381134215
+INFO 	2016-06-17 18:23:23 	[quality_alignments] 	percentage duplication = 25.67
+INFO 	2016-06-17 18:23:23 	[quality_alignments] 	median insert size (bp) = 214
+INFO 	2016-06-17 18:23:23 	[quality_alignments] 	mean mapping quality = 107.9864
+INFO 	2016-06-17 18:23:23 	[quality_alignments] 	mean coverage (X) = 27.4091
+INFO 	2016-06-17 18:23:23 	[quality_alignments] 	mean coverage adjusted paired-end = 27.4009
+
+INFO 	2016-06-17 18:23:49 	[quality_alignments] 	RNAseq-specific QC of the BAM (using qualimap's rnaseq)
+INFO 	2016-06-17 18:49:54 	[quality_alignments] 	parse step log to extract generated metadata
+INFO 	2016-06-17 18:49:54 	[quality_alignments] 	total alignments = 304923382
+INFO 	2016-06-17 18:49:54 	[quality_alignments] 	percentage secondary alignments = 43.85566404350060632608
+INFO 	2016-06-17 18:49:54 	[quality_alignments] 	percentage non-unique alignments = 0
+INFO 	2016-06-17 18:49:54 	[quality_alignments] 	percentage aligned to genes = .06608282994840979430
+INFO 	2016-06-17 18:49:54 	[quality_alignments] 	percentage no feature assigned = 11.98622610056187819666
+INFO 	2016-06-17 18:49:54 	[quality_alignments] 	percentage not aligned = 0
+INFO 	2016-06-17 18:49:54 	[quality_alignments] 	percentage exonic = 0.55
+INFO 	2016-06-17 18:49:54 	[quality_alignments] 	percentage intronic = 10.9
+INFO 	2016-06-17 18:49:54 	[quality_alignments] 	percentage intergenic = 88.55
+INFO 	2016-06-17 18:49:54 	[quality_alignments] 	percentage overlapping exon = 0.14
+TIME 	2016-06-17 18:50:15 	[quality_alignments] 	step time for completion (seconds) = 3545
+
+INFO 	2016-06-17 18:50:16 	[quantification_featurecounts] 	quantifying read counts per gene using featureCounts
+INFO 	2016-06-17 18:50:16 	[quantification_featurecounts] 	using gene models from /users/GR/mb/jquilez/assemblies/homo_sapiens/hg19/gencode/gencode.v19.annotation.gtf
+INFO 	2016-06-17 18:50:16 	[quantification_featurecounts] 	kallisto (transcripts) and featurecounts (genes) quantifications are not directly comparable
+INFO 	2016-06-17 18:50:16 	[quantification_featurecounts] 	even if the *_mmtv version of the assembly is used, gene/transcript models are the same as for *
+INFO 	2016-06-17 18:50:16 	[quantification_featurecounts] 	sequencing type is PE so fragments are counted
+INFO 	2016-06-17 19:39:54 	[quantification_featurecounts] 	quantifications are in /users/GR/mb/jquilez/data/chrrnaseq/samples/ps_004_01_01_chrrnaseq/quantifications/featurecounts/hg19/paired_end
+INFO 	2016-06-17 19:39:54 	[quantification_featurecounts] 	parse step log to extract generated metadata
+INFO 	2016-06-17 19:39:54 	[quantification_featurecounts] 	total fragments = 152461691
+INFO 	2016-06-17 19:39:54 	[quantification_featurecounts] 	percentage fragments assigned = 2.92103083127944579861
+INFO 	2016-06-17 19:39:54 	[quantification_featurecounts] 	percentage fragments ambiguous = .05229772769606759772
+INFO 	2016-06-17 19:39:54 	[quantification_featurecounts] 	percentage fragments multi-mapping = 55.57697375926389272436
+INFO 	2016-06-17 19:39:54 	[quantification_featurecounts] 	percentage fragments no features = 41.44969768176059387928
+TIME 	2016-06-17 19:40:05 	[quantification_featurecounts] 	step time for completion (seconds) = 2989
+
+INFO 	2016-06-17 19:40:06 	[quantification_kallisto] 	performing pseudoalignment and quantifying abundances of transcripts using kallisto, version 0.42.5
+INFO 	2016-06-17 19:40:06 	[quantification_kallisto] 	using /users/GR/mb/jquilez/assemblies/homo_sapiens/hg19/kallisto_index/kallisto_homo_sapiens_hg19_ensGene.index as transcriptome reference
+INFO 	2016-06-17 19:40:06 	[quantification_kallisto] 	kallisto (transcripts) and featurecounts (genes) quantifications are not directly comparable
+INFO 	2016-06-17 19:40:06 	[quantification_kallisto] 	even if the *_mmtv version of the assembly is used, gene/transcript models are the same as for *
+INFO 	2016-06-17 19:40:06 	[quantification_kallisto] 	sequence based bias correction is only applied to single-end data, as it fails for paired-end
+INFO 	2016-06-17 19:40:06 	[quantification_kallisto] 	for paired-end data, the fragment length average and standard deviation are inferred from the data
+INFO 	2016-06-17 20:31:05 	[quantification_kallisto] 	converting form HDF5 to text
+INFO 	2016-06-17 20:32:24 	[quantification_kallisto] 	quantifications are in /users/GR/mb/jquilez/data/chrrnaseq/samples/ps_004_01_01_chrrnaseq/quantifications/kallisto/hg19/paired_end
+INFO 	2016-06-17 20:32:24 	[quantification_kallisto] 	parse step log to extract generated metadata
+INFO 	2016-06-17 20:32:24 	[quantification_kallisto] 	number transcripts quantified = 204940
+INFO 	2016-06-17 20:32:24 	[quantification_kallisto] 	number reads processed = 136525241
+INFO 	2016-06-17 20:32:24 	[quantification_kallisto] 	percentage reads pseudoaligned = 25.47985027911432143159
+INFO 	2016-06-17 20:32:24 	[quantification_kallisto] 	estimated average fragment length (bp) = 198.32
+TIME 	2016-06-17 20:32:49 	[quantification_kallisto] 	step time for completion (seconds) = 3163
+
+INFO 	2016-06-17 20:32:51 	[clean_up] 	deleting the following intermediate files/directories:
+INFO 	2016-06-17 20:32:51 	[clean_up] 	/users/GR/mb/jquilez/data/chrrnaseq/samples/ps_004_01_01_chrrnaseq/fastqs_processed/trimmomatic/*/*
+TIME 	2016-06-17 20:32:52 	[clean_up] 	step time for completion (seconds) = 1
+
+
+INFO 	2016-06-17 20:32:54 	[pipeline] 	completed successfully
+TIME 	2016-06-17 20:32:54 	[pipeline] 	total time for completion (seconds) = 19127
+

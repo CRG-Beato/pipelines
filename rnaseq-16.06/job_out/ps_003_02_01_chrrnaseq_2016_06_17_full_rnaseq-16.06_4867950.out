@@ -1,0 +1,113 @@
+
+Traceback (most recent call last):
+  File "/users/GR/mb/jquilez/utils/io_metadata.py", line 108, in <module>
+    tab.upsert(new_data, ['JOB_ID'])
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/table.py", line 172, in upsert
+    row_count = self.update(row, keys, ensure=ensure, types=types)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/dataset/persistence/table.py", line 145, in update
+    rp = self.database.executable.execute(stmt)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1991, in execute
+    return connection.execute(statement, *multiparams, **params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 914, in execute
+    return meth(self, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/sql/elements.py", line 323, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1010, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1166, in _execute_context
+    self._root._commit_impl(autocommit=True)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 693, in _commit_impl
+    self.connection._reset_agent is self.__transaction:
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 318, in connection
+    self._handle_dbapi_exception(e, None, None, None, None)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 1344, in _handle_dbapi_exception
+    util.reraise(*exc_info)
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 316, in connection
+    return self._revalidate_connection()
+  File "/nfs/software/mb/el6.3/python/envs/.virtualenvs/cpython279/lib/python2.7/site-packages/sqlalchemy/engine/base.py", line 396, in _revalidate_connection
+    raise exc.ResourceClosedError("This Connection is closed")
+sqlalchemy.exc.ResourceClosedError: This Connection is closed
+INFO 	2016-06-17 15:11:29 	[trim_reads_trimmomatic] 	paths to read1 and read2 saved to metadata database
+INFO 	2016-06-17 15:11:29 	[trim_reads_trimmomatic] 	sequencing type = PE
+INFO 	2016-06-17 15:11:29 	[trim_reads_trimmomatic] 	trimming adapter sequences for HiSeq, NextSeq or HiSeq
+INFO 	2016-06-17 15:11:29 	[trim_reads_trimmomatic] 	trimming low-quality reads ends using trimmomatic's recommended practices
+INFO 	2016-06-17 16:16:29 	[trim_reads_trimmomatic] 	parse step log to extract generated metadata
+INFO 	2016-06-17 16:16:29 	[trim_reads_trimmomatic] 	reads after trimming = 195042273
+INFO 	2016-06-17 16:16:48 	[trim_reads_trimmomatic] 	trimmomatic parameters and numbe of trimmed reads added to metadata
+INFO 	2016-06-17 16:16:48 	[trim_reads_trimmomatic] 	trimmed reads are in /users/GR/mb/jquilez/data/chrrnaseq/samples/ps_003_02_01_chrrnaseq/fastqs_processed/trimmomatic/paired_end
+INFO 	2016-06-17 16:16:48 	[trim_reads_trimmomatic] 	unpaired reads are deleted
+TIME 	2016-06-17 16:17:53 	[trim_reads_trimmomatic] 	step time for completion (seconds) = 3987
+
+INFO 	2016-06-17 16:17:56 	[align_star] 	align trimmed single-end reads with STAR (version = STAR_2.5.1b_modified)
+INFO 	2016-06-17 16:17:56 	[align_star] 	using ENCODE standard options for long RNA-seq pipeline
+INFO 	2016-06-17 18:14:47 	[align_star] 	alignments are in /users/GR/mb/jquilez/data/chrrnaseq/samples/ps_003_02_01_chrrnaseq/alignments/star/hg19/paired_end
+INFO 	2016-06-17 18:36:36 	[align_star] 	parse step log to extract generated metadata
+INFO 	2016-06-17 18:36:37 	[align_star] 	reads unique (number) = 95715926
+INFO 	2016-06-17 18:36:37 	[align_star] 	reads unique (percentage) = 49.07
+INFO 	2016-06-17 18:36:37 	[align_star] 	accepted multi-mappings (number) = 26576298
+INFO 	2016-06-17 18:36:37 	[align_star] 	accepted multi-mappings (percentage) = 13.63
+INFO 	2016-06-17 18:36:37 	[align_star] 	excluded multi-mappings (percentage) = 1.40
+INFO 	2016-06-17 18:36:37 	[align_star] 	reads unmapped too short (percentage) = 30.99
+INFO 	2016-06-17 18:36:37 	[align_star] 	splices (number) = 237706
+TIME 	2016-06-17 18:38:49 	[align_star] 	step time for completion (seconds) = 8453
+
+INFO 	2016-06-17 18:38:51 	[quality_alignments] 	general QC of the BAM (using qualimap's bamqc)
+INFO 	2016-06-17 19:24:49 	[quality_alignments] 	parse step log to extract generated metadata
+INFO 	2016-06-17 19:24:50 	[quality_alignments] 	percentage of overlapping read pais = 4.96824272215326059075
+INFO 	2016-06-17 19:24:50 	[quality_alignments] 	percentage duplication = 26.95
+INFO 	2016-06-17 19:24:50 	[quality_alignments] 	median insert size (bp) = 181
+INFO 	2016-06-17 19:24:50 	[quality_alignments] 	mean mapping quality = 114.4404
+INFO 	2016-06-17 19:24:50 	[quality_alignments] 	mean coverage (X) = 38.9618
+INFO 	2016-06-17 19:24:50 	[quality_alignments] 	mean coverage adjusted paired-end = 38.914
+
+INFO 	2016-06-17 19:25:04 	[quality_alignments] 	RNAseq-specific QC of the BAM (using qualimap's rnaseq)
+INFO 	2016-06-17 20:00:10 	[quality_alignments] 	parse step log to extract generated metadata
+INFO 	2016-06-17 20:00:10 	[quality_alignments] 	total alignments = 436302194
+INFO 	2016-06-17 20:00:10 	[quality_alignments] 	percentage secondary alignments = 43.94150399344542374682
+INFO 	2016-06-17 20:00:10 	[quality_alignments] 	percentage non-unique alignments = 0
+INFO 	2016-06-17 20:00:10 	[quality_alignments] 	percentage aligned to genes = .04695277787211860777
+INFO 	2016-06-17 20:00:10 	[quality_alignments] 	percentage no feature assigned = 11.68837211943976609936
+INFO 	2016-06-17 20:00:10 	[quality_alignments] 	percentage not aligned = 0
+INFO 	2016-06-17 20:00:10 	[quality_alignments] 	percentage exonic = 0.4
+INFO 	2016-06-17 20:00:10 	[quality_alignments] 	percentage intronic = 11.38
+INFO 	2016-06-17 20:00:10 	[quality_alignments] 	percentage intergenic = 88.22
+INFO 	2016-06-17 20:00:10 	[quality_alignments] 	percentage overlapping exon = 0.13
+TIME 	2016-06-17 20:00:32 	[quality_alignments] 	step time for completion (seconds) = 4901
+
+INFO 	2016-06-17 20:00:33 	[quantification_featurecounts] 	quantifying read counts per gene using featureCounts
+INFO 	2016-06-17 20:00:33 	[quantification_featurecounts] 	using gene models from /users/GR/mb/jquilez/assemblies/homo_sapiens/hg19/gencode/gencode.v19.annotation.gtf
+INFO 	2016-06-17 20:00:33 	[quantification_featurecounts] 	kallisto (transcripts) and featurecounts (genes) quantifications are not directly comparable
+INFO 	2016-06-17 20:00:33 	[quantification_featurecounts] 	even if the *_mmtv version of the assembly is used, gene/transcript models are the same as for *
+INFO 	2016-06-17 20:00:33 	[quantification_featurecounts] 	sequencing type is PE so fragments are counted
+INFO 	2016-06-17 21:13:50 	[quantification_featurecounts] 	quantifications are in /users/GR/mb/jquilez/data/chrrnaseq/samples/ps_003_02_01_chrrnaseq/quantifications/featurecounts/hg19/paired_end
+INFO 	2016-06-17 21:13:51 	[quantification_featurecounts] 	parse step log to extract generated metadata
+INFO 	2016-06-17 21:13:51 	[quantification_featurecounts] 	total fragments = 218151097
+INFO 	2016-06-17 21:13:51 	[quantification_featurecounts] 	percentage fragments assigned = 1.24687890063647032680
+INFO 	2016-06-17 21:13:51 	[quantification_featurecounts] 	percentage fragments ambiguous = .03867915456780856802
+INFO 	2016-06-17 21:13:51 	[quantification_featurecounts] 	percentage fragments multi-mapping = 56.12402260805500327142
+INFO 	2016-06-17 21:13:51 	[quantification_featurecounts] 	percentage fragments no features = 42.59041933674071783374
+TIME 	2016-06-17 21:14:16 	[quantification_featurecounts] 	step time for completion (seconds) = 4423
+
+INFO 	2016-06-17 21:14:17 	[quantification_kallisto] 	performing pseudoalignment and quantifying abundances of transcripts using kallisto, version 0.42.5
+INFO 	2016-06-17 21:14:17 	[quantification_kallisto] 	using /users/GR/mb/jquilez/assemblies/homo_sapiens/hg19/kallisto_index/kallisto_homo_sapiens_hg19_ensGene.index as transcriptome reference
+INFO 	2016-06-17 21:14:17 	[quantification_kallisto] 	kallisto (transcripts) and featurecounts (genes) quantifications are not directly comparable
+INFO 	2016-06-17 21:14:17 	[quantification_kallisto] 	even if the *_mmtv version of the assembly is used, gene/transcript models are the same as for *
+INFO 	2016-06-17 21:14:17 	[quantification_kallisto] 	sequence based bias correction is only applied to single-end data, as it fails for paired-end
+INFO 	2016-06-17 21:14:17 	[quantification_kallisto] 	for paired-end data, the fragment length average and standard deviation are inferred from the data
+INFO 	2016-06-17 22:14:00 	[quantification_kallisto] 	converting form HDF5 to text
+INFO 	2016-06-17 22:15:09 	[quantification_kallisto] 	quantifications are in /users/GR/mb/jquilez/data/chrrnaseq/samples/ps_003_02_01_chrrnaseq/quantifications/kallisto/hg19/paired_end
+INFO 	2016-06-17 22:15:09 	[quantification_kallisto] 	parse step log to extract generated metadata
+INFO 	2016-06-17 22:15:09 	[quantification_kallisto] 	number transcripts quantified = 204940
+INFO 	2016-06-17 22:15:09 	[quantification_kallisto] 	number reads processed = 195042273
+INFO 	2016-06-17 22:15:09 	[quantification_kallisto] 	percentage reads pseudoaligned = 24.78102836711711209395
+INFO 	2016-06-17 22:15:09 	[quantification_kallisto] 	estimated average fragment length (bp) = 176.049
+TIME 	2016-06-17 22:15:23 	[quantification_kallisto] 	step time for completion (seconds) = 3666
+
+INFO 	2016-06-17 22:15:25 	[clean_up] 	deleting the following intermediate files/directories:
+INFO 	2016-06-17 22:15:25 	[clean_up] 	/users/GR/mb/jquilez/data/chrrnaseq/samples/ps_003_02_01_chrrnaseq/fastqs_processed/trimmomatic/*/*
+TIME 	2016-06-17 22:15:27 	[clean_up] 	step time for completion (seconds) = 2
+
+
+INFO 	2016-06-17 22:15:28 	[pipeline] 	completed successfully
+TIME 	2016-06-17 22:15:28 	[pipeline] 	total time for completion (seconds) = 25874
+

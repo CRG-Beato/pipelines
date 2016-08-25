@@ -1,3 +1,55 @@
+#!/bin/bash
+#$ -N ps_008_01_01_chipseq_2016_08_22_full_macs2_chipseq-16.04
+#$ -q short-sl65
+#$ -l virtual_free=40G
+#$ -l h_rt=06:00:00
+#$ -o /users/GR/mb/jquilez/pipelines/chipseq-16.04/job_out/ps_008_01_01_chipseq_2016_08_22_full_macs2_chipseq-16.04_$JOB_ID.out
+#$ -e /users/GR/mb/jquilez/pipelines/chipseq-16.04/job_out/ps_008_01_01_chipseq_2016_08_22_full_macs2_chipseq-16.04_$JOB_ID.err
+#$ -j y
+#$ -M javier.quilez@crg.eu
+#$ -m abe
+#$ -pe smp 8
+
+submitted_on=2016_08_22
+pipeline_version=16.04
+sample_id=ps_008_01_01_chipseq
+data_type=chipseq
+pipeline_name=chipseq
+pipeline_version=16.04
+pipeline_run_mode=full
+io_mode=standard
+CUSTOM_IN=data/chipseq/raw/2016-03-11
+sample_to_fastqs=sample_to_fastqs.txt
+submit_to_cluster=yes
+queue=short-sl65
+memory=40G
+max_time=06:00:00
+slots=8
+email=javier.quilez@crg.eu
+integrate_metadata=yes
+sequencing_type=SE
+seedMismatches=2
+palindromeClipThreshold=30
+simpleClipThreshold=12
+leading=3
+trailing=3
+minAdapterLength=1
+keepBothReads=true
+minQual=3
+strictness=0.999
+minLength=36
+read_length=50
+species=homo_sapiens
+version=hg19
+strand_specific=1
+peak_caller=macs2
+use_control=yes
+macs2_qvalue=0.05
+control_bam=/users/GR/mb/jquilez/data/chipseq/samples/gv_008_01_01_chipseq/alignments/bwa/hg38_mmtv/single_end/gv_008_01_01_chipseq_sorted_unique.bam
+CUSTOM_OUT=/users/GR/mb/jquilez/data/chipseq/samples/T0_roberto_input
+PIPELINE=/users/GR/mb/jquilez/pipelines/chipseq-16.04
+config=pipelines/chipseq-16.04/chipseq.config
+path_job_file=/users/GR/mb/jquilez/pipelines/chipseq-16.04/job_cmd/ps_008_01_01_chipseq_2016_08_22_full_macs2_chipseq-16.04.sh
 # additional run variables
 time_start=$(date +"%s")
 run_date=`date +"%Y-%m-%d-%H-%M"`
@@ -122,27 +174,28 @@ main() {
 		align_bwa
 		quality_alignments
 		make_tag_directory
+		#make_bigbed
 		make_profiles
 		call_peaks
-		clean_up
 	elif [[ $pipeline_run_mode == 'full_no_call_peaks' ]]; then
 		trim_reads_trimmomatic
 		align_bwa
 		quality_alignments
 		make_tag_directory
+		#make_bigbed
 		make_profiles
-		clean_up
 	elif [[ $pipeline_run_mode == 'full_from_alignments' ]]; then
 		make_tag_directory
+		#make_bigbed
 		make_profiles
 		call_peaks
 	elif [[ $pipeline_run_mode == 'trim_reads_trimmomatic' ]]; then trim_reads_trimmomatic
 	elif [[ $pipeline_run_mode == 'align_bwa' ]]; then align_bwa
 	elif [[ $pipeline_run_mode == 'quality_alignments' ]]; then quality_alignments
 	elif [[ $pipeline_run_mode == 'make_tag_directory' ]]; then make_tag_directory
+#	elif [[ $pipeline_run_mode == 'make_bigbed' ]]; then make_bigbed
 	elif [[ $pipeline_run_mode == 'make_profiles' ]]; then make_profiles
 	elif [[ $pipeline_run_mode == 'call_peaks' ]]; then call_peaks
-	elif [[ $pipeline_run_mode == 'clean_up' ]]; then clean_up
 	fi
 	echo
 
@@ -802,22 +855,6 @@ call_peaks() {
 
 }
 
-
-# ========================================================================================
-# Deletes intermediate files
-# ========================================================================================
-
-clean_up() {
-
-	step="clean_up"
-	time0=$(date +"%s")
-
-	message_info $step "deleting the following intermediate files/directories:"
-	message_info $step "$SAMPLE/fastqs_processed/trimmomatic/*/*"
-	rm -f $SAMPLE/fastqs_processed/trimmomatic/*/*
-	message_time_step $step $time0
-
-}
 
 
 main
