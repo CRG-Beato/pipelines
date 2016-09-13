@@ -1,21 +1,58 @@
+#!/bin/bash
+#$ -N rf_046_01_01_rnaseq_2016_09_12_full_rnaseq-16.06
+#$ -q long-sl65
+#$ -l virtual_free=50G
+#$ -l h_rt=24:00:00
+#$ -o /users/GR/mb/jquilez/pipelines/rnaseq-16.06/job_out/rf_046_01_01_rnaseq_2016_09_12_full_rnaseq-16.06_$JOB_ID.out
+#$ -e /users/GR/mb/jquilez/pipelines/rnaseq-16.06/job_out/rf_046_01_01_rnaseq_2016_09_12_full_rnaseq-16.06_$JOB_ID.err
+#$ -j y
+#$ -M javier.quilez@crg.eu
+#$ -m abe
+#$ -pe smp 8
+
+submitted_on=2016_09_12
+pipeline_version=16.06
+sample_id=rf_046_01_01_rnaseq
+data_type=rnaseq
+pipeline_name=rnaseq
+pipeline_version=16.06
+pipeline_run_mode=full
+io_mode=standard
+CUSTOM_IN=/users/GR/mb/jquilez/pipelines/rnaseq-16.06/test
+CUSTOM_OUT=/users/GR/mb/jquilez/misc/rnaseq
+sample_to_fastqs=sample_to_fastqs.txt
+submit_to_cluster=yes
+queue=long-sl65
+memory=50G
+max_time=24:00:00
+slots=8
+email=javier.quilez@crg.eu
+integrate_metadata=yes
+sequencing_type=PE
+seedMismatches=2
+palindromeClipThreshold=30
+simpleClipThreshold=12
+leading=3
+trailing=3
+minAdapterLength=1
+keepBothReads=true
+minQual=3
+strictness=0.999
+minLength=36
+species=
+version=
+read_length=
+n_bootstraps=100
+fragment_length_avg=150
+fragment_length_sd=30
+strand_specific=2
+CUSTOM_OUT=/users/GR/mb/jquilez/misc/rnaseq
+PIPELINE=/users/GR/mb/jquilez/pipelines/rnaseq-16.06
+config=pipelines/rnaseq-16.06/rnaseq.config
+path_job_file=/users/GR/mb/jquilez/pipelines/rnaseq-16.06/job_cmd/rf_046_01_01_rnaseq_2016_09_12_full_rnaseq-16.06.sh
 time_start=$(date +"%s")
 run_date=`date +"%Y-%m-%d-%H-%M"`
 job_name=$pipeline_name-$pipeline_version
-
-# python script to write/access metadata
-io_metadata=/users/GR/mb/jquilez/utils/io_metadata.sh
-
-# get species and assembly version from the metadata
-species=homo_sapiens
-if [[ $integrate_metadata == "yes" ]]; then
-	sequencing_type=`$io_metadata -m get_from_metadata -s $sample_id -t input_metadata -a 'SEQUENCING_TYPE'`
-	read_length=`$io_metadata -m get_from_metadata -s $sample_id -t input_metadata -a 'SEQUENCING_READ_LENGTH'`
-	if [[ ${species,,} == 'homo_sapiens' ]]; then
-		version=hg38_mmtv
-	elif [[ ${species,,} == 'mus_musculus' ]]; then
-		version=mm10
-	fi
-fi
 
 
 
@@ -104,7 +141,7 @@ elif [[ $version == "hg38" || $version == "hg38_mmtv" ]]; then
 fi
 
 # python script to write/access metadata
-#io_metadata=/users/GR/mb/jquilez/utils/io_metadata.sh
+io_metadata=/users/GR/mb/jquilez/utils/io_metadata.sh
 
 
 
