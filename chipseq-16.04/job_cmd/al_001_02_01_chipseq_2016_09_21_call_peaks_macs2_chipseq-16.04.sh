@@ -1,3 +1,55 @@
+#!/bin/bash
+#$ -N al_001_02_01_chipseq_2016_09_21_call_peaks_macs2_chipseq-16.04
+#$ -q long-sl65
+#$ -l virtual_free=40G
+#$ -l h_rt=24:00:00
+#$ -o /users/GR/mb/jquilez/pipelines/chipseq-16.04/job_out/al_001_02_01_chipseq_2016_09_21_call_peaks_macs2_chipseq-16.04_$JOB_ID.out
+#$ -e /users/GR/mb/jquilez/pipelines/chipseq-16.04/job_out/al_001_02_01_chipseq_2016_09_21_call_peaks_macs2_chipseq-16.04_$JOB_ID.err
+#$ -j y
+#$ -M javier.quilez@crg.eu
+#$ -m abe
+#$ -pe smp 8
+
+submitted_on=2016_09_21
+pipeline_version=16.04
+sample_id=al_001_02_01_chipseq
+data_type=chipseq
+pipeline_name=chipseq
+pipeline_version=16.04
+pipeline_run_mode=call_peaks
+io_mode=standard
+CUSTOM_IN=data/chipseq/raw/2016-03-11
+sample_to_fastqs=sample_to_fastqs.txt
+submit_to_cluster=yes
+queue=long-sl65
+memory=40G
+max_time=24:00:00
+slots=8
+email=javier.quilez@crg.eu
+integrate_metadata=yes
+sequencing_type=
+seedMismatches=2
+palindromeClipThreshold=30
+simpleClipThreshold=12
+leading=3
+trailing=3
+minAdapterLength=1
+keepBothReads=true
+minQual=3
+strictness=0.999
+minLength=36
+read_length=50
+species=
+version=
+strand_specific=1
+peak_caller=macs2
+use_control=yes
+macs2_qvalue=0.05
+control_bam=/users/GR/mb/jquilez/data/chipseq/samples/al_005_01_01_chipseq/alignments/bwa/hg38_mmtv/single_end/al_005_01_01_chipseq_sorted_unique.bam
+CUSTOM_OUT=/users/GR/mb/jquilez/data/chipseq/samples
+PIPELINE=/users/GR/mb/jquilez/pipelines/chipseq-16.04
+config=pipelines/chipseq-16.04/chipseq.config
+path_job_file=/users/GR/mb/jquilez/pipelines/chipseq-16.04/job_cmd/al_001_02_01_chipseq_2016_09_21_call_peaks_macs2_chipseq-16.04.sh
 # additional run variables
 time_start=$(date +"%s")
 run_date=`date +"%Y-%m-%d-%H-%M"`
@@ -68,8 +120,8 @@ checksums=$CHECKSUMS/files_checksums.sha
 
 # input FASTQ
 if [[ $io_mode == "custom" ]]; then
-	ifq1_name=`grep -w $sample_id $CUSTOM_IN/sample_to_fastqs.txt |cut -f2`
-	ifq2_name=`grep -w $sample_id $CUSTOM_IN/sample_to_fastqs.txt |cut -f3`
+	ifq1_name=`grep $sample_id $CUSTOM_IN/sample_to_fastqs.txt |cut -f2`
+	ifq2_name=`grep $sample_id $CUSTOM_IN/sample_to_fastqs.txt |cut -f3`
 	ifq1=$CUSTOM_IN/$ifq1_name
 	ifq2=$CUSTOM_IN/$ifq2_name
 else
