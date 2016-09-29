@@ -17,6 +17,7 @@
 4. `make_tag_directory`: generate quality reads of the ChIP-seq fragments with [HOMER](http://homer.salk.edu/homer/)
 5. `make_profiles`: generate reads per million (RPM) profiles
 6. `call_peaks`: call binding site peaks with (a) [MACS2](https://github.com/taoliu/MACS) (either using control or not) or (b) [Zerone](https://github.com/gui11aume/zerone) (control is required)
+7. `clean_up`: remove *big* intermediate files
 
 The pipeline can be configured to run all steps or just one (see below) considering that to run the `n` step the `n-1` step has to be run at leas once (except for `n=1`, obviously).
 
@@ -42,11 +43,12 @@ The pipeline can be configured to run all steps or just one (see below) consider
 ## Configuration file
 
 - `pipeline_run_mode`:
-	- by setting `trim_reads_single_end`, `align_single_end`, `make_tag_directory`, `make_bigbed`, `calculate_rpms`, or `call_peaks` the corresponding module (see above) is executed (**note modules are sequential so each cannot be run unless the preceding one is completed**) 
+	- by setting `trim_reads_trimmomatic`, `align_bwa`, `quality_alignments`, `make_tag_directory`, `make_profiles`, `call_peaks` or `clean_up` the corresponding module (see above) is executed (**note modules are sequential so each cannot be run unless the preceding one is completed**) 
 	- `full`: all the steps above in the sequential order
 	- `full_no_call_peaks`: all the modules except `call_peaks` (this is useful when a sample will be used as control)
+	- `full_from_alignments`: all modules after `quality_alignmnents`
 - `data_type`: chipseq, atacseq (if `io_mode=standard` this will be used to search for the input/output directory)
-- `samples`: espace-separated list of samples
+- `samples`: space-separated list of samples
 - `pipeline_run_mode`: any of the 5 steps described in the **Modules** section of `full` to run all of them sequentially
 - `io_mode`:
 	- `standard`: in/out directories defined in my home directory `/users/GR/mb/jquilez`

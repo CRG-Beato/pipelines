@@ -1,0 +1,73 @@
+
+INFO 	2016-09-27 11:36:58 	[trim_reads_trimmomatic] 	paths to read1 saved to metadata database
+INFO 	2016-09-27 11:36:58 	[trim_reads_trimmomatic] 	sequencing type = SE
+INFO 	2016-09-27 11:36:58 	[trim_reads_trimmomatic] 	trimming adapter sequences for HiSeq, NextSeq or HiSeq
+INFO 	2016-09-27 11:36:58 	[trim_reads_trimmomatic] 	trimming low-quality reads ends using trimmomatic's recommended practices
+INFO 	2016-09-27 11:45:26 	[trim_reads_trimmomatic] 	parse step log to extract generated metadata
+INFO 	2016-09-27 11:45:26 	[trim_reads_trimmomatic] 	reads after trimming = 28236751
+INFO 	2016-09-27 11:45:40 	[trim_reads_trimmomatic] 	trimmomatic parameters and numbe of trimmed reads added to metadata
+INFO 	2016-09-27 11:45:40 	[trim_reads_trimmomatic] 	trimmed reads are in /users/GR/mb/jquilez/data/chipseq/samples/ps_015_01_01_chipseq/fastqs_processed/trimmomatic/single_end
+TIME 	2016-09-27 11:45:40 	[trim_reads_trimmomatic] 	step time for completion (seconds) = 535
+
+INFO 	2016-09-27 11:45:41 	[align_bwa] 	align single-end reads with BWA
+INFO 	2016-09-27 11:45:41 	[align_bwa] 	alignments are converted to BAM, sorted by genomic coordinates and multi-mappings filtered out
+[main] Version: 0.7.12-r1039
+[main] CMD: /software/mb/el6.3/bwa/bwa-0.7.12/bwa mem -t 10 -M -R @RG\tID:'ps_015_01_01_chipseq'\tLB:'ps_015_01_01_chipseq'\tPL:illumina\tPU:'ps_015_01_01_chipseq'\tSM:'ps_015_01_01_chipseq' -v 0 /users/GR/mb/jquilez/assemblies/homo_sapiens/hg38_mmtv/ucsc/hg38_mmtv_chr1-22XYMUn.fa /users/GR/mb/jquilez/data/chipseq/samples/ps_015_01_01_chipseq/fastqs_processed/trimmomatic/single_end/ps_015_01_01_chipseq_read1.fastq.gz
+[main] Real time: 1056.348 sec; CPU: 9958.881 sec
+[bam_sort_core] merging from 13 files...
+INFO 	2016-09-27 12:11:40 	[align_bwa] 	reads aligned = 28237125
+INFO 	2016-09-27 12:11:40 	[align_bwa] 	reads unique = 24231282
+INFO 	2016-09-27 12:11:59 	[align_bwa] 	path to genome sequence FASTA and number of (uniquely) aligned reads added to metadata
+TIME 	2016-09-27 12:12:04 	[align_bwa] 	step time for completion (seconds) = 1583
+
+INFO 	2016-09-27 12:12:05 	[quality_alignments] 	general QC of the BAM (using qualimap's bamqc)
+INFO 	2016-09-27 12:14:01 	[quality_alignments] 	parse step log to extract generated metadata
+INFO 	2016-09-27 12:14:01 	[quality_alignments] 	percentage duplication = 13.76
+INFO 	2016-09-27 12:14:01 	[quality_alignments] 	median insert size (bp) = 0
+INFO 	2016-09-27 12:14:01 	[quality_alignments] 	mean mapping quality = 43.6339
+INFO 	2016-09-27 12:14:01 	[quality_alignments] 	mean coverage (X) = 0.3914
+INFO 	2016-09-27 12:14:01 	[quality_alignments] 	mean coverage adjusted paired-end = .
+TIME 	2016-09-27 12:14:07 	[quality_alignments] 	step time for completion (seconds) = 122
+
+INFO 	2016-09-27 12:14:08 	[make_tag_directory] 	converting BAM to BED --required for making tag directory
+INFO 	2016-09-27 12:15:09 	[make_tag_directory] 	make tag directory with HOMER
+INFO 	2016-09-27 12:20:30 	[make_tag_directory] 	parse step log to extract generated metadata
+INFO 	2016-09-27 12:20:30 	[make_tag_directory] 	estimated genome size = 3090729447
+INFO 	2016-09-27 12:20:30 	[make_tag_directory] 	estimated average read density per bp = 0.007840
+INFO 	2016-09-27 12:20:30 	[make_tag_directory] 	total tags = 24231282.0
+INFO 	2016-09-27 12:20:30 	[make_tag_directory] 	total_positions = 20947067
+INFO 	2016-09-27 12:20:30 	[make_tag_directory] 	avg. tag length = 50.0
+INFO 	2016-09-27 12:20:30 	[make_tag_directory] 	median tags per position = 1
+INFO 	2016-09-27 12:20:30 	[make_tag_directory] 	avg. tags per position = 1.157
+INFO 	2016-09-27 12:20:30 	[make_tag_directory] 	fragment length estimate = 105
+INFO 	2016-09-27 12:20:30 	[make_tag_directory] 	peak width estimate = 0
+INFO 	2016-09-27 12:20:30 	[make_tag_directory] 	autocorrelation: same strand fold enrichment = 1.1
+INFO 	2016-09-27 12:20:30 	[make_tag_directory] 	autocorrelation: diff strand fold enrichment = 1.1
+INFO 	2016-09-27 12:20:30 	[make_tag_directory] 	autocorrelation: same-to-diff strand fold enrichment = 1.0
+INFO 	2016-09-27 12:20:30 	[make_tag_directory] 	avg. fragment GC% = 38.06
+INFO 	2016-09-27 12:20:30 	[make_tag_directory] 	avg. expected GC% = 40.30
+INFO 	2016-09-27 12:20:46 	[make_tag_directory] 	ChIP-seq metrics calculated with Homer added to metadata
+TIME 	2016-09-27 12:20:46 	[make_tag_directory] 	step time for completion (seconds) = 398
+
+INFO 	2016-09-27 12:20:47 	[make_profiles] 	generate reads per million profile (RPM) fragment profile
+INFO 	2016-09-27 12:50:07 	[make_profiles] 	get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-09-27 12:50:07 	[make_profiles] 	fragment length estimate = 105
+INFO 	2016-09-27 12:50:07 	[make_profiles] 	fragment length correction = 105
+INFO 	2016-09-27 12:50:07 	[make_profiles] 	the correction will be used if the estimate is not reliable
+TIME 	2016-09-27 12:50:09 	[make_profiles] 	step time for completion (seconds) = 1762
+
+INFO 	2016-09-27 12:50:10 	[call_peaks] 	Get fragment length estimate (l) as calculated in the 'make_tag_directory' step
+INFO 	2016-09-27 12:50:10 	[call_peaks] 	Fragment length (l) is 105 bp (note this is not used if peak caller is zerone)
+INFO 	2016-09-27 12:50:10 	[call_peaks] 	Peak calling with MACS2
+INFO 	2016-09-27 12:50:10 	[call_peaks] 	genome size for homo_sapiens will be used
+INFO 	2016-09-27 12:50:10 	[call_peaks] 	q-value cutoff = 0.05 (default is 0.01)
+INFO 	2016-09-27 12:50:10 	[call_peaks] 	--nomodel (MACS2 will not try to model peak length but use l = 105 instead
+INFO 	2016-09-27 12:50:10 	[call_peaks] 	--call-summits = MACS reanalyzes the shape of signal profile to deconvolve subpeaks within each peak called
+INFO 	2016-09-27 12:50:11 	[call_peaks] 	peak calling with input DNA (/users/GR/mb/jquilez/data/chipseq/samples/T0_roberto_input/alignments/bwa/hg19/single_end/T0_roberto_input_sorted_unique.bam) as control
+INFO 	2016-09-27 13:40:10 	[call_peaks] 	peaks = 829
+INFO 	2016-09-27 13:40:43 	[call_peaks] 	peak calling with input DNA as control added to metadata
+INFO 	2016-09-27 13:40:44 	[clean_up] 	deleting the following intermediate files/directories:
+INFO 	2016-09-27 13:40:44 	[clean_up] 	/users/GR/mb/jquilez/data/chipseq/samples/ps_015_01_01_chipseq/fastqs_processed/trimmomatic/*/*
+TIME 	2016-09-27 13:40:44 	[clean_up] 	step time for completion (seconds) = 0
+
+
