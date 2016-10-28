@@ -95,8 +95,14 @@ bam2wig=`which bam2wig.pl`
 bedGraphToBigWig=`which bedGraphToBigWig`
 
 # genome fasta and chromosome sizes
-genome_fasta=/users/GR/mb/jquilez/assemblies/$species/$version/ucsc/${version}_chr1-22XYMUn.fa
-genome_chrom_sizes=/users/GR/mb/jquilez/assemblies/$species/$version/ucsc/$version.chrom.sizes.chr1-22XYMUn
+if [[ ${species,,} == 'homo_sapiens' ]]; then
+	genome_fasta=/users/GR/mb/jquilez/assemblies/${species,,}/$version/ucsc/${version}_chr1-22XYMUn.fa
+	genome_chrom_sizes=/users/GR/mb/jquilez/assemblies/${species,,}/$version/ucsc/${version}_chr1-22XYMUn.chrom.sizes
+elif [[ ${species,,} == 'mus_musculus' ]]; then
+	genome_fasta=/users/GR/mb/jquilez/assemblies/${species,,}/$version/ucsc/${version}_chr1-19XYMUn.fa
+	genome_chrom_sizes=/users/GR/mb/jquilez/assemblies/${species,,}/$version/ucsc/${version}_chr1-19XYMUn.chrom.sizes
+fi
+
 
 
 # =================================================================================================
