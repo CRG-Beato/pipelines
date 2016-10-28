@@ -11,6 +11,7 @@ species=homo_sapiens
 if [[ $integrate_metadata == "yes" ]]; then
 	sequencing_type=`$io_metadata -m get_from_metadata -s $sample_id -t input_metadata -a 'SEQUENCING_TYPE'`
 	read_length=`$io_metadata -m get_from_metadata -s $sample_id -t input_metadata -a 'SEQUENCING_READ_LENGTH'`
+	species=`$io_metadata -m get_from_metadata -s $sample_id -t input_metadata -a 'SPECIES'`	
 	if [[ ${species,,} == 'homo_sapiens' ]]; then
 		version=hg38_mmtv
 	elif [[ ${species,,} == 'mus_musculus' ]]; then
