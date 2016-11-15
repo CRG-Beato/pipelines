@@ -494,6 +494,11 @@ make_tag_directory() {
 	mkdir -p $ODIR
 	$makeTagDirectory $ODIR $obed -format bed -genome $genome_fasta -checkGC 2>$step_log
 
+	# obed is only used by HOMER in the make_tag_directory step but this I file is no longer used
+	# and of little use for the downstream analyses considering it is relatively big and can be
+	# regenerated relatively quickly from the BAM if needed, so I will delete it
+	rm -f $obed
+
 	# parse step log to extract generated metadata
 	message_info $step "parse step log to extract generated metadata"
 	# parse
