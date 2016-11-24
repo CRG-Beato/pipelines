@@ -556,36 +556,6 @@ make_tag_directory() {
 }
 
 
-# =================================================================================================
-# Make BigBed file
-# =================================================================================================
-
-# make_bigbed() {
-
-# 	step="make_bigbed"
-# 	time0=$(date +"%s")
-
-# 	# Make BigBed file
-# 	message_info $step "make BigBed file"
-# 	if [[ $sequencing_type == "SE" ]]; then
-# 		IODIR=$BWA/single_end
-# 		step_log=$LOGS/${sample_id}_${step}_single_end.log
-# 	elif [[ $sequencing_type == "PE" ]]; then
-# 		IODIR=$BWA/paired_end
-# 		step_log=$LOGS/${sample_id}_${step}_paired_end.log
-# 	fi
-# 	ibed=$IODIR/${sample_id}_sorted_unique.bed
-# 	obb=$IODIR/${sample_id}_sorted_unique.bb
-# 	$bedToBigBed $ibed $genome_chrom_sizes $obb 2>$step_log
-
-# 	# data integrity
-# 	mkdir -p $CHECKSUMS
-# 	shasum $obb >> $checksums
-
-# 	message_time_step $step $time0
-
-# }
-
 
 # =================================================================================================
 # Make read per million (RPM) profiles
@@ -642,6 +612,7 @@ make_profiles() {
 }
 
 
+
 # =================================================================================================
 # Call peaks
 # =================================================================================================
@@ -674,6 +645,8 @@ call_peaks() {
 		message_info $step "Peak calling with MACS2"
 		if [[ $species == "homo_sapiens" ]]; then
 			genome_size="hs"
+		elif [[ $species == "mus_musculus" ]]; then
+			genome_size="mm"
 		fi
 		message_info $step "genome size for $species will be used"
 		message_info $step "q-value cutoff = $macs2_qvalue (default is 0.01)"
@@ -701,6 +674,7 @@ call_peaks() {
 		 					--extsize $fragment_length_estimate_corrected \
 		 					--outdir $ODIR \
 		 					--call-summits \
+		 					--gsize $genome_size \
 		 					--name $sample_id 2>$step_log
 
 			# parse step log to extract generated metadata
@@ -738,6 +712,7 @@ call_peaks() {
 							--extsize $fragment_length_estimate_corrected \
 							--outdir $ODIR \
 		 					--call-summits \
+		 					--gsize $genome_size \
 							--name $sample_id 2>$step_log
 	
 			# parse step log to extract generated metadata
