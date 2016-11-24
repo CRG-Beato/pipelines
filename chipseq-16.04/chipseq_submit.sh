@@ -71,9 +71,9 @@ for s in $samples; do
 	# Build job: parameters
 	submitted_on=`date +"%Y_%m_%d"`
 	if [[ $pipeline_run_mode == "full" || $pipeline_run_mode == "call_peaks" ]]; then
-		job_name=${s}_${submitted_on}_${pipeline_run_mode}_${peak_caller}_${pipeline_name}-${pipeline_version}
+		job_name=job_${s}_${submitted_on}_${pipeline_run_mode}_${peak_caller}_${pipeline_name}-${pipeline_version}
 	else
-		job_name=${s}_${submitted_on}_${pipeline_run_mode}_${pipeline_name}-${pipeline_version}
+		job_name=job_${s}_${submitted_on}_${pipeline_run_mode}_${pipeline_name}-${pipeline_version}
 	fi
 	job_file=$JOB_CMD/$job_name.sh
 	m_out=$JOB_OUT
