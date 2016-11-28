@@ -643,16 +643,16 @@ call_peaks() {
 		
 		macs2=`which $peak_caller`
 		message_info $step "Peak calling with MACS2"
-		if [[ $species == "homo_sapiens" ]]; then
+		if [[ ${species,,} == "homo_sapiens" ]]; then
 			genome_size="hs"
-		elif [[ $species == "mus_musculus" ]]; then
+		elif [[ ${species,,} == "mus_musculus" ]]; then
 			genome_size="mm"
 		fi
 		message_info $step "genome size for $species will be used"
 		message_info $step "q-value cutoff = $macs2_qvalue (default is 0.01)"
 		message_info $step "--nomodel (MACS2 will not try to model peak length but use l = $fragment_length_estimate_corrected instead"
 		message_info $step "--call-summits = MACS reanalyzes the shape of signal profile to deconvolve subpeaks within each peak called"
-		
+
 		# Peak calling with input DNA as control
 		if [[ $use_control == "yes" ]]; then
 			if [ ! -f $control_bam ]; then
