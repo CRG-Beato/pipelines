@@ -46,7 +46,7 @@ TRIMMED=$SAMPLE/fastqs_processed/trimmomatic
 SINGLE=$TRIMMED/single_end
 PAIRED=$TRIMMED/paired_end
 UNPAIRED=$TRIMMED/unpaired_reads
-ADAPTERS=/software/mb/el6.3/Trimmomatic-0.33/adapters
+ADAPTERS=/software/mb/el7.2/Trimmomatic-0.36/adapters
 
 # alignment
 BWA=$SAMPLE/alignments/bwa/$version
@@ -81,18 +81,18 @@ fi
 # tools
 trimmomatic=`which trimmomatic`
 # I use this newer BWA version instead of that pointed by `which bwa` (0.7.10-r789)
-bwa=/software/mb/el6.3/bwa/bwa-0.7.12/bwa
-qualimap=/software/mb/el6.3/qualimap_v2.2/qualimap
+bwa=`which bwa`
+qualimap=`which qualimap`
 # + as of 2015-11-03, the `which samtools` version of samtools fails to sort the BAM of some samples
 # Quique mentioned he had a similar problem and recommended me to use the '/software/mb/el6.3/samtools-1.2/samtools'
 samtools=/software/mb/el6.3/samtools-1.2/samtools
-bamToBed=`which bamToBed`
 makeTagDirectory=`which makeTagDirectory`
 bedToBigBed=`which bedToBigBed`
 bedtools=`which bedtools`
 perl=`which perl`
 bam2wig=`which bam2wig.pl`
 bedGraphToBigWig=`which bedGraphToBigWig`
+java=`which java`
 
 # genome fasta and chromosome sizes
 if [[ ${species,,} == 'homo_sapiens' ]]; then
@@ -277,13 +277,13 @@ trim_reads_trimmomatic() {
 	message_info $step "trimming low-quality reads ends using trimmomatic's recommended practices"
 	seqs=$ADAPTERS/TruSeq3-$sequencing_type.fa
 	targetLength=$read_length
-	$trimmomatic $sequencing_type \
- 					$params \
- 					ILLUMINACLIP:$seqs:$seedMismatches:$palindromeClipThreshold:$simpleClipThreshold:$minAdapterLength:$keepBothReads \
- 					LEADING:$leading \
- 					TRAILING:$trailing \
- 					MAXINFO:$targetLength:$strictness \
- 					MINLEN:$minLength >$step_log 2>&1
+	$java -jar $trimmomatic $sequencing_type \
+					$params \
+					ILLUMINACLIP:$seqs:$seedMismatches:$palindromeClipThreshold:$simpleClipThreshold:$minAdapterLength:$keepBothReads \
+					LEADING:$leading \
+					TRAILING:$trailing \
+					MAXINFO:$targetLength:$strictness \
+					MINLEN:$minLength >$step_log 2>&1
 
 	# parse step log to extract generated metadata
 	message_info $step "parse step log to extract generated metadata"
@@ -487,7 +487,7 @@ make_tag_directory() {
 	fi
 	ibam=$IDIR/${sample_id}_sorted_unique.bam
 	obed=$IDIR/${sample_id}_sorted_unique.bed
-	$bamToBed -i $ibam | awk '{OFS="\t"; $4="."; print $0}' > $obed
+	$bedtools bamtobed -i $ibam | awk '{OFS="\t"; $4="."; print $0}' > $obed
 
 	# Make tag directory with HOMER
 	message_info $step "make tag directory with HOMER"
