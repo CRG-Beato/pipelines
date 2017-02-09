@@ -1,3 +1,5 @@
+module load libpng
+
 # additional run variables
 time_start=$(date +"%s")
 run_date=`date +"%Y-%m-%d-%H-%M"`
@@ -80,19 +82,16 @@ fi
 
 # tools
 trimmomatic=`which trimmomatic`
-# I use this newer BWA version instead of that pointed by `which bwa` (0.7.10-r789)
 bwa=`which bwa`
 qualimap=`which qualimap`
-# + as of 2015-11-03, the `which samtools` version of samtools fails to sort the BAM of some samples
-# Quique mentioned he had a similar problem and recommended me to use the '/software/mb/el6.3/samtools-1.2/samtools'
-samtools=/software/mb/el6.3/samtools-1.2/samtools
+samtools=`which samtools`
 makeTagDirectory=`which makeTagDirectory`
 bedToBigBed=`which bedToBigBed`
 bedtools=`which bedtools`
 perl=`which perl`
-bam2wig=`which bam2wig.pl`
-bedGraphToBigWig=`which bedGraphToBigWig`
 java=`which java`
+bam2wig=`which bam2wig`
+wigToBigWig=`which wigToBigWig`
 
 # genome fasta and chromosome sizes
 if [[ ${species,,} == 'homo_sapiens' ]]; then
@@ -138,6 +137,13 @@ main() {
 		quality_alignments
 		make_tag_directory
 		make_profiles
+		clean_up
+	elif [[ $pipeline_run_mode == 'full_no_make_profiles' ]]; then
+		trim_reads_trimmomatic
+		align_bwa
+		quality_alignments
+		make_tag_directory
+		call_peaks
 		clean_up
 	elif [[ $pipeline_run_mode == 'full_from_alignments' ]]; then
 		make_tag_directory
@@ -351,6 +357,7 @@ align_bwa() {
 	read_group="@RG\tID:'$sample_id'\tLB:'$sample_id'\tPL:illumina\tPU:'$sample_id'\tSM:'$sample_id'"
 	$bwa mem -t $slots -M $genome_fasta -R $read_group $params -v 0 |$samtools sort -o $tbam -O bam -T $TMP_DIR/$sample_id - >$step_log
 	$samtools view -bq 1 $tbam > $obam
+	$samtools index $obam
 
 	# parse output
 	n_reads_aligned=`$samtools view $tbam | wc -l`
@@ -566,6 +573,12 @@ make_profiles() {
 	step="make_profiles"
 	time0=$(date +"%s")
 
+	if [[ $species == "homo_sapiens" ]]; then
+		effective_genome_size=2451960000
+	elif [[ $species == "mus_musculus" ]]; then
+		effective_genome_size=2150570000
+	fi
+
 	# Generate RPM fragment profile
 	message_info $step "generate reads per million profile (RPM) fragment profile"
 	if [[ $sequencing_type == "SE" ]]; then
@@ -576,10 +589,15 @@ make_profiles() {
 		tag_info=$TAG_DIR/single_end/tagInfo.txt	
 		ibam=$IDIR/${sample_id}_sorted_unique.bam
 		mkdir -p $ODIR
-		orpm=$ODIR/$sample_id.rpm
-		fragment_length_estimate=`grep "Fragment Length Estimate" $make_tag_directory_log | cut -f2 -d':' | sed "s/ //g"`
-		fragment_length_estimate_corrected=`cat $tag_info | grep fragmentLengthEstimate |cut -f 2 -d"=" | sed 's/[^0-9]*//g'`
-		$perl $bam2wig --bw --bwapp $bedGraphToBigWig --pos extend --ext $fragment_length_estimate_corrected --rpm --in $ibam --out $orpm > $step_log
+		orpm=$ODIR/$sample_id.rpm.bw
+		# bam2wig (https://github.com/MikeAxtell/bam2wig) converts from BAM to wig and then it looks if wigToBigWig is installed
+		# and it uses it to convert from wig to bigwig. However, if you try to execute wigToBigWig independently of bam2wig you will
+		# see that wigToBigWig requires a file with the chromosome sizes as input, yet we are not passing such file to bam2wig
+		# I thus will add an additional step in which I use wigToBigWig to generate the final bigWig
+		$bam2wig -D $ODIR -m $ibam &> $step_log
+		$wigToBigWig -clip $ODIR/${sample_id}_sorted_unique-m.wig $genome_chrom_sizes $orpm &>> $step_log
+		rm -f $ODIR/${sample_id}_sorted_unique-m.wig
+
 	elif [[ $sequencing_type == "PE" ]]; then
 		IDIR=$BWA/paired_end
 		ODIR=$PROFILES/paired_end
@@ -588,24 +606,18 @@ make_profiles() {
 		tag_info=$TAG_DIR/paired_end/tagInfo.txt	
 		ibam=$IDIR/${sample_id}_sorted_unique.bam
 		mkdir -p $ODIR
-		orpm=$ODIR/$sample_id.rpm
-		fragment_length_estimate=`grep "Fragment Length Estimate" $make_tag_directory_log | cut -f2 -d':' | sed "s/ //g"`
-		fragment_length_estimate_corrected=`cat $tag_info | grep fragmentLengthEstimate |cut -f 2 -d"=" | sed 's/[^0-9]*//g'`
+		orpm=$ODIR/$sample_id.rpm.bw
 		tbam=$ODIR/tmp.bam
  		$samtools view -bf 0x2 $ibam > $tbam
-		$perl $bam2wig --bw --bwapp $bedGraphToBigWig --pos extend --ext $fragment_length_estimate_corrected --rpm --in $tbam --out $orpm > $step_log
- 		rm $tbam $tbam.bai
-	fi
+		$bam2wig -D $ODIR -m $tbam &> $step_log
+		$wigToBigWig -clip $ODIR/tmp-m.wig $genome_chrom_sizes $orpm &>> $step_log
+		rm -f $ODIR/tmp*
 
-	# Get fragment length estimate as calculated in the 'make_tag_directory' step
-	message_info $step "get fragment length estimate (l) as calculated in the 'make_tag_directory' step"
-	message_info $step "fragment length estimate = $fragment_length_estimate"
-	message_info $step "fragment length correction = $fragment_length_estimate_corrected"
-	message_info $step "the correction will be used if the estimate is not reliable"
+	fi
 
 	# data integrity
 	mkdir -p $CHECKSUMS
-	shasum $orpm.bw >> $checksums
+	shasum $orpm >> $checksums
 
 	message_time_step $step $time0
 
