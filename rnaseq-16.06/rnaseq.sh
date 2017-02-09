@@ -75,13 +75,11 @@ else
 fi
 
 # tools
+java=`which java`
 trimmomatic=`which trimmomatic`
 star=`which star`
-qualimap=/software/mb/el6.3/qualimap_v2.2/qualimap
-# + as of 2015-11-03, the `which samtools` version of samtools fails to sort the BAM of some samples
-# Quique mentioned he had a similar problem and recommended me to use the '/software/mb/el6.3/samtools-1.2/samtools'
-# version
-samtools=/software/mb/el6.3/samtools-1.2/samtools
+qualimap=`which qualimap`
+samtools=`which samtools`
 bamToBed=`which bamToBed`
 bed2bb=`which bedToBigBed`
 kallisto=`which kallisto`
@@ -89,7 +87,6 @@ htseq_count=`which htseq-count`
 featureCounts=`which featureCounts`
 bamToBed=`which bamToBed`
 perl=`which perl`
-bam2wig=`which bam2wig.pl`
 wigToBigWig=`which wigToBigWig`
 bedGraphToBigWig=`which bedGraphToBigWig`
 
@@ -265,7 +262,7 @@ trim_reads_trimmomatic() {
 	message_info $step "trimming low-quality reads ends using trimmomatic's recommended practices"
 	seqs=$ADAPTERS/TruSeq3-$sequencing_type.fa
 	targetLength=$read_length
-	$trimmomatic $sequencing_type \
+	java -jar $trimmomatic $sequencing_type \
  					$params \
  					ILLUMINACLIP:$seqs:$seedMismatches:$palindromeClipThreshold:$simpleClipThreshold:$minAdapterLength:$keepBothReads \
  					LEADING:$leading \
