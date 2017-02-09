@@ -591,8 +591,7 @@ make_profiles() {
 		mkdir -p $ODIR
 		orpm=$ODIR/$sample_id.rpm.bw
 		# bam2wig (https://github.com/MikeAxtell/bam2wig) converts from BAM to wig and then it looks if wigToBigWig is installed
-		# and it uses it to convert from wig to bigwig. However, if you try to execute wigToBigWig independently of bam2wig you will
-		# see that wigToBigWig requires a file with the chromosome sizes as input, yet we are not passing such file to bam2wig
+		# and it uses it to convert from wig to bigwig. However, as I need to pass the -clip command (otherwise I get an error for chrM)
 		# I thus will add an additional step in which I use wigToBigWig to generate the final bigWig
 		$bam2wig -D $ODIR -m $ibam &> $step_log
 		$wigToBigWig -clip $ODIR/${sample_id}_sorted_unique-m.wig $genome_chrom_sizes $orpm &>> $step_log
