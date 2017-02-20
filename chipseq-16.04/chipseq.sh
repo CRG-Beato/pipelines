@@ -90,8 +90,8 @@ bedToBigBed=`which bedToBigBed`
 bedtools=`which bedtools`
 perl=`which perl`
 java=`which java`
-bam2wig=`which bam2wig`
-wigToBigWig=`which wigToBigWig`
+bam2wig=`which bam2wig.pl`
+bedGraphToBigWig=`which bedGraphToBigWig`
 
 # genome fasta and chromosome sizes
 if [[ ${species,,} == 'homo_sapiens' ]]; then
@@ -573,12 +573,6 @@ make_profiles() {
 	step="make_profiles"
 	time0=$(date +"%s")
 
-	if [[ $species == "homo_sapiens" ]]; then
-		effective_genome_size=2451960000
-	elif [[ $species == "mus_musculus" ]]; then
-		effective_genome_size=2150570000
-	fi
-
 	# Generate RPM fragment profile
 	message_info $step "generate reads per million profile (RPM) fragment profile"
 	if [[ $sequencing_type == "SE" ]]; then
@@ -589,13 +583,11 @@ make_profiles() {
 		tag_info=$TAG_DIR/single_end/tagInfo.txt	
 		ibam=$IDIR/${sample_id}_sorted_unique.bam
 		mkdir -p $ODIR
+		orpm=$ODIR/$sample_id.rpm
+		fragment_length_estimate=`grep "Fragment Length Estimate" $make_tag_directory_log | cut -f2 -d':' | sed "s/ //g"`
+		fragment_length_estimate_corrected=`cat $tag_info | grep fragmentLengthEstimate |cut -f 2 -d"=" | sed 's/[^0-9]*//g'`
+		$perl $bam2wig --bw --bwapp $bedGraphToBigWig --pos extend --ext $fragment_length_estimate_corrected --rpm --in $ibam --out $orpm > $step_log
 		orpm=$ODIR/$sample_id.rpm.bw
-		# bam2wig (https://github.com/MikeAxtell/bam2wig) converts from BAM to wig and then it looks if wigToBigWig is installed
-		# and it uses it to convert from wig to bigwig. However, as I need to pass the -clip command (otherwise I get an error for chrM)
-		# I thus will add an additional step in which I use wigToBigWig to generate the final bigWig
-		$bam2wig -D $ODIR -m $ibam &> $step_log
-		$wigToBigWig -clip $ODIR/${sample_id}_sorted_unique-m.wig $genome_chrom_sizes $orpm &>> $step_log
-		rm -f $ODIR/${sample_id}_sorted_unique-m.wig
 
 	elif [[ $sequencing_type == "PE" ]]; then
 		IDIR=$BWA/paired_end
@@ -605,12 +597,13 @@ make_profiles() {
 		tag_info=$TAG_DIR/paired_end/tagInfo.txt	
 		ibam=$IDIR/${sample_id}_sorted_unique.bam
 		mkdir -p $ODIR
-		orpm=$ODIR/$sample_id.rpm.bw
+		orpm=$ODIR/$sample_id.rpm
+		fragment_length_estimate=`grep "Fragment Length Estimate" $make_tag_directory_log | cut -f2 -d':' | sed "s/ //g"`
+		fragment_length_estimate_corrected=`cat $tag_info | grep fragmentLengthEstimate |cut -f 2 -d"=" | sed 's/[^0-9]*//g'`
 		tbam=$ODIR/tmp.bam
  		$samtools view -bf 0x2 $ibam > $tbam
-		$bam2wig -D $ODIR -m $tbam &> $step_log
-		$wigToBigWig -clip $ODIR/tmp-m.wig $genome_chrom_sizes $orpm &>> $step_log
-		rm -f $ODIR/tmp*
+		$perl $bam2wig --bw --bwapp $bedGraphToBigWig --pos extend --ext $fragment_length_estimate_corrected --rpm --in $tbam --out $orpm > $step_log
+ 		rm $tbam $tbam.bai
 
 	fi
 
