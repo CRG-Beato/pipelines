@@ -86,12 +86,13 @@ bwa=`which bwa`
 qualimap=`which qualimap`
 samtools=`which samtools`
 makeTagDirectory=`which makeTagDirectory`
-bedToBigBed=`which bedToBigBed`
 bedtools=`which bedtools`
 perl=`which perl`
 java=`which java`
 bam2wig=`which bam2wig.pl`
 bedGraphToBigWig=`which bedGraphToBigWig`
+python=`which python`
+bedgraph_to_bigwig=`which bedGraphToBigWig`
 
 # genome fasta and chromosome sizes
 if [[ ${species,,} == 'homo_sapiens' ]]; then
@@ -334,7 +335,7 @@ align_bwa() {
 	step="align_bwa"
 	time0=$(date +"%s")
 
-	# align single-end reads with BWA
+	# align reads with BWA
 	message_info $step "align single-end reads with BWA"
 	message_info $step "alignments are converted to BAM, sorted by genomic coordinates and multi-mappings filtered out"
 	if [[ $sequencing_type == "SE" ]]; then
@@ -353,10 +354,20 @@ align_bwa() {
 	mkdir -p $TMP_DIR	
 	mkdir -p $ODIR
 	tbam=$ODIR/${sample_id}_sorted.bam
-	obam=$ODIR/${sample_id}_sorted_unique.bam
+	obam=$ODIR/${sample_id}_sorted_unique_filtered.bam
 	read_group="@RG\tID:'$sample_id'\tLB:'$sample_id'\tPL:illumina\tPU:'$sample_id'\tSM:'$sample_id'"
 	$bwa mem -t $slots -M $genome_fasta -R $read_group $params -v 0 |$samtools sort -o $tbam -O bam -T $TMP_DIR/$sample_id - >$step_log
-	$samtools view -bq 1 $tbam > $obam
+
+	# clean reads:
+	# unique mappings (implicit in -q 10 as BWA sets the mapping quality of multimappings to 0)
+	# mapping quality >10 (-q 10)
+	# exclude non primary alignments and supplementary alignments (-F 2304)
+	# remove duplicates
+	if [[ $sequencing_type == "SE" ]]; then
+		$samtools view $tbam -bq 10 -F 2304 |$samtools rmdup -s - $obam
+	elif [[ $sequencing_type == "PE" ]]; then
+		$samtools view $tbam -bq 10 -F 2304 |$samtools rmdup - $obam
+	fi
 	$samtools index $obam
 
 	# parse output
@@ -576,6 +587,7 @@ make_profiles() {
 	# Generate RPM fragment profile
 	message_info $step "generate reads per million profile (RPM) fragment profile"
 	if [[ $sequencing_type == "SE" ]]; then
+		# paths
 		IDIR=$BWA/single_end
 		ODIR=$PROFILES/single_end
 		step_log=$LOGS/${sample_id}_${step}_single_end.log
@@ -583,13 +595,23 @@ make_profiles() {
 		tag_info=$TAG_DIR/single_end/tagInfo.txt	
 		ibam=$IDIR/${sample_id}_sorted_unique.bam
 		mkdir -p $ODIR
-		orpm=$ODIR/$sample_id.rpm
+		# get the fragment length estimate
 		fragment_length_estimate=`grep "Fragment Length Estimate" $make_tag_directory_log | cut -f2 -d':' | sed "s/ //g"`
 		fragment_length_estimate_corrected=`cat $tag_info | grep fragmentLengthEstimate |cut -f 2 -d"=" | sed 's/[^0-9]*//g'`
-		$perl $bam2wig --bw --bwapp $bedGraphToBigWig --pos extend --ext $fragment_length_estimate_corrected --rpm --in $ibam --out $orpm > $step_log
+		# get the number of million mapped reads
+		n_mapped=`$samtools idxstats $ibam |cut -f3 |paste -sd+ |bc`
+		scale_factor=`$python -c "print(1000000. / $n_mapped)"`
+		# calculate the coverage (in bedGraph format)
+		tbg=$ODIR/tmp.bgedGraph
+		$bedtools genomecov -bg -ibam $ibam -g $genome_chrom_sizes -scale $scale_factor > $tbg
+		# convert bedGraph to bigwig
 		orpm=$ODIR/$sample_id.rpm.bw
+		$bedgraph_to_bigwig $tbg $genome_chrom_sizes $orpm > $step_log
+		# remove intermediate reads
+		rm -f $tbg
 
 	elif [[ $sequencing_type == "PE" ]]; then
+		# paths
 		IDIR=$BWA/paired_end
 		ODIR=$PROFILES/paired_end
 		step_log=$LOGS/${sample_id}_${step}_paired_end.log
@@ -597,13 +619,23 @@ make_profiles() {
 		tag_info=$TAG_DIR/paired_end/tagInfo.txt	
 		ibam=$IDIR/${sample_id}_sorted_unique.bam
 		mkdir -p $ODIR
-		orpm=$ODIR/$sample_id.rpm
+		# get the fragment length estimate
 		fragment_length_estimate=`grep "Fragment Length Estimate" $make_tag_directory_log | cut -f2 -d':' | sed "s/ //g"`
 		fragment_length_estimate_corrected=`cat $tag_info | grep fragmentLengthEstimate |cut -f 2 -d"=" | sed 's/[^0-9]*//g'`
+		# get valid pairs
 		tbam=$ODIR/tmp.bam
  		$samtools view -bf 0x2 $ibam > $tbam
-		$perl $bam2wig --bw --bwapp $bedGraphToBigWig --pos extend --ext $fragment_length_estimate_corrected --rpm --in $tbam --out $orpm > $step_log
- 		rm $tbam $tbam.bai
+ 		$samtools index $tbam
+		# get the number of million mapped reads
+		n_mapped=`$samtools idxstats $tbam |cut -f3 |paste -sd+ |bc`
+		scale_factor=`$python -c "print(1000000. / $n_mapped)"`
+		# calculate the coverage (in bedGraph format)
+		tbg=$ODIR/tmp.bgedGraph
+		$bedtools genomecov -bg -ibam $tbam -g $genome_chrom_sizes -scale $scale_factor > $tbg
+		# convert bedGraph to bigwig
+		orpm=$ODIR/$sample_id.rpm.bw
+		$bedgraph_to_bigwig $tbg $genome_chrom_sizes $orpm > $step_log
+ 		rm $tbam $tbam.bai $tbg
 
 	fi
 
