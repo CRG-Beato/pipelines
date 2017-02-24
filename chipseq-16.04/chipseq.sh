@@ -354,7 +354,7 @@ align_bwa() {
 	mkdir -p $TMP_DIR	
 	mkdir -p $ODIR
 	tbam=$ODIR/${sample_id}_sorted.bam
-	obam=$ODIR/${sample_id}_sorted_unique_filtered.bam
+	obam=$ODIR/${sample_id}_sorted_filtered.bam
 	read_group="@RG\tID:'$sample_id'\tLB:'$sample_id'\tPL:illumina\tPU:'$sample_id'\tSM:'$sample_id'"
 	$bwa mem -t $slots -M $genome_fasta -R $read_group $params -v 0 |$samtools sort -o $tbam -O bam -T $TMP_DIR/$sample_id - >$step_log
 
@@ -364,23 +364,23 @@ align_bwa() {
 	# exclude non primary alignments and supplementary alignments (-F 2304)
 	# remove duplicates
 	if [[ $sequencing_type == "SE" ]]; then
-		$samtools view $tbam -bq 10 -F 2304 |$samtools rmdup -s - $obam
+		$samtools view $tbam -bq 10 -F 2304 |$samtools rmdup -s - $obam >> $step_log
 	elif [[ $sequencing_type == "PE" ]]; then
-		$samtools view $tbam -bq 10 -F 2304 |$samtools rmdup - $obam
+		$samtools view $tbam -bq 10 -F 2304 |$samtools rmdup - $obam >> $step_log
 	fi
 	$samtools index $obam
 
 	# parse output
-	n_reads_aligned=`$samtools view $tbam | wc -l`
-	n_reads_unique=`$samtools view $obam | wc -l`
-	message_info $step "reads aligned = $n_reads_aligned"
-	message_info $step "reads unique = $n_reads_unique"
+	n_alignments=`$samtools view $tbam | wc -l`
+	n_alignments_filtered=`$samtools view $obam | wc -l`
+	message_info $step "total number of alignments = $n_alignments"
+	message_info $step "number of filtered alignments = $n_alignments_filtered"
 
 	# update metadata
 	if [[ $integrate_metadata == "yes" ]]; then
 	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a GENOME_FASTA -v $genome_fasta
-	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a N_READS_ALIGNED -v $n_reads_aligned
-	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a N_READS_UNIQUE -v $n_reads_unique
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a N_ALIGNMENTS -v $n_alignments
+	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a N_ALIGNMENTS_FILTERED -v $n_alignments_filtered
 		message_info $step "path to genome sequence FASTA and number of (uniquely) aligned reads added to metadata"
 	fi
 
@@ -408,11 +408,11 @@ quality_alignments() {
 
 	if [[ $sequencing_type == "SE" ]]; then
 		step_log=$LOGS/${sample_id}_${step}_single_end.log
-		ibam=$BWA/single_end/${sample_id}_sorted_unique.bam
+		ibam=$BWA/single_end/${sample_id}_sorted_filtered.bam
 		BAMQC=$BWA/single_end/qualimap_bamqc
 	elif [[ $sequencing_type == "PE" ]]; then
 		step_log=$LOGS/${sample_id}_${step}_paired_end.log
-		ibam=$BWA/paired_end/${sample_id}_sorted_unique.bam
+		ibam=$BWA/paired_end/${sample_id}_sorted_filtered.bam
 		BAMQC=$BWA/paired_end/qualimap_bamqc
 	fi
 
@@ -503,8 +503,8 @@ make_tag_directory() {
 		ODIR=$TAG_DIR/paired_end
 		step_log=$LOGS/${sample_id}_${step}_paired_end.log
 	fi
-	ibam=$IDIR/${sample_id}_sorted_unique.bam
-	obed=$IDIR/${sample_id}_sorted_unique.bed
+	ibam=$IDIR/${sample_id}_sorted_filtered.bam
+	obed=$IDIR/${sample_id}_sorted_filtered.bed
 	$bedtools bamtobed -i $ibam | awk '{OFS="\t"; $4="."; print $0}' > $obed
 
 	# Make tag directory with HOMER
@@ -593,7 +593,7 @@ make_profiles() {
 		step_log=$LOGS/${sample_id}_${step}_single_end.log
 		make_tag_directory_log=$LOGS/${sample_id}_make_tag_directory_single_end.log
 		tag_info=$TAG_DIR/single_end/tagInfo.txt	
-		ibam=$IDIR/${sample_id}_sorted_unique.bam
+		ibam=$IDIR/${sample_id}_sorted_filtered.bam
 		mkdir -p $ODIR
 		# get the fragment length estimate
 		fragment_length_estimate=`grep "Fragment Length Estimate" $make_tag_directory_log | cut -f2 -d':' | sed "s/ //g"`
@@ -617,7 +617,7 @@ make_profiles() {
 		step_log=$LOGS/${sample_id}_${step}_paired_end.log
 		make_tag_directory_log=$LOGS/${sample_id}_make_tag_directory_paired_end.log
 		tag_info=$TAG_DIR/paired_end/tagInfo.txt	
-		ibam=$IDIR/${sample_id}_sorted_unique.bam
+		ibam=$IDIR/${sample_id}_sorted_filtered.bam
 		mkdir -p $ODIR
 		# get the fragment length estimate
 		fragment_length_estimate=`grep "Fragment Length Estimate" $make_tag_directory_log | cut -f2 -d':' | sed "s/ //g"`
@@ -667,7 +667,7 @@ call_peaks() {
 		step_log=$LOGS/${sample_id}_${step}_paired_end.log
 		tag_info=$TAG_DIR/paired_end/tagInfo.txt	
 	fi
-	ibam=$IDIR/${sample_id}_sorted_unique.bam
+	ibam=$IDIR/${sample_id}_sorted_filtered.bam
 
 	# Get fragment length estimate as calculated in the 'make_tag_directory' step
 	message_info $step "Get fragment length estimate (l) as calculated in the 'make_tag_directory' step"
