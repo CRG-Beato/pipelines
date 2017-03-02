@@ -83,7 +83,6 @@ samtools=`which samtools`
 bamToBed=`which bamToBed`
 bed2bb=`which bedToBigBed`
 kallisto=`which kallisto`
-htseq_count=`which htseq-count`
 featureCounts=`which featureCounts`
 bamToBed=`which bamToBed`
 perl=`which perl`
