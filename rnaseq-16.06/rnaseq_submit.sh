@@ -22,7 +22,7 @@ if ! [[ -n "$config" ]]; then
 	"configuration file with analysis parameters does not exist at $config ! Exiting..."
 	exit 
 else
-	samples=`cat $config | grep '=' | grep -v 'control_bam' | grep samples | sed 's/[\t]//g' | sed 's/;.*//g' | cut -f2 -d"="`
+	samples=`cat $config | grep '=' | grep -v 'control_bam' | grep samples |grep -v '/samples' | sed 's/[\t]//g' | sed 's/;.*//g' | cut -f2 -d"="`
 	pipeline_run_mode=`cat $config | grep pipeline_run_mode | sed 's/[ \t]//g' | cut -f2 -d"="`
 	io_mode=`cat $config | grep "^io_mode" | sed 's/[ \t]//g' | sed 's/;.*//g' | cut -f2 -d"="`
 	CUSTOM_OUT=`cat $config | grep "CUSTOM_OUT" | sed 's/[ \t]//g' | sed 's/;.*//g' | cut -f2 -d"="`
@@ -36,6 +36,9 @@ else
 	pipeline_version=`cat $config | grep pipeline_version | sed 's/[ \t]//g' | sed 's/;.*//g' | cut -f2 -d"="`
 	integrate_metadata=`cat $config | grep integrate_metadata | sed 's/[ \t]//g' | sed 's/;.*//g' | cut -f2 -d"="`
 fi
+
+echo $samples
+exit
 
 # Variables and paths
 PIPELINE=/users/GR/mb/jquilez/pipelines/$pipeline_name-$pipeline_version
@@ -108,9 +111,9 @@ for s in $samples; do
 		qsub < $job_file
 	else
 		chmod a+x $job_file
-		$job_file
+		#$job_file
 	fi
 
-	sleep 10
+	#sleep 10
 
 done
