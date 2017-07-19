@@ -130,6 +130,10 @@ main() {
 		quantification_featurecounts
 		quantification_kallisto
 		clean_up
+	elif [[ $pipeline_run_mode == 'trim_and_kallisto' ]]; then
+		trim_reads_trimmomatic
+		quantification_kallisto
+		clean_up
 	elif [[ $pipeline_run_mode == 'trim_reads_trimmomatic' ]]; then trim_reads_trimmomatic
 	elif [[ $pipeline_run_mode == 'align_star' ]]; then align_star
 	elif [[ $pipeline_run_mode == 'quality_alignments' ]]; then quality_alignments
