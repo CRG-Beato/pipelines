@@ -269,7 +269,11 @@ trim_reads_trimmomatic() {
 	message_info $step "sequencing type = $sequencing_type" 
 	message_info $step "trimming adapter sequences for HiSeq, NextSeq or HiSeq"
 	message_info $step "trimming low-quality reads ends using trimmomatic's recommended practices"
-	seqs=$ADAPTERS/TruSeq3-$sequencing_type.fa
+	if [[ $sequencing_type == "SE"]]; then
+		seqs=$ADAPTERS/TruSeq3-$sequencing_type.fa
+	elif [[ $sequencing_type == "PE"]]; then
+		seqs=$ADAPTERS/TruSeq3-${sequencing_type}-2.fa
+	fi
 	targetLength=$read_length
 	java -jar $trimmomatic $sequencing_type \
  					$params \
