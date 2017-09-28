@@ -7,11 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 <br>
+
 ## [16.06] 2017-09-28
 ### Added
 - Added this CHANGELOG
 
 <br>
+
 ## [_pipeline_version_] YYYY-MM-DD
 ### Added
 ### Changed
