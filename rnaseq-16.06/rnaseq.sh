@@ -85,6 +85,7 @@ featureCounts=`which featureCounts`
 bedGraphToBigWig=`which bedGraphToBigWig`
 fastqc=`which fastqc`
 unzip=`which unzip`
+goleft=`which goleft`
 
 # indices and annotation
 chrom_sizes=/users/GR/mb/jquilez/assemblies/$species/$version/ucsc/${version}_chr1-22XYMUn.chrom.sizes
@@ -496,14 +497,18 @@ quality_alignments() {
 
 	if [[ $sequencing_type == "SE" ]]; then
 		step_log=$LOGS/${sample_id}_${step}_single_end.log
+		indexcov_log=$LOGS/${sample_id}_indexcov_single_end.log
 		ibam=$STAR/single_end/$sample_id.Aligned.sortedByCoord.out.bam
 		BAMQC=$STAR/single_end/qualimap_bamqc
 		RNASEQ=$STAR/single_end/qualimap_rnaseq
+		INDEXCOV=$BWA/single_end/indexcov
 	elif [[ $sequencing_type == "PE" ]]; then
 		step_log=$LOGS/${sample_id}_${step}_paired_end.log
+		indexcov_log=$LOGS/${sample_id}_indexcov_paired_end.log
 		ibam=$STAR/paired_end/$sample_id.Aligned.sortedByCoord.out.bam
 		BAMQC=$STAR/paired_end/qualimap_bamqc
 		RNASEQ=$STAR/paired_end/qualimap_rnaseq
+		INDEXCOV=$BWA/paired_end/indexcov
 	fi
 
 	# general QC of the BAM (bamqc)
@@ -615,6 +620,9 @@ quality_alignments() {
 
 	# remove log file for this step as this is very big (~40GB!)
 	rm -f $step_log
+
+	# Quickly estimate coverage from a whole-genome bam
+	$goleft indexcov --directory $INDEXCOV $ibam > $indexcov_log 2>&1
 
 	message_time_step $step $time0
 
@@ -778,7 +786,7 @@ clean_up() {
 	time0=$(date +"%s")
 
 	message_info $step "deleting the following intermediate files/directories:"
-	message_info $step "$SAMPLE/fastqs_processed/trimmomatic/*/*"
+	message_info $step "$SAMPLE/fastqs_processed/trimmomatic/*/*fastq.gz"
 	rm -f $SAMPLE/fastqs_processed/trimmomatic/*/*fastq.gz
 	message_time_step $step $time0
 
