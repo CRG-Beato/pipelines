@@ -89,10 +89,10 @@ makeTagDirectory=`which makeTagDirectory`
 bedtools=`which bedtools`
 perl=`which perl`
 java=`which java`
-bam2wig=`which bam2wig.pl`
-bedGraphToBigWig=`which bedGraphToBigWig`
 python=`which python`
 bedgraph_to_bigwig=`which bedGraphToBigWig`
+fastqc=`which fastqc`
+unzip=`which unzip`
 
 # genome fasta and chromosome sizes
 if [[ ${species,,} == 'homo_sapiens' ]]; then
@@ -241,6 +241,7 @@ trim_reads_trimmomatic() {
 			mkdir -p $CHECKSUMS
 			shasum $ifq1 >> $checksums
 			step_log=$SAMPLE/logs/${sample_id}_${step}_single_end.log
+			fastqc_log=$SAMPLE/logs/${sample_id}_fastqc_single_end.log		
 			single1=$SINGLE/${sample_id}_read1.fastq.gz
 			params="$ifq1 $single1"
 			ODIR=$SINGLE
@@ -261,6 +262,7 @@ trim_reads_trimmomatic() {
 			shasum $ifq1 >> $checksums
 			shasum $ifq2 >> $checksums
 			step_log=$SAMPLE/logs/${sample_id}_${step}_paired_end.log
+			fastqc_log=$SAMPLE/logs/${sample_id}_fastqc_paired_end.log		
 			paired1=$PAIRED/${sample_id}_read1.fastq.gz
 			paired2=$PAIRED/${sample_id}_read2.fastq.gz
 			unpaired1=$UNPAIRED/${sample_id}_read1.fastq.gz
@@ -323,6 +325,16 @@ trim_reads_trimmomatic() {
 	if [[ $sequencing_type == "PE" ]]; then
 		message_info $step "unpaired reads are deleted"
 		rm -fr $UNPAIRED
+	fi
+
+	# run FastQC on the trimmed reads
+	if [[ $sequencing_type == "SE" ]]; then
+		$fastqc --extract $single1 -o $SINGLE > $fastqc_log 2>&1
+		rm -f $SINGLE/$sample_id*read1_fastqc.zip
+	elif [[ $sequencing_type == "PE" ]]; then
+		$fastqc --extract $paired1 -o $PAIRED > $fastqc_log 2>&1
+		$fastqc --extract $paired2 -o $PAIRED >> $fastqc_log 2>&1
+		rm -f $PAIRED/$sample_id*read*_fastqc.zip
 	fi
 
 	message_time_step $step $time0
@@ -841,7 +853,7 @@ clean_up() {
 
 	message_info $step "deleting the following intermediate files/directories:"
 	message_info $step "$SAMPLE/fastqs_processed/trimmomatic/*/*"
-	rm -f $SAMPLE/fastqs_processed/trimmomatic/*/*
+	rm -f $SAMPLE/fastqs_processed/trimmomatic/*/*fastq.gz
 	message_time_step $step $time0
 
 }
