@@ -93,6 +93,7 @@ python=`which python`
 bedgraph_to_bigwig=`which bedGraphToBigWig`
 fastqc=`which fastqc`
 unzip=`which unzip`
+goleft=`which goleft`
 
 # genome fasta and chromosome sizes
 if [[ ${species,,} == 'homo_sapiens' ]]; then
@@ -424,12 +425,16 @@ quality_alignments() {
 
 	if [[ $sequencing_type == "SE" ]]; then
 		step_log=$LOGS/${sample_id}_${step}_single_end.log
+		indexcov_log=$LOGS/${sample_id}_indexcov_single_end.log
 		ibam=$BWA/single_end/${sample_id}_sorted_filtered.bam
 		BAMQC=$BWA/single_end/qualimap_bamqc
+		INDEXCOV=$BWA/single_end/indexcov
 	elif [[ $sequencing_type == "PE" ]]; then
 		step_log=$LOGS/${sample_id}_${step}_paired_end.log
+		indexcov_log=$LOGS/${sample_id}_indexcov_paired_end.log
 		ibam=$BWA/paired_end/${sample_id}_sorted_filtered.bam
 		BAMQC=$BWA/paired_end/qualimap_bamqc
+		INDEXCOV=$BWA/paired_end/indexcov
 	fi
 
 	# general QC of the BAM (bamqc)
@@ -484,6 +489,9 @@ quality_alignments() {
 
 	# remove log file for this step as this is very big (~40GB!)
 	rm -f $step_log
+
+	# Quickly estimate coverage from a whole-genome bam
+	$goleft indexcov --directory $INDEXCOV $ibam > $indexcov_log 2>&1
 
 	message_time_step $step $time0
 
@@ -852,7 +860,7 @@ clean_up() {
 	time0=$(date +"%s")
 
 	message_info $step "deleting the following intermediate files/directories:"
-	message_info $step "$SAMPLE/fastqs_processed/trimmomatic/*/*"
+	message_info $step "$SAMPLE/fastqs_processed/trimmomatic/*/*fastq.gz"
 	rm -f $SAMPLE/fastqs_processed/trimmomatic/*/*fastq.gz
 	message_time_step $step $time0
 
