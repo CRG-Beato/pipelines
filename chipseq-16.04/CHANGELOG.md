@@ -23,6 +23,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 <br>
 
+## [16.04] 2017-10-04 
+### Added
+- [FastQC is run on the FASTQ(s) with the trimmed reads](https://github.com/CRG-Beato/pipelines/commit/9d7bc32bae9a8e403fc6de2a6cc0bfeb54849098)
+- [indexcov is run on BAM](https://github.com/CRG-Beato/pipelines/commit/2f03bc8be6e1222335d5cc185a86c8d27f21a4c6)
+
+<br>
+
 ## [_pipeline_version_] YYYY-MM-DD 
 ### Added
 ### Changed
