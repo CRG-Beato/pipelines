@@ -24,6 +24,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 <br>
 
+## [16.04] 2017-10-05
+### Fixed
+- [fix bug in metrics calculation for single-end](https://github.com/CRG-Beato/pipelines/commit/a5b49dbd17e7999f912264eb22dce408e20982f7)
+
+<br>
+
 ## [_pipeline_version_] YYYY-MM-DD
 ### Added
 ### Changed
