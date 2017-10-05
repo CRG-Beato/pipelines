@@ -523,9 +523,6 @@ quality_alignments() {
 	message_info $step "parse step log to extract generated metadata"
 	genome_results=$BAMQC/genome_results.txt
 	# globals
-	n_mapped_paired_reads=`grep "number of mapped paired reads (first in pair)" $genome_results |cut -f2 -d"=" | sed "s/[ ,]//g"`
-	n_overlapping_read_pairs=`grep "number of overlapping read pairs" $genome_results |cut -f2 -d"=" | sed "s/[ ,]//g"`
-	p_overlapping_read_pairs=`echo "(100 * $n_overlapping_read_pairs) / $n_mapped_paired_reads" | bc -l`
 	p_duplication=`grep "duplication rate" $genome_results | cut -f2 -d"=" | sed "s/[ %]//g"`
 	# insert size
 	median_insert_size=`grep "median insert size" $genome_results | cut -f2 -d"=" | sed "s/[ ,]//g"`
@@ -535,8 +532,14 @@ quality_alignments() {
 	mean_coverage=`grep "mean coverageData" $genome_results | cut -f2 -d"=" | sed "s/[ X]//g"`
 	if [[ $sequencing_type == "SE" ]]; then
 		mean_coverage_paired_end='.'
+		n_mapped_paired_reads='.'
+		n_overlapping_read_pairs='.'
+		p_overlapping_read_pairs='.'
 	elif [[ $sequencing_type == "PE" ]]; then
 		mean_coverage_paired_end=`grep "paired-end adapted mean coverage" $genome_results | cut -f2 -d"=" | sed "s/[ X]//g"`
+		n_mapped_paired_reads=`grep "number of mapped paired reads (first in pair)" $genome_results |cut -f2 -d"=" | sed "s/[ ,]//g"`
+		n_overlapping_read_pairs=`grep "number of overlapping read pairs" $genome_results |cut -f2 -d"=" | sed "s/[ ,]//g"`
+		p_overlapping_read_pairs=`echo "(100 * $n_overlapping_read_pairs) / $n_mapped_paired_reads" | bc -l`
 	fi
 	# print values
 	message_info $step "percentage of overlapping read pais = $p_overlapping_read_pairs"
@@ -678,28 +681,32 @@ quantification_featurecounts() {
 	message_info $step "parse step log to extract generated metadata"
 	# parse
 	log_final=$ODIR/*txt.summary
-	fragments_total=`grep "Total fragments" $step_log | cut -f2 -d':' | sed "s/[ |]//g"`
-	fragments_assigned=`grep "Assigned" $log_final | cut -f2`
-	fragments_ambiguous=`grep "Ambiguity" $log_final | cut -f2`
-	fragments_multimapping=`grep "MultiMapping" $log_final | cut -f2`
-	fragments_no_features=`grep "NoFeatures" $log_final | cut -f2`
-	p_fragments_assigned=`echo "(100 * $fragments_assigned) / $fragments_total" | bc -l`
-	p_fragments_ambiguous=`echo "(100 * $fragments_ambiguous) / $fragments_total" | bc -l`
-	p_fragments_multimapping=`echo "(100 * $fragments_multimapping) / $fragments_total" | bc -l`
-	p_fragments_no_features=`echo "(100 * $fragments_no_features) / $fragments_total" | bc -l`
-	message_info $step "total fragments = $fragments_total"
-	message_info $step "percentage fragments assigned = $p_fragments_assigned"
-	message_info $step "percentage fragments ambiguous = $p_fragments_ambiguous"
-	message_info $step "percentage fragments multi-mapping = $p_fragments_multimapping"
-	message_info $step "percentage fragments no features = $p_fragments_no_features"
+	if [[ $sequencing_type == "SE" ]]; then
+		total=`grep "Total reads" $step_log | cut -f2 -d':' | sed "s/[ |]//g"`
+	elif [[ $sequencing_type == "PE" ]]; then
+		total=`grep "Total fragments" $step_log | cut -f2 -d':' | sed "s/[ |]//g"`
+	fi	
+	assigned=`grep "Assigned" $log_final | cut -f2`
+	ambiguous=`grep "Ambiguity" $log_final | cut -f2`
+	multimapping=`grep "MultiMapping" $log_final | cut -f2`
+	no_features=`grep "NoFeatures" $log_final | cut -f2`
+	p_assigned=`echo "(100 * $assigned) / $total" | bc -l`
+	p_ambiguous=`echo "(100 * $ambiguous) / $total" | bc -l`
+	p_multimapping=`echo "(100 * $multimapping) / $total" | bc -l`
+	p_no_features=`echo "(100 * $no_features) / $total" | bc -l`
+	message_info $step "total reads or fragments = $total"
+	message_info $step "percentage assigned = $p_assigned"
+	message_info $step "percentage ambiguous = $p_ambiguous"
+	message_info $step "percentage multi-mapping = $p_multimapping"
+	message_info $step "percentage no features = $p_no_features"
 
 	# update metadata
 	if [[ $integrate_metadata == "yes" ]]; then
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a N_FRAGMENTS_TOTAL -v $fragments_total
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_FRAGMENTS_ASSIGNED -v $p_fragments_assigned
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_FRAGMENTS_AMBIGUOUS -v $p_fragments_ambiguous
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_FRAGMENTS_MULTIMAPPING -v $p_fragments_multimapping
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_FRAGMENTS_NO_FEATURES -v $p_fragments_no_features
+	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a N_FRAGMENTS_TOTAL -v $total
+	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_FRAGMENTS_ASSIGNED -v $p_assigned
+	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_FRAGMENTS_AMBIGUOUS -v $p_ambiguous
+	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_FRAGMENTS_MULTIMAPPING -v $p_multimapping
+	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_FRAGMENTS_NO_FEATURES -v $p_no_features
 	fi
 
 	message_time_step $step $time0
