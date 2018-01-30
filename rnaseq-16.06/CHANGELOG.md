@@ -24,9 +24,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 <br>
 
-## [16.04] 2017-10-05
+## [16.06] 2017-10-05
 ### Fixed
 - [fix bug in metrics calculation for single-end](https://github.com/CRG-Beato/pipelines/commit/a5b49dbd17e7999f912264eb22dce408e20982f7)
+
+<br>
+
+## [16.06] 2018-01-30
+### Changed
+- [update path to input/output files for rnaseq-16.06](https://github.com/CRG-Beato/pipelines/commit/566c6777e7b961d7c3a938bfa0119e9cc5482f04)
 
 <br>
 
