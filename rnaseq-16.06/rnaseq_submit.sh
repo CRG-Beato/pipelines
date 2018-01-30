@@ -37,13 +37,10 @@ else
 	integrate_metadata=`cat $config | grep integrate_metadata | sed 's/[ \t]//g' | sed 's/;.*//g' | cut -f2 -d"="`
 fi
 
-echo $samples
-exit
-
 # Variables and paths
-PIPELINE=/users/GR/mb/jquilez/pipelines/$pipeline_name-$pipeline_version
+PIPELINE=/users/mbeato/projects/pipelines/$pipeline_name-$pipeline_version
 pipeline_file=$PIPELINE/$pipeline_name.sh
-io_metadata=/users/GR/mb/jquilez/utils/io_metadata.sh
+io_metadata=/users/mbeato/projects/utils/io_metadata.sh
 
 
 
@@ -111,9 +108,9 @@ for s in $samples; do
 		qsub < $job_file
 	else
 		chmod a+x $job_file
-		#$job_file
+		$job_file
 	fi
 
-	#sleep 10
+	sleep 10
 
 done

@@ -3,7 +3,7 @@ run_date=`date +"%Y-%m-%d-%H-%M"`
 job_name=$pipeline_name-$pipeline_version
 
 # python script to write/access metadata
-io_metadata=/users/GR/mb/jquilez/utils/io_metadata.sh
+io_metadata=/users/mbeato/projects/utils/io_metadata.sh
 
 # get species and assembly version from the metadata
 species=homo_sapiens
@@ -32,7 +32,7 @@ SCRIPTS=$PIPELINE/scripts
 if [[ $io_mode == "custom" ]]; then
 	SAMPLE=$CUSTOM_OUT/$sample_id
 else
-	SAMPLE=/users/GR/mb/jquilez/data/$data_type/samples/$sample_id
+	SAMPLE=/users/mbeato/projects/data/$data_type/samples/$sample_id
 fi
 
 # Logs
@@ -46,7 +46,7 @@ UNPAIRED=$TRIMMED/unpaired_reads
 ADAPTERS=/software/mb/el6.3/Trimmomatic-0.33/adapters
 
 # Mapping/alignment
-GENOME_DIR=/users/GR/mb/jquilez/assemblies/$species/$version/star_genome_index/read_length_${read_length}bp
+GENOME_DIR=/users/mbeato/projects/assemblies/$species/$version/star_genome_index/read_length_${read_length}bp
 STAR=$SAMPLE/alignments/star/$version
 
 # reads per transcript quantification
@@ -70,8 +70,8 @@ if [[ $io_mode == "custom" ]]; then
 	ifq1=$CUSTOM_IN/$ifq1_name
 	ifq2=$CUSTOM_IN/$ifq2_name
 else
-	ifq1=/users/GR/mb/jquilez/data/$data_type/raw/*/${sample_id}*read1.fastq.gz
-	ifq2=/users/GR/mb/jquilez/data/$data_type/raw/*/${sample_id}*read2.fastq.gz
+	ifq1=/users/mbeato/projects/data/$data_type/raw/*/${sample_id}*read1.fastq.gz
+	ifq2=/users/mbeato/projects/data/$data_type/raw/*/${sample_id}*read2.fastq.gz
 fi
 
 # tools
@@ -88,17 +88,17 @@ unzip=`which unzip`
 goleft=`which goleft`
 
 # indices and annotation
-chrom_sizes=/users/GR/mb/jquilez/assemblies/$species/$version/ucsc/${version}_chr1-22XYMUn.chrom.sizes
+chrom_sizes=/users/mbeato/projects/assemblies/$species/$version/ucsc/${version}_chr1-22XYMUn.chrom.sizes
 if [[ $version == "hg19" || $version == "hg19_mmtv" ]]; then
-	kallisto_index=/users/GR/mb/jquilez/assemblies/$species/hg19/kallisto_index/kallisto_${species}_hg19_ensGene.index
-	transcripts_gtf=/users/GR/mb/jquilez/assemblies/$species/hg19/gencode/gencode.v19.annotation.gtf
+	kallisto_index=/users/mbeato/projects/assemblies/$species/hg19/kallisto_index/kallisto_${species}_hg19_ensGene.index
+	transcripts_gtf=/users/mbeato/projects/assemblies/$species/hg19/gencode/gencode.v19.annotation.gtf
 elif [[ $version == "hg38" || $version == "hg38_mmtv" ]]; then
-	kallisto_index=/users/GR/mb/jquilez/assemblies/$species/hg38/kallisto_index/kallisto_${species}_hg38_gencode_v24.index
-	transcripts_gtf=/users/GR/mb/jquilez/assemblies/$species/hg38/gencode/gencode.v24.annotation.gtf
+	kallisto_index=/users/mbeato/projects/assemblies/$species/hg38/kallisto_index/kallisto_${species}_hg38_gencode_v24.index
+	transcripts_gtf=/users/mbeato/projects/assemblies/$species/hg38/gencode/gencode.v24.annotation.gtf
 fi
 
 # python script to write/access metadata
-#io_metadata=/users/GR/mb/jquilez/utils/io_metadata.sh
+#io_metadata=/users/mbeato/projects/utils/io_metadata.sh
 
 
 
