@@ -6,7 +6,7 @@ run_date=`date +"%Y-%m-%d-%H-%M"`
 job_name=$pipeline_name-$pipeline_version
 
 # python script to write/access metadata
-io_metadata=/users/GR/mb/jquilez/utils/io_metadata.sh
+io_metadata=/users/mbeato/projects/utils/io_metadata.sh
 
 # get species and assembly version from the metadata
 species=homo_sapiens
@@ -37,7 +37,7 @@ SCRIPTS=$PIPELINE/scripts
 if [[ $io_mode == "custom" ]]; then
 	SAMPLE=$CUSTOM_OUT/$sample_id
 else
-	SAMPLE=/users/GR/mb/jquilez/data/$data_type/samples/$sample_id
+	SAMPLE=/users/mbeato/projects/data/$data_type/samples/$sample_id
 fi
 
 # Logs
@@ -76,8 +76,8 @@ if [[ $io_mode == "custom" ]]; then
 	ifq1=$CUSTOM_IN/$ifq1_name
 	ifq2=$CUSTOM_IN/$ifq2_name
 else
-	ifq1=/users/GR/mb/jquilez/data/$data_type/raw/*/${sample_id}_read1.fastq.gz
-	ifq2=/users/GR/mb/jquilez/data/$data_type/raw/*/${sample_id}_read2.fastq.gz
+	ifq1=/users/mbeato/projects/data/$data_type/raw/*/${sample_id}_read1.fastq.gz
+	ifq2=/users/mbeato/projects/data/$data_type/raw/*/${sample_id}_read2.fastq.gz
 fi
 
 # tools
@@ -97,11 +97,11 @@ goleft=`which goleft`
 
 # genome fasta and chromosome sizes
 if [[ ${species,,} == 'homo_sapiens' ]]; then
-	genome_fasta=/users/GR/mb/jquilez/assemblies/${species,,}/$version/ucsc/${version}_chr1-22XYMUn.fa
-	genome_chrom_sizes=/users/GR/mb/jquilez/assemblies/${species,,}/$version/ucsc/${version}_chr1-22XYMUn.chrom.sizes
+	genome_fasta=/users/mbeato/projects/assemblies/${species,,}/$version/ucsc/${version}_chr1-22XYMUn.fa
+	genome_chrom_sizes=/users/mbeato/projects/assemblies/${species,,}/$version/ucsc/${version}_chr1-22XYMUn.chrom.sizes
 elif [[ ${species,,} == 'mus_musculus' ]]; then
-	genome_fasta=/users/GR/mb/jquilez/assemblies/${species,,}/$version/ucsc/${version}_chr1-19XYMUn.fa
-	genome_chrom_sizes=/users/GR/mb/jquilez/assemblies/${species,,}/$version/ucsc/${version}_chr1-19XYMUn.chrom.sizes
+	genome_fasta=/users/mbeato/projects/assemblies/${species,,}/$version/ucsc/${version}_chr1-19XYMUn.fa
+	genome_chrom_sizes=/users/mbeato/projects/assemblies/${species,,}/$version/ucsc/${version}_chr1-19XYMUn.chrom.sizes
 fi
 
 

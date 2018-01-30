@@ -39,9 +39,9 @@ else
 fi
 
 # paths
-PIPELINE=/users/GR/mb/jquilez/pipelines/$pipeline_name-$pipeline_version
+PIPELINE=/users/mbeato/projects/pipelines/$pipeline_name-$pipeline_version
 pipeline_file=$PIPELINE/$pipeline_name.sh
-io_metadata=/users/GR/mb/jquilez/utils/io_metadata.sh
+io_metadata=/users/mbeato/projects/utils/io_metadata.sh
 
 
 
