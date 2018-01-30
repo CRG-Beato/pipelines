@@ -32,7 +32,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [16.04] 2018-01-30 
 ### Changed
-- [update path to genome assemblies](https://github.com/CRG-Beato/pipelines/commit/9baf3c26a520f15a70382acbd1b422b5a1993b35)
+- [update path to input/output files](https://github.com/CRG-Beato/pipelines/commit/9baf3c26a520f15a70382acbd1b422b5a1993b35)
 
 
 <br>
