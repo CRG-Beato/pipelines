@@ -13,7 +13,7 @@ species=homo_sapiens
 if [[ $integrate_metadata == "yes" ]]; then
 	sequencing_type=`$io_metadata -m get_from_metadata -s $sample_id -t input_metadata -a 'SEQUENCING_TYPE'`
 	read_length=`$io_metadata -m get_from_metadata -s $sample_id -t input_metadata -a 'SEQUENCING_READ_LENGTH'`
-	species=`$io_metadata -m get_from_metadata -s $sample_id -t input_metadata -a 'SPECIES'`	
+	species=`$io_metadata -m get_from_metadata -s $sample_id -t input_metadata -a 'SPECIES'`
 	if [[ ${species,,} == 'homo_sapiens' ]]; then
 		version=hg38_mmtv
 	elif [[ ${species,,} == 'mus_musculus' ]]; then
@@ -121,8 +121,8 @@ main() {
 		$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a MAX_TIME -v $max_time
 		$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a SLOTS -v $slots
 		$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a ASSEMBLY_VERSION -v $version
-		$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a JOB_NAME -v $job_name		
-		$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a PATH_JOB_FILE -v $path_job_file		
+		$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a JOB_NAME -v $job_name
+		$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a PATH_JOB_FILE -v $path_job_file
 	fi
 
 	if [[ $pipeline_run_mode == 'full' ]]; then
@@ -186,7 +186,7 @@ message_error() {
 	step_name=$1
 	message=$2
 	echo -e "ERROR \t`date +"%Y-%m-%d %T"` \t[$step_name] \t$message"
-	exit	
+	exit
 }
 
 # Outputs a warning message about the task being done
@@ -242,7 +242,7 @@ trim_reads_trimmomatic() {
 			mkdir -p $CHECKSUMS
 			shasum $ifq1 >> $checksums
 			step_log=$SAMPLE/logs/${sample_id}_${step}_single_end.log
-			fastqc_log=$SAMPLE/logs/${sample_id}_fastqc_single_end.log		
+			fastqc_log=$SAMPLE/logs/${sample_id}_fastqc_single_end.log
 			single1=$SINGLE/${sample_id}_read1.fastq.gz
 			params="$ifq1 $single1"
 			ODIR=$SINGLE
@@ -263,7 +263,7 @@ trim_reads_trimmomatic() {
 			shasum $ifq1 >> $checksums
 			shasum $ifq2 >> $checksums
 			step_log=$SAMPLE/logs/${sample_id}_${step}_paired_end.log
-			fastqc_log=$SAMPLE/logs/${sample_id}_fastqc_paired_end.log		
+			fastqc_log=$SAMPLE/logs/${sample_id}_fastqc_paired_end.log
 			paired1=$PAIRED/${sample_id}_read1.fastq.gz
 			paired2=$PAIRED/${sample_id}_read2.fastq.gz
 			unpaired1=$UNPAIRED/${sample_id}_read1.fastq.gz
@@ -282,7 +282,7 @@ trim_reads_trimmomatic() {
 
 	# adapter trimming: the trimmomatic program directory contains a folder with the adapter sequences for
 	# the Illumina sequencers in use. 'TruSeq3-PE.fa' is used, which contains the adapter sequences for the HiSeq
-	message_info $step "sequencing type = $sequencing_type" 
+	message_info $step "sequencing type = $sequencing_type"
 	message_info $step "trimming adapter sequences for HiSeq, NextSeq or HiSeq"
 	message_info $step "trimming low-quality reads ends using trimmomatic's recommended practices"
 	if [[ $sequencing_type == "SE" ]]; then
@@ -368,7 +368,7 @@ align_bwa() {
 		params="$paired1 $paired2"
 	fi
 	TMP_DIR=$BWA/my_tmp
-	mkdir -p $TMP_DIR	
+	mkdir -p $TMP_DIR
 	mkdir -p $ODIR
 	tbam=$ODIR/${sample_id}_sorted.bam
 	obam=$ODIR/${sample_id}_sorted_filtered.bam
@@ -573,7 +573,7 @@ make_tag_directory() {
 	message_info $step "autocorrelation: same-to-diff strand fold enrichment = $autocorrelation_same_to_diff_strand_fold_enrichment"
 	message_info $step "avg. fragment GC% = $avg_fragment_gc"
 	message_info $step "avg. expected GC% = $avg_expected_gc"
-	
+
 	# update metadata
 	if [[ $integrate_metadata == "yes" ]]; then
 	 	$io_metadata -m add_to_metadata -t 'chipseq' -s $sample_id -u $run_date -a ESTIMATED_GENOME_SIZE -v $estimated_genome_size
@@ -616,7 +616,7 @@ make_profiles() {
 		ODIR=$PROFILES/single_end
 		step_log=$LOGS/${sample_id}_${step}_single_end.log
 		make_tag_directory_log=$LOGS/${sample_id}_make_tag_directory_single_end.log
-		tag_info=$TAG_DIR/single_end/tagInfo.txt	
+		tag_info=$TAG_DIR/single_end/tagInfo.txt
 		ibam=$IDIR/${sample_id}_sorted_filtered.bam
 		mkdir -p $ODIR
 		# get the fragment length estimate
@@ -640,7 +640,7 @@ make_profiles() {
 		ODIR=$PROFILES/paired_end
 		step_log=$LOGS/${sample_id}_${step}_paired_end.log
 		make_tag_directory_log=$LOGS/${sample_id}_make_tag_directory_paired_end.log
-		tag_info=$TAG_DIR/paired_end/tagInfo.txt	
+		tag_info=$TAG_DIR/paired_end/tagInfo.txt
 		ibam=$IDIR/${sample_id}_sorted_filtered.bam
 		mkdir -p $ODIR
 		# get the fragment length estimate
@@ -685,11 +685,11 @@ call_peaks() {
 	if [[ $sequencing_type == "SE" ]]; then
 		IDIR=$BWA/single_end
 		step_log=$LOGS/${sample_id}_${step}_single_end.log
-		tag_info=$TAG_DIR/single_end/tagInfo.txt	
+		tag_info=$TAG_DIR/single_end/tagInfo.txt
 	elif [[ $sequencing_type == "PE" ]]; then
 		IDIR=$BWA/paired_end
 		step_log=$LOGS/${sample_id}_${step}_paired_end.log
-		tag_info=$TAG_DIR/paired_end/tagInfo.txt	
+		tag_info=$TAG_DIR/paired_end/tagInfo.txt
 	fi
 	ibam=$IDIR/${sample_id}_sorted_filtered.bam
 
@@ -700,7 +700,7 @@ call_peaks() {
 
 	# Peak calling with MACS2
 	if [[ $peak_caller == "macs2" ]]; then
-		
+
 		macs2=`which $peak_caller`
 		message_info $step "Peak calling with MACS2"
 		if [[ ${species,,} == "homo_sapiens" ]]; then
@@ -724,7 +724,7 @@ call_peaks() {
 			elif [[ $sequencing_type == "PE" ]]; then
 			 	ODIR=$PEAKS/with_control/paired_end
 			 	step_log=$LOGS/${sample_id}_${step}_${peak_caller}_with_control_paired_end.log
-			fi		
+			fi
 		 	mkdir -p $ODIR
 		 	message_info $step "peak calling with input DNA ($control_bam) as control"
 		 	$macs2 callpeak -t $ibam \
@@ -763,7 +763,7 @@ call_peaks() {
 			elif [[ $sequencing_type == "PE" ]]; then
 			 	ODIR=$PEAKS/sample_alone/paired_end
 			 	step_log=$LOGS/${sample_id}_${step}_${peak_caller}_sample_alone_paired_end.log
-			fi		
+			fi
 			mkdir -p $ODIR
 			message_info $step "peak calling with the sample alone (i.e. no input)"
 			$macs2 callpeak -t $ibam \
@@ -774,7 +774,7 @@ call_peaks() {
 		 					--call-summits \
 		 					--gsize $genome_size \
 							--name $sample_id 2>$step_log
-	
+
 			# parse step log to extract generated metadata
 	 		n_peaks=`cat $ODIR/*.narrowPeak | wc -l`
 			message_info $step "peaks = $n_peaks"
@@ -810,11 +810,11 @@ call_peaks() {
 			elif [[ $sequencing_type == "PE" ]]; then
 			 	ODIR=$PEAKS/with_control/paired_end
 			 	step_log=$LOGS/${sample_id}_${step}_${peak_caller}_with_control_paired_end.log
-			fi		
+			fi
 			mkdir -p $ODIR
 			message_info $step "peak calling with input DNA ($control_bam) as control"
 			# Zerone parameters
-			# -l = zerone produces an alternative output in which 
+			# -l = zerone produces an alternative output in which
 			# (i) only enriched windows (i.e. peaks) are shown
 			# (ii) contiguous windows are merged
 			otab1=$ODIR/${sample_id}_zerone.txt
@@ -868,5 +868,3 @@ clean_up() {
 
 
 main
-
-
