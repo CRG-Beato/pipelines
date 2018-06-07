@@ -714,6 +714,10 @@ call_peaks() {
 		message_info $step "--call-summits = MACS reanalyzes the shape of signal profile to deconvolve subpeaks within each peak called"
 
 		# Peak calling with input DNA as control
+		broad=''
+		if [[ $broad_peaks == "yes" ]]; then
+			broad="--broad"
+		fi
 		if [[ $use_control == "yes" ]]; then
 			if [ ! -f $control_bam ]; then
 				message_error $step "$control_bam not found. Exiting..."
@@ -727,11 +731,7 @@ call_peaks() {
 			fi
 		 	mkdir -p $ODIR
 		 	message_info $step "peak calling with input DNA ($control_bam) as control"
-		fi
-		broad=''
-		if [[ $broad_peaks == "yes" ]]; then
-			broad="--broad"
-		fi
+
 		 	$macs2 callpeak -t $ibam \
 		 					-c $control_bam \
 		 					-q $macs2_qvalue \
@@ -775,6 +775,7 @@ call_peaks() {
 			$macs2 callpeak -t $ibam \
 							-q $macs2_qvalue \
 							--nomodel \
+							$broad \
 							--extsize $fragment_length_estimate_corrected \
 							--outdir $ODIR \
 		 					--call-summits \
