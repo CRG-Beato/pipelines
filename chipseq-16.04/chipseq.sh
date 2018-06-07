@@ -727,6 +727,7 @@ call_peaks() {
 			fi
 		 	mkdir -p $ODIR
 		 	message_info $step "peak calling with input DNA ($control_bam) as control"
+		fi
 			broad=""
 			if [[ $broad_peaks == "yes"]]; then
 				broad="--broad"
