@@ -728,10 +728,10 @@ call_peaks() {
 		 	mkdir -p $ODIR
 		 	message_info $step "peak calling with input DNA ($control_bam) as control"
 		fi
-			broad=""
-			if [[ $broad_peaks == "yes"]]; then
-				broad="--broad"
-			fi
+		broad=''
+		if [[ $broad_peaks == "yes" ]]; then
+			broad="--broad"
+		fi
 		 	$macs2 callpeak -t $ibam \
 		 					-c $control_bam \
 		 					-q $macs2_qvalue \
