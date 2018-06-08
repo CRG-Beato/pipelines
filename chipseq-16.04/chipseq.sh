@@ -717,7 +717,7 @@ call_peaks() {
 		broad='' #Broad peaks parameter. If deactivated it will calculate peak summits instead.
 		if [[ $broad_peaks == "yes" ]]; then
 			broad="--broad"
-		elif [[ $sequencing_type == "PE" ]]; then
+		else
 			broad="--call-summits"
 		fi
 
