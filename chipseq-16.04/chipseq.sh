@@ -714,10 +714,13 @@ call_peaks() {
 		message_info $step "--call-summits = MACS reanalyzes the shape of signal profile to deconvolve subpeaks within each peak called"
 
 		# Peak calling with input DNA as control
-		broad=''
+		broad='' #Broad peaks parameter. If deactivated it will calculate peak summits instead.
 		if [[ $broad_peaks == "yes" ]]; then
 			broad="--broad"
+		elif [[ $sequencing_type == "PE" ]]; then
+			broad="--call-summits"
 		fi
+
 		if [[ $use_control == "yes" ]]; then
 			if [ ! -f $control_bam ]; then
 				message_error $step "$control_bam not found. Exiting..."
@@ -739,7 +742,6 @@ call_peaks() {
 							$broad \
 		 					--extsize $fragment_length_estimate_corrected \
 		 					--outdir $ODIR \
-		 					--call-summits \
 		 					--gsize $genome_size \
 		 					--name $sample_id 2>$step_log
 
@@ -778,7 +780,6 @@ call_peaks() {
 							$broad \
 							--extsize $fragment_length_estimate_corrected \
 							--outdir $ODIR \
-		 					--call-summits \
 		 					--gsize $genome_size \
 							--name $sample_id 2>$step_log
 
