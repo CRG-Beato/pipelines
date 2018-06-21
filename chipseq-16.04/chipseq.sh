@@ -717,8 +717,10 @@ call_peaks() {
 		broad='' #Broad peaks parameter. If deactivated it will calculate peak summits instead.
 		if [[ $broad_peaks == "yes" ]]; then
 			broad="--broad"
+			peak_type='broad'
 		else
 			broad="--call-summits"
+			peak_type='narrow'
 		fi
 
 		if [[ $use_control == "yes" ]]; then
@@ -743,10 +745,10 @@ call_peaks() {
 		 					--extsize $fragment_length_estimate_corrected \
 		 					--outdir $ODIR \
 		 					--gsize $genome_size \
-		 					--name $sample_id 2>$step_log
+		 					--name ${sample_id}_${peak_type} 2>$step_log
 
 			# parse step log to extract generated metadata
-	 		n_peaks=`cat $ODIR/*.narrowPeak | wc -l`
+	 		n_peaks=`cat $ODIR/*.${peak_type}Peak | wc -l`
 			message_info $step "peaks = $n_peaks"
 
 	 		# update metadata
@@ -781,10 +783,10 @@ call_peaks() {
 							--extsize $fragment_length_estimate_corrected \
 							--outdir $ODIR \
 		 					--gsize $genome_size \
-							--name $sample_id 2>$step_log
+							--name ${sample_id}_${peak_type} 2>$step_log
 
 			# parse step log to extract generated metadata
-	 		n_peaks=`cat $ODIR/*.narrowPeak | wc -l`
+	 		n_peaks=`cat $ODIR/*.${peak_type}Peak | wc -l`
 			message_info $step "peaks = $n_peaks"
 
 	 		# update metadata
