@@ -749,6 +749,9 @@ call_peaks() {
 
 			# parse step log to extract generated metadata
 	 		n_peaks=`cat $ODIR/*.${peak_type}Peak | wc -l`
+			if [[ $broad_peaks == "no" ]]; then
+				ln -s $ODIR/${sample_id}_${peak_type}_peaks.narrowPeak $ODIR/${sample_id}_peaks.narrowPeak
+			fi
 			message_info $step "peaks = $n_peaks"
 
 	 		# update metadata
@@ -836,6 +839,9 @@ call_peaks() {
 
 			# parse step log to extract generated metadata
 	 		n_peaks=`grep -v "#" $otab2 | wc -l`
+			if [[ $broad_peaks == "no" ]]; then
+				ln -s $ODIR/${sample_id}_${peak_type}_peaks.narrowPeak $ODIR/${sample_id}_peaks.narrowPeak
+			fi
 			message_info $step "peaks = $n_peaks"
 
 	 		# update metadata
