@@ -6,8 +6,8 @@ job_name=$pipeline_name-$pipeline_version
 io_metadata=/users/mbeato/projects/utils/io_metadata.sh
 
 # get species and assembly version from the metadata
-species=homo_sapiens
 if [[ $integrate_metadata == "yes" ]]; then
+	species=`$io_metadata -m get_from_metadata -s $sample_id -t input_metadata -a 'SPECIES'`
 	sequencing_type=`$io_metadata -m get_from_metadata -s $sample_id -t input_metadata -a 'SEQUENCING_TYPE'`
 	read_length=`$io_metadata -m get_from_metadata -s $sample_id -t input_metadata -a 'SEQUENCING_READ_LENGTH'`
 	if [[ ${species,,} == 'homo_sapiens' ]]; then
@@ -87,14 +87,24 @@ fastqc=`which fastqc`
 unzip=`which unzip`
 goleft=`which goleft`
 
+#Chromosome sizes
+if [[ $species == "homo_sapiens" ]]; then
+	chrom_sizes=/users/mbeato/projects/assemblies/$species/$version/ucsc/${version}_chr1-22XYMUn.chrom.sizes
+elif [[ $species == "mus_musculus" ]]; then
+	chrom_sizes=/users/mbeato/projects/assemblies/$species/$version/ucsc/${version}_chr1-19XYM.chrom.sizes
+fi
+
 # indices and annotation
-chrom_sizes=/users/mbeato/projects/assemblies/$species/$version/ucsc/${version}_chr1-22XYMUn.chrom.sizes
 if [[ $version == "hg19" || $version == "hg19_mmtv" ]]; then
 	kallisto_index=/users/mbeato/projects/assemblies/$species/hg19/kallisto_index/kallisto_${species}_hg19_ensGene.index
 	transcripts_gtf=/users/mbeato/projects/assemblies/$species/hg19/gencode/gencode.v19.annotation.gtf
 elif [[ $version == "hg38" || $version == "hg38_mmtv" ]]; then
 	kallisto_index=/users/mbeato/projects/assemblies/$species/hg38/kallisto_index/kallisto_${species}_hg38_gencode_v24.index
 	transcripts_gtf=/users/mbeato/projects/assemblies/$species/hg38/gencode/gencode.v24.annotation.gtf
+elif [[ $version == "mm10" ]]; then
+	kallisto_index=/users/mbeato/projects/assemblies/$species/hg38/kallisto_index/kallisto_${species}_hg38_gencode_v24.index
+	transcripts_gtf=/users/mbeato/projects/assemblies/$species/hg38/gencode/gencode.v24.annotation.gtf
+
 fi
 
 # python script to write/access metadata
@@ -108,7 +118,7 @@ fi
 
 main() {
 
-	echo 
+	echo
 	# store general parameters into the metadata
 	if [[ $integrate_metadata == "yes" ]]; then
 		$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a PIPELINE_RUN_MODE -v $pipeline_run_mode
@@ -117,8 +127,8 @@ main() {
 		$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a MAX_TIME -v $max_time
 		$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a SLOTS -v $slots
 		$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a ASSEMBLY_VERSION -v $version
-		$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a JOB_NAME -v $job_name		
-		$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a PATH_JOB_FILE -v $path_job_file		
+		$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a JOB_NAME -v $job_name
+		$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a PATH_JOB_FILE -v $path_job_file
 	fi
 
 	if [[ $pipeline_run_mode == 'full' ]]; then
@@ -149,7 +159,7 @@ main() {
 
 	# Final message
 	message_info "pipeline" "completed successfully"
-	message_time_pipeline 	
+	message_time_pipeline
 
 }
 
@@ -175,7 +185,7 @@ message_error() {
 	step_name=$1
 	message=$2
 	echo -e "ERROR \t`date +"%Y-%m-%d %T"` \t[$step_name] \t$message"
-	exit	
+	exit
 }
 
 # Outputs a warning message about the task being done
@@ -266,7 +276,7 @@ trim_reads_trimmomatic() {
 
 	# adapter trimming: the trimmomatic program directory contains a folder with the adapter sequences for
 	# the Illumina sequencers in use. 'TruSeq3-PE.fa' is used, which contains the adapter sequences for the HiSeq
-	message_info $step "sequencing type = $sequencing_type" 
+	message_info $step "sequencing type = $sequencing_type"
 	message_info $step "trimming adapter sequences for HiSeq, NextSeq or HiSeq"
 	message_info $step "trimming low-quality reads ends using trimmomatic's recommended practices"
 	if [[ $sequencing_type == "SE" ]]; then
@@ -350,7 +360,7 @@ align_star() {
 	star_version=`$star --version`
 	message_info $step "align trimmed single-end reads with STAR (version = $star_version)"
 	message_info $step "using ENCODE standard options for long RNA-seq pipeline"
-	# Mapping options adjusted following ENCODE standard options for long RNA-seq found in the 
+	# Mapping options adjusted following ENCODE standard options for long RNA-seq found in the
 	# STAR manual https://github.com/alexdobin/STAR/tree/master/doc (note that although this links to the STAR 2.4 manual,
 	# the options used here are also available for STAR 2.3, the version used here)
 	# --outFilterType BySJout = reduces the number of ”spurious” junctions
@@ -358,14 +368,14 @@ align_star() {
 	# --alignSJoverhangMin 8 = minimum overhang for unannotated junctions
 	# --alignSJDBoverhangMin 1 = minimum overhang for annotated junctions
 	# --outFilterMismatchNmax 999 = maximum number of mismatches per pair, large number switches off this filter
-	# --outFilterMismatchNoverLmax 0.04 = max number of mismatches per pair relative to read length: for 2x50b, 
+	# --outFilterMismatchNoverLmax 0.04 = max number of mismatches per pair relative to read length: for 2x50b,
 	# max number of mis- matches is 0.04*100=4 for the pair (default is 0.3 so we are much more restrictive)
 	# --alignIntronMin 20: ...
 	# --alignIntronMax 1000000: maximum intron length
 	# --outSAMtype BAM SortedByCoordinate = output sorted by coordinate
 	# --outWigType: make read per million profile files. 4 files in total:
 	# forward and reverse
-	# unique alignments and multiple-alignments (provided the latter have less than outFilterMultimapNmax placements)  
+	# unique alignments and multiple-alignments (provided the latter have less than outFilterMultimapNmax placements)
 	if [[ $sequencing_type == "SE" ]]; then
 		step_log=$LOGS/${sample_id}_${step}_single_end.log
 		single1=$SINGLE/${sample_id}_read1.fastq.gz
@@ -384,7 +394,7 @@ align_star() {
 	mkdir -p $ODIR2
 	TMP_DIR=$ODIR1/my_tmp
 	$star \
-		    --genomeDir $GENOME_DIR/ \
+		  --genomeDir $GENOME_DIR/ \
 			--genomeLoad NoSharedMemory \
 			--runThreadN $slots \
 			--outFilterType "BySJout" \
@@ -418,7 +428,7 @@ align_star() {
 	# unique alignments, strand2
 	ibg=$ODIR1/$sample_id.Signal.Unique.str2.out.bg
 	obw=$ODIR2/${sample_id}_unique_strand2_rpm.bw
-	$bedGraphToBigWig $ibg $chrom_sizes $obw 
+	$bedGraphToBigWig $ibg $chrom_sizes $obw
 	rm -f $ibg
 	# unique and multi alignments, strand1
 	ibg=$ODIR1/$sample_id.Signal.UniqueMultiple.str1.out.bg
@@ -451,28 +461,28 @@ align_star() {
 	message_info $step "reads unique (percentage) = $p_reads_unique"
 	message_info $step "accepted multi-mappings (number) = $n_reads_multi_mapping_accepted"
 	message_info $step "accepted multi-mappings (percentage) = $p_reads_multi_mapping_accepted"
-	message_info $step "excluded multi-mappings (percentage) = $p_reads_multi_mapping_too_many" 
+	message_info $step "excluded multi-mappings (percentage) = $p_reads_multi_mapping_too_many"
 	message_info $step "reads unmapped too short (percentage) = $p_reads_unmapped_too_short"
 	message_info $step "splices (number) = $n_splices"
 
 	# update metadata
 	if [[ $integrate_metadata == "yes" ]]; then
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a GENOME_DIR -v $GENOME_DIR 	
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a OUT_FILTER_TYPE -v BySJout 	
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a OUT_FILTER_MULTIMAP_N_MAX -v 20 	
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a ALIGN_SJ_OVERHANG_MIN -v 8 	
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a ALIGN_SJDB_OVERHANG_MIN -v 1 	
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a OUT_FILTER_MISMATCH_N_MAX -v 999 	
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a OUT_FILTER_MISMATCH_N_OVER_L_MAX -v 0.04	
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a ALIGN_INTRON_MIN -v 20 	
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a ALIGN_INTRON_MAX -v 1000000 	
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a ALIGN_MATES_GAP_MAX -v 1000000 	
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a VERSION_STAR -v $star_version 	
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a N_READS_UNIQUE -v $n_reads_unique 
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_READS_UNIQUE -v $p_reads_unique 
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a N_READS_MULTI_MAPPING_ACCEPTED -v $n_reads_multi_mapping_accepted 
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_READS_MULTI_MAPPING_ACCEPTED -v $p_reads_multi_mapping_accepted 
-	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_READS_MULTI_MAPPING_TOO_MANY -v $p_reads_multi_mapping_too_many 
+	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a GENOME_DIR -v $GENOME_DIR
+	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a OUT_FILTER_TYPE -v BySJout
+	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a OUT_FILTER_MULTIMAP_N_MAX -v 20
+	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a ALIGN_SJ_OVERHANG_MIN -v 8
+	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a ALIGN_SJDB_OVERHANG_MIN -v 1
+	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a OUT_FILTER_MISMATCH_N_MAX -v 999
+	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a OUT_FILTER_MISMATCH_N_OVER_L_MAX -v 0.04
+	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a ALIGN_INTRON_MIN -v 20
+	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a ALIGN_INTRON_MAX -v 1000000
+	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a ALIGN_MATES_GAP_MAX -v 1000000
+	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a VERSION_STAR -v $star_version
+	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a N_READS_UNIQUE -v $n_reads_unique
+	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_READS_UNIQUE -v $p_reads_unique
+	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a N_READS_MULTI_MAPPING_ACCEPTED -v $n_reads_multi_mapping_accepted
+	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_READS_MULTI_MAPPING_ACCEPTED -v $p_reads_multi_mapping_accepted
+	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_READS_MULTI_MAPPING_TOO_MANY -v $p_reads_multi_mapping_too_many
 	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a P_READS_UNMAPPED_TOO_SHORT -v $p_reads_unmapped_too_short
 	 	$io_metadata -m add_to_metadata -t 'rnaseq' -s $sample_id -u $run_date -a N_SPLICES -v $n_splices
 	fi
@@ -685,7 +695,7 @@ quantification_featurecounts() {
 		total=`grep "Total reads" $step_log | cut -f2 -d':' | sed "s/[ |]//g"`
 	elif [[ $sequencing_type == "PE" ]]; then
 		total=`grep "Total fragments" $step_log | cut -f2 -d':' | sed "s/[ |]//g"`
-	fi	
+	fi
 	assigned=`grep "Assigned" $log_final | cut -f2`
 	ambiguous=`grep "Ambiguity" $log_final | cut -f2`
 	multimapping=`grep "MultiMapping" $log_final | cut -f2`
