@@ -103,8 +103,8 @@ elif [[ $version == "hg38" || $version == "hg38_mmtv" ]]; then
 	kallisto_index=/users/mbeato/projects/assemblies/$species/hg38/kallisto_index/kallisto_${species}_hg38_gencode_v24.index
 	transcripts_gtf=/users/mbeato/projects/assemblies/$species/hg38/gencode/gencode.v24.annotation.gtf
 elif [[ $version == "mm10" ]]; then
-	kallisto_index=/users/mbeato/projects/assemblies/$species/hg38/kallisto_index/kallisto_${species}_hg38_gencode_v24.index
-	transcripts_gtf=/users/mbeato/projects/assemblies/$species/hg38/gencode/gencode.v24.annotation.gtf
+	kallisto_index=/users/mbeato/projects/assemblies/$species/${version}/kallisto_index/kallisto_${species}_${version}_gencode_vM19.index
+	transcripts_gtf=/users/mbeato/projects/assemblies/$species/${version}/gencode/gencode.vM19.annotation.gtf
 
 fi
 
