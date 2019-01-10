@@ -8,6 +8,7 @@ io_metadata=/users/mbeato/projects/utils/io_metadata.sh
 # get species and assembly version from the metadata
 if [[ $integrate_metadata == "yes" ]]; then
 	species=`$io_metadata -m get_from_metadata -s $sample_id -t input_metadata -a 'SPECIES'`
+	species=${species,,}
 	sequencing_type=`$io_metadata -m get_from_metadata -s $sample_id -t input_metadata -a 'SEQUENCING_TYPE'`
 	read_length=`$io_metadata -m get_from_metadata -s $sample_id -t input_metadata -a 'SEQUENCING_READ_LENGTH'`
 	if [[ ${species,,} == 'homo_sapiens' ]]; then
