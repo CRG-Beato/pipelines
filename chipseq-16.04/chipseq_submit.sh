@@ -20,7 +20,7 @@ config=$1
 # Get variables from configuration file
 if ! [[ -n "$config" ]]; then
 	"configuration file with analysis parameters does not exist at $config ! Exiting..."
-	exit 
+	exit
 else
 	samples=`cat $config | grep '=' | grep -v 'control_bam\|CUSTOM_OUT' | grep samples |grep -v '/samples' |sed 's/[\t]//g' | sed 's/;.*//g' | cut -f2 -d"="`
 	pipeline_run_mode=`cat $config | grep pipeline_run_mode | sed 's/[ \t]//g' | cut -f2 -d"="`
@@ -31,7 +31,7 @@ else
 	max_time=`cat $config | grep max_time | sed 's/[ \t]//g' | sed 's/;.*//g' | cut -f2 -d"="`
 	slots=`cat $config | grep slots | sed 's/[ \t]//g' | sed 's/;.*//g' | cut -f2 -d"="`
 	submit_to_cluster=`cat $config | grep submit_to_cluster | sed 's/[ \t]//g' | sed 's/;.*//g' | cut -f2 -d"="`
-	email=`cat $config | grep email | sed 's/[ \t]//g' | sed 's/;.*//g' | cut -f2 -d"="`	
+	email=`cat $config | grep email | sed 's/[ \t]//g' | sed 's/;.*//g' | cut -f2 -d"="`
 	peak_caller=`cat $config | grep peak_caller | sed 's/[ \t]//g' | cut -f2 -d"="`
 	pipeline_name=`cat $config | grep pipeline_name | sed 's/[ \t]//g' | sed 's/;.*//g' | cut -f2 -d"="`
 	pipeline_version=`cat $config | grep pipeline_version | sed 's/[ \t]//g' | sed 's/;.*//g' | cut -f2 -d"="`
@@ -57,7 +57,7 @@ fi
 # set in/out mode
 if [[ $io_mode == "standard" ]]; then
 	JOB_CMD=$PIPELINE/job_cmd
-	JOB_OUT=$PIPELINE/job_out 
+	JOB_OUT=$PIPELINE/job_out
 elif [[ $io_mode == "custom" ]]; then
 	JOB_CMD=$CUSTOM_OUT/job_cmd
 	JOB_OUT=$CUSTOM_OUT/job_out
@@ -77,7 +77,7 @@ for s in $samples; do
 	fi
 	job_file=$JOB_CMD/$job_name.sh
 	m_out=$JOB_OUT
-	echo "#!/bin/bash
+	echo '#!/bin/bash
 	#$ -N $job_name
 	#$ -q $queue
 	#$ -l virtual_free=$memory
@@ -87,14 +87,14 @@ for s in $samples; do
 	#$ -j y
 	#$ -M $email
 	#$ -m abe
-	#$ -pe smp $slots" > $job_file
+	#$ -pe smp $slots' > $job_file
 	sed -i 's/^\t//g' $job_file
 
 	# Add date of submission
 	echo -e "\nsubmitted_on=$submitted_on" >> $job_file
-	# Add pipeline version 
+	# Add pipeline version
 	echo "pipeline_version=$pipeline_version" >> $job_file
-	# Add sample ID 
+	# Add sample ID
 	echo "sample_id=$s" >> $job_file
 	# Add parameters from the configuration file
 	cat $config | grep '=' | grep -v samples | sed 's/[ \t]//g' | sed 's/;.*//g' | sed '/^$/d' >> $job_file
