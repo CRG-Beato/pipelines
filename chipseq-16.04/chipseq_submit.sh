@@ -77,7 +77,7 @@ for s in $samples; do
 	fi
 	job_file=$JOB_CMD/$job_name.sh
 	m_out=$JOB_OUT
-	echo '#!/bin/bash
+	echo "#!/bin/bash
 	#$ -N $job_name
 	#$ -q $queue
 	#$ -l virtual_free=$memory
@@ -87,7 +87,7 @@ for s in $samples; do
 	#$ -j y
 	#$ -M $email
 	#$ -m abe
-	#$ -pe smp $slots' > $job_file
+	#$ -pe smp $slots" > $job_file
 	sed -i 's/^\t//g' $job_file
 
 	# Add date of submission
