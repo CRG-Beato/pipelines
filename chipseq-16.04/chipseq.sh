@@ -18,6 +18,8 @@ if [[ $integrate_metadata == "yes" ]]; then
 		version=hg38_mmtv
 	elif [[ ${species,,} == 'mus_musculus' ]]; then
 		version=mm10
+	elif [[ ${species,,} == 'drosophila_melanogaster' ]]; then
+		version=dm3
 	fi
 fi
 
@@ -102,6 +104,9 @@ if [[ ${species,,} == 'homo_sapiens' ]]; then
 elif [[ ${species,,} == 'mus_musculus' ]]; then
 	genome_fasta=/users/mbeato/projects/assemblies/${species,,}/$version/ucsc/${version}_chr1-19XYMUn.fa
 	genome_chrom_sizes=/users/mbeato/projects/assemblies/${species,,}/$version/ucsc/${version}_chr1-19XYMUn.chrom.sizes
+elif [[ ${species,,} == 'drosophila_melanogaster' ]]; then
+	genome_fasta=/users/mbeato/projects/assemblies/${species,,}/$version/flybase/${version}.fa
+	genome_chrom_sizes=/users/mbeato/projects/assemblies/${species,,}/$version/flybase/${version}.chrom.sizes
 fi
 
 
@@ -707,6 +712,8 @@ call_peaks() {
 			genome_size="hs"
 		elif [[ ${species,,} == "mus_musculus" ]]; then
 			genome_size="mm"
+		elif [[ ${species,,} == "drosophila_melanogaster" ]]; then
+			genome_size="dm"
 		fi
 		message_info $step "genome size for $species will be used"
 		message_info $step "q-value cutoff = $macs2_qvalue (default is 0.01)"
