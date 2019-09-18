@@ -407,8 +407,8 @@ align_bwa() {
 	fi
 
 	# remove intermediate files
-	rm -fr $TMP_DIR
-	rm -f $tbam
+	#rm -fr $TMP_DIR
+	#rm -f $tbam
 
 	# data integrity
 	mkdir -p $CHECKSUMS
