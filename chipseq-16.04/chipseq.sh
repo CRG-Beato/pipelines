@@ -382,7 +382,7 @@ align_bwa() {
 
 	# clean reads:
 	# unique mappings (implicit in -q 10 as BWA sets the mapping quality of multimappings to 0)
-	# mapping quality >10 (-q 10)
+	# mapping quality >=10 (-q 10)
 	# exclude non primary alignments and supplementary alignments (-F 2304)
 	# remove duplicates
 	if [[ $sequencing_type == "SE" ]]; then
@@ -392,11 +392,30 @@ align_bwa() {
 	fi
 	$samtools index $obam
 
+
+#Count the number of reads lost in each category
+n_alignments_quality=`$samtools view $tbam -bq 10 -c`
+n_alignments_supplem=`$samtools view $tbam -F 2304 -c`
+n_alignments_dup=`$samtools rmdup -s $tbam - | $samtools view -c`
+
+
+#correr qualimap para bam original
+
+
 	# parse output
 	n_alignments=`$samtools view $tbam | wc -l`
 	n_alignments_filtered=`$samtools view $obam | wc -l`
 	message_info $step "total number of alignments = $n_alignments"
 	message_info $step "number of filtered alignments = $n_alignments_filtered"
+
+
+	aln_mapped_log=$LOGS/${sample_id}_${step}_classify_alignments.log
+
+	echo n_alignments: $n_alignments >> $aln_mapped_log
+	echo n_alignments_quality: $n_alignments_quality >> $aln_mapped_log
+	echo n_alignments_supplem: $n_alignments_supplem >> $aln_mapped_log
+	echo n_alignments_dup: $n_alignments_dup >> $aln_mapped_log
+	echo n_alignments_filtered: $n_alignments_filtered >> $aln_mapped_log
 
 	# update metadata
 	if [[ $integrate_metadata == "yes" ]]; then
