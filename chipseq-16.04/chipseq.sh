@@ -392,25 +392,26 @@ align_bwa() {
 	fi
 	$samtools index $obam
 
-
-#Count the number of reads lost in each category
-n_alignments_quality=`$samtools view $tbam -bq 10 -c`
-n_alignments_supplem=`$samtools view $tbam -F 2304 -c`
-n_alignments_dup=`$samtools rmdup -s $tbam - | $samtools view -c`
-
-
-#correr qualimap para bam original
-
-
-	# parse output
+	#Count the number of reads lost in each category
 	n_alignments=`$samtools view $tbam | wc -l`
+	n_alignments_quality=`$samtools view $tbam -bq 10 -c`
+	n_alignments_supplem=`$samtools view $tbam -F 2304 -c`
+
+	if [[ $sequencing_type == "SE" ]]; then
+		n_alignments_dup=`$samtools rmdup -s $tbam - | $samtools view -c`
+	elif [[ $sequencing_type == "PE" ]]; then
+		n_alignments_dup=`$samtools rmdup $tbam - | $samtools view -c`
+	fi
+
+	#Count the number of final filtered reads
 	n_alignments_filtered=`$samtools view $obam | wc -l`
+	
 	message_info $step "total number of alignments = $n_alignments"
 	message_info $step "number of filtered alignments = $n_alignments_filtered"
 
 
 	aln_mapped_log=$LOGS/${sample_id}_${step}_classify_alignments.log
-
+	rm $aln_mapped_log
 	echo n_alignments: $n_alignments >> $aln_mapped_log
 	echo n_alignments_quality: $n_alignments_quality >> $aln_mapped_log
 	echo n_alignments_supplem: $n_alignments_supplem >> $aln_mapped_log
