@@ -386,7 +386,7 @@ align_bwa() {
 	# exclude non primary alignments and supplementary alignments (-F 2304)
 	# remove duplicates
 	if [[ $sequencing_type == "SE" ]]; then
-		$samtools view $tbam -bq 10 -F 2304 |$samtools rmdup -s $obam >> $step_log
+		$samtools view $tbam -bq 10 -F 2304 |$samtools rmdup -s - $obam >> $step_log
 	elif [[ $sequencing_type == "PE" ]]; then
 		$samtools view $tbam -bq 10 -F 2304 |$samtools rmdup - $obam >> $step_log
 	fi
@@ -405,7 +405,7 @@ align_bwa() {
 
 	#Count the number of final filtered reads
 	n_alignments_filtered=`$samtools view $obam | wc -l`
-	
+
 	message_info $step "total number of alignments = $n_alignments"
 	message_info $step "number of filtered alignments = $n_alignments_filtered"
 
