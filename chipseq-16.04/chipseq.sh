@@ -157,7 +157,9 @@ main() {
 		make_profiles
 		call_peaks
 	elif [[ $pipeline_run_mode == 'trim_reads_trimmomatic' ]]; then trim_reads_trimmomatic
-	elif [[ $pipeline_run_mode == 'align_bwa' ]]; then align_bwa
+	elif [[ $pipeline_run_mode == 'align_bwa' ]]; then
+	trim_reads_trimmomatic
+	align_bwa
 	elif [[ $pipeline_run_mode == 'quality_alignments' ]]; then quality_alignments
 	elif [[ $pipeline_run_mode == 'make_tag_directory' ]]; then make_tag_directory
 	elif [[ $pipeline_run_mode == 'make_profiles' ]]; then make_profiles
@@ -381,7 +383,8 @@ align_bwa() {
 	#$bwa mem -t $slots -M $genome_fasta -R $read_group $params -v 0 |$samtools sort -o $tbam -O bam -T $TMP_DIR/$sample_id - >$step_log
 	bowtie=`which bowtie`
 
-	message_info $step echo $bowtie --quiet -S -n 1 -p $slots ${genome_fasta::-5} $params |$samtools sort -o $tbam -O bam -T $TMP_DIR/$sample_id - >$step_log
+	$bowtie --quiet -S -n 1 -p $slots ${genome_fasta::-5} $params |$samtools sort -o $tbam -O bam -T $TMP_DIR/$sample_id - >$step_log
+
 	# clean reads:
 	# unique mappings (implicit in -q 10 as BWA sets the mapping quality of multimappings to 0)
 	# mapping quality >=10 (-q 10)
