@@ -304,7 +304,8 @@ trim_reads_trimmomatic() {
 					LEADING:$leading \
 					TRAILING:$trailing \
 					MAXINFO:$targetLength:$strictness \
-					MINLEN:$minLength \ >$step_log 2>&1
+					MINLEN:$minLength \
+					CROP:20 >$step_log 2>&1
 
 	# parse step log to extract generated metadata
 	message_info $step "parse step log to extract generated metadata"
