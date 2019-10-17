@@ -304,8 +304,7 @@ trim_reads_trimmomatic() {
 					LEADING:$leading \
 					TRAILING:$trailing \
 					MAXINFO:$targetLength:$strictness \
-					MINLEN:15 \
-					CROP:20 >$step_log 2>&1
+					MINLEN:$minLength >$step_log 2>&1
 
 	# parse step log to extract generated metadata
 	message_info $step "parse step log to extract generated metadata"
@@ -381,10 +380,9 @@ align_bwa() {
 	tbam=$ODIR/${sample_id}_sorted.bam
 	obam=$ODIR/${sample_id}_sorted_filtered.bam
 	read_group="@RG\tID:'$sample_id'\tLB:'$sample_id'\tPL:illumina\tPU:'$sample_id'\tSM:'$sample_id'"
-	#$bwa mem -t $slots -M $genome_fasta -R $read_group $params -v 0 |$samtools sort -o $tbam -O bam -T $TMP_DIR/$sample_id - >$step_log
-	bowtie=`which bowtie`
-
-	$bowtie --quiet -S -n 1 -p $slots ${genome_fasta::-5} $params |$samtools sort -o $tbam -O bam -T $TMP_DIR/$sample_id - >$step_log
+	$bwa mem -t $slots -M $genome_fasta -R $read_group $params -v 0 |$samtools sort -o $tbam -O bam -T $TMP_DIR/$sample_id - >$step_log
+	#bowtie=`which bowtie`
+	#$bowtie --quiet -S -n 1 -p $slots ${genome_fasta::-5} $params |$samtools sort -o $tbam -O bam -T $TMP_DIR/$sample_id - >$step_log
 
 	# clean reads:
 	# unique mappings (implicit in -q 10 as BWA sets the mapping quality of multimappings to 0)
