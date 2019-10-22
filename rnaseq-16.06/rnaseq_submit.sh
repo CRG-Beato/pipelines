@@ -68,7 +68,7 @@ for s in $samples; do
 
 	# Build job: parameters
 	submitted_on=`date +"%Y_%m_%d"`
-	job_name=${s}_${submitted_on}_${pipeline_run_mode}_${pipeline_name}-${pipeline_version}
+	job_name=job_${s}_${submitted_on}_${pipeline_run_mode}_${pipeline_name}-${pipeline_version}
 	job_file=$JOB_CMD/$job_name.sh
 	m_out=$JOB_OUT
 	echo "#!/bin/bash
